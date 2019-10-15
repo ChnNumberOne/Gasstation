@@ -12,6 +12,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using Gasstation.Implementation;
 
 namespace Gasstation
 {
@@ -23,6 +24,29 @@ namespace Gasstation
         public MainWindow()
         {
             InitializeComponent();
+        }
+
+        int counter = 0;
+
+        // Button Click Event 
+        private void Button_Click(object sender, RoutedEventArgs e)
+        {
+            FuelTank newCreatedFuelTank = new FuelTank(new FuelType(), 1000);
+            Button eventButton = (Button) e.Source;
+            StackPanel stackPanel = (StackPanel) eventButton.Parent;
+
+            Button newTankButton = new Button();
+            newTankButton.Content = "Tank " + (counter++);
+            newTankButton.Click += (s, events) => {
+                newCreatedFuelTank.AddFuelToTank(100);
+                Console.WriteLine(newCreatedFuelTank.getFillPercentage());
+                newCreatedFuelTank.DrainFuelFromTank(50);
+                Console.WriteLine(newCreatedFuelTank.getFillPercentage());
+
+            };
+            stackPanel.Children.Add(newTankButton);
+            
+
         }
     }
 }

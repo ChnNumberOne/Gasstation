@@ -26,7 +26,7 @@ namespace Gasstation.Implementation
         private int fuelAmount;
 
         // the top fill warn level of the fueltank ( e.g. do something above 70% fill)
-        private int topFillWarn;
+        private int topFillWarnLevel;
 
         // the bottom fill warn level of the fueltank ( e.g. do something below 30% fill)
         private int bottomFillWarnLevel;
@@ -34,7 +34,20 @@ namespace Gasstation.Implementation
         // the maximum capacity the tank can hold in fuel
         private int fuelCapacity;
 
+        public FuelType GetFuelType()
+        {
+            return this.fuelType;
+        }
 
+        public void SetTopFillWarn(int newTopWarnLevel)
+        {
+            this.topFillWarnLevel = newTopWarnLevel;
+        }
+
+        public void SetBottomFillWarn(int newBottomWarnLevel)
+        {
+            this.bottomFillWarnLevel = newBottomWarnLevel;
+        }
 
         // Adds an amount to the fuel tank, if the fuel doesnt fit its filled to capacity and the added value is returned
         public int AddFuelToTank(int amount)
@@ -48,8 +61,6 @@ namespace Gasstation.Implementation
             int fillableAmount = this.fuelCapacity - this.fuelAmount;
             this.fuelAmount += fillableAmount;
             return fillableAmount;
-
-
 
         }
 
@@ -66,11 +77,10 @@ namespace Gasstation.Implementation
             this.fuelAmount -= drainableAmount;
             return drainableAmount;
 
-
         }
 
         // returns the fill percentage of the fueltank
-        public float getFillPercentage()
+        public float GetFillPercentage()
         {
             return (float) this.fuelAmount / (float) this.fuelCapacity * 100;
         }

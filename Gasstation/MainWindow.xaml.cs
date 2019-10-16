@@ -31,7 +31,7 @@ namespace Gasstation
         // Button Click Event 
         private void Button_Click(object sender, RoutedEventArgs e)
         {
-            FuelTank newCreatedFuelTank = new FuelTank(new FuelType(), 1000);
+            FuelTank newCreatedFuelTank = new FuelTank(new FuelType("Benzin",125), 1000);
             Button eventButton = (Button) e.Source;
             StackPanel stackPanel = (StackPanel) eventButton.Parent;
 
@@ -39,14 +39,15 @@ namespace Gasstation
             newTankButton.Content = "Tank " + (counter++);
             newTankButton.Click += (s, events) => {
                 newCreatedFuelTank.AddFuelToTank(100);
-                Console.WriteLine(newCreatedFuelTank.getFillPercentage());
+                Console.WriteLine(newCreatedFuelTank.GetFillPercentage());
                 newCreatedFuelTank.DrainFuelFromTank(50);
-                Console.WriteLine(newCreatedFuelTank.getFillPercentage());
+                Console.WriteLine(newCreatedFuelTank.GetFillPercentage());
 
             };
             stackPanel.Children.Add(newTankButton);
             
 
         }
+
     }
 }

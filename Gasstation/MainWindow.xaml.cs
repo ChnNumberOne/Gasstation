@@ -13,6 +13,7 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 using Gasstation.Implementation;
+using Gasstation.Testfolder;
 
 namespace Gasstation
 {
@@ -23,7 +24,13 @@ namespace Gasstation
     {
         public MainWindow()
         {
+
             InitializeComponent();
+            
+           
+            
+
+
         }
 
         int counter = 0;
@@ -31,6 +38,22 @@ namespace Gasstation
         // Button Click Event 
         private void Button_Click(object sender, RoutedEventArgs e)
         {
+
+            // Test für Konfigurationsschreiben (muss nicht hier sein)
+            FuelType testFuelType = new FuelType("Benzin", 125);
+            FuelType testFuelType2 = new FuelType("Diesel", 135);
+            FuelType testFuelType3 = new FuelType("Super", 130);
+            List<FuelType> testFuelTypes = new List<FuelType>();
+            testFuelTypes.Add(testFuelType);
+            testFuelTypes.Add(testFuelType2);
+            testFuelTypes.Add(testFuelType3);
+            TankstellenKonfiguration config = new TankstellenKonfiguration(testFuelTypes, 3);
+            config.SaveConfig();
+
+
+
+
+
             FuelTank newCreatedFuelTank = new FuelTank(new FuelType("Benzin",125), 1000);
             Button eventButton = (Button) e.Source;
             StackPanel stackPanel = (StackPanel) eventButton.Parent;
@@ -48,6 +71,7 @@ namespace Gasstation
             
 
         }
+     
 
     }
 }

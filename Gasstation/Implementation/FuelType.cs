@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 
 namespace Gasstation.Implementation
 {
+    [Serializable]
     class FuelType
     {
 

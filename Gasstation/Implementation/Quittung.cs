@@ -1,6 +1,6 @@
 ﻿using System;
 
-public class Class1
+public class Quittung
 {
     // saves the value of cost in CHF
     private float receiptCost;
@@ -8,7 +8,7 @@ public class Class1
     // date of purchase
     private DateTime date;
 
-	public Class1(float cost, DateTime date)
+	public Quittung(float cost, DateTime date)
 	{
         receiptCost = cost;
         this.date = date;

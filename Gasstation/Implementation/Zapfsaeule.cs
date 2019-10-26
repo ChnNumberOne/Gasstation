@@ -26,7 +26,6 @@ namespace Gasstation.Implementation
         private Zapfhahn currentlySelectedZapfhahn;
 
 
-
         private FuelTank selectedFuelTank;
 
         public void SelectZapfhahn(FuelType fuelType, int fuel) 

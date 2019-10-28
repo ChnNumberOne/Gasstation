@@ -20,7 +20,7 @@ namespace Gasstation.Implementation
             }
         }
 
-        //private List<FuelTank> fuelTanks = new List<FuelTank>();
+        private List<FuelTank> fuelTanks = new List<FuelTank>();
         private List<Zapfhahn> zapfhaene = new List<Zapfhahn>();
 
         private Zapfhahn currentlySelectedZapfhahn;
@@ -124,6 +124,7 @@ namespace Gasstation.Implementation
             {
                 drainedFuelTotal += fuel;
                 fuelTank.DrainFuelFromTank(fuel);
+                return drainedFuelTotal;
             }
 
             // get total drained fuel and lock zapfhahn

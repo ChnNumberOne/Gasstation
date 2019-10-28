@@ -8,6 +8,11 @@ namespace Gasstation.Implementation
 {
     class Zapfsaeule
     {
+
+        // Sieht nicht schlecht aus aber:
+        // Deutsch Englisch nicht mixen
+        // Gewisse List Suchen können deutlich vereinfacht werden (und sind damit wahrscheinlich auch besser für die Performance)
+
         public Zapfsaeule(List<FuelTank> fuelTanks)
         {
             //this.fuelTanks = fuelTanks;
@@ -30,6 +35,7 @@ namespace Gasstation.Implementation
 
         public void SelectZapfhahn(FuelType fuelType, int fuel) 
         {
+            // Arrow Function Nach Beispiel Kassenautomat (List.Find() with custom condition)
             foreach (Zapfhahn zpf in zapfhaene) 
             {
                 if (fuelType == zpf.GetFuelTank().GetFuelType()) 
@@ -45,11 +51,13 @@ namespace Gasstation.Implementation
 
         public void StartTanking(int amntOfFuel) 
         {
+            // wieso entfernen wir den Zapfhahn wenn wir tanken mit dem wir tanken?
             currentlySelectedZapfhahn.removeFromFuelTank(amntOfFuel);
         }
 
         public void FinishTanking() 
         {
+         
             int drainedFuel = currentlySelectedZapfhahn.FinishFueling();
             
         }
@@ -66,6 +74,9 @@ namespace Gasstation.Implementation
 
         public void SelectFuelType(string fuelTypeName)
         {
+
+            // Kassenautomat Beispiel wie oben List.Functions können das hier einfacher lösen
+            // fehlt hier ein Field?
             foreach(FuelTank currentFuelTank in fuelTanks)
             {
                 FuelType currentFuelType = currentFuelTank.GetFuelType();
@@ -120,6 +131,7 @@ namespace Gasstation.Implementation
             }
 
             // removes certain amount of fuel from fueltank
+            // was ist mit returns?
             public int removeFromFuelTank(int fuel) 
             {
                 drainedFuelTotal += fuel;

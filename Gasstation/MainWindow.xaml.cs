@@ -47,9 +47,7 @@ namespace Gasstation
             testFuelTypes.Add(testFuelType);
             testFuelTypes.Add(testFuelType2);
             testFuelTypes.Add(testFuelType3);
-            TankstellenKonfiguration config = new TankstellenKonfiguration(testFuelTypes, 3);
-            config.SaveConfig();
-
+          
 
 
 
@@ -68,10 +66,19 @@ namespace Gasstation
 
             };
             stackPanel.Children.Add(newTankButton);
-            
+
+            // grober test für config save ( auf diese weise können wir bereits Objekte serialisiern und abspeichern und wieder laden.
+            // alles was fehlt ist Datenerweiterung der Konfiguration und absicherung, dass der IFormatter richtig aufgebaut ist.
+            List<FuelTank> fuelTanks = new List<FuelTank>();
+            fuelTanks.Add(newCreatedFuelTank);
+            Config config = Config.CreateInstance();
+            config.SetConfigurationData(fuelTanks);
+            config.SaveConfig();
+            config.ReadConfig();
+
 
         }
-     
+
 
     }
 }

@@ -9,7 +9,8 @@ namespace Unit_Tests
         [TestMethod]
         public void TestMethod1()
         {
-
+            int x = 5;
+            Assert.AreEqual(5, 5);
         }
     }
 }

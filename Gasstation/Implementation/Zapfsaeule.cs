@@ -51,7 +51,6 @@ namespace Gasstation.Implementation
 
         public void StartTanking(int amntOfFuel) 
         {
-            if(currentlySelectedZapfhahn)
             currentlySelectedZapfhahn.RemoveFromFuelTank(amntOfFuel);
         }
 

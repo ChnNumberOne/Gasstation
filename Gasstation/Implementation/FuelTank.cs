@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Gasstation.Implementation
 {
-
+    [Serializable]
     class FuelTank
     {
         // constructor
@@ -49,7 +49,12 @@ namespace Gasstation.Implementation
             this.bottomFillWarnLevel = newBottomWarnLevel;
         }
 
-        // Adds an amount to the fuel tank, if the fuel doesnt fit its filled to capacity and the added value is returned
+        /// <summary>
+        /// Adds an amount to the fuel tank, if the fuel doesnt fit its filled to capacity and the added value is returned
+        /// </summary>
+        /// <param name="amount"></param>
+        /// <returns></returns>
+      
         public int AddFuelToTank(int amount)
         {
             if (this.fuelAmount + amount < this.fuelCapacity)
@@ -63,8 +68,12 @@ namespace Gasstation.Implementation
             return fillableAmount;
 
         }
-
-        // Takes an amount from the fuel tank, if the amount is too big it takes the remainder and the drained value is returned
+        /// <summary>
+        /// Takes an amount from the fuel tank, if the amount is too big it takes the remainder and the drained value is returned
+        /// </summary>
+        /// <param name="amount"></param>
+        /// <returns></returns>
+    
         public int DrainFuelFromTank(int amount)
         {
             if (this.fuelAmount - amount >= 0)
@@ -79,7 +88,10 @@ namespace Gasstation.Implementation
 
         }
 
-        // returns the fill percentage of the fueltank
+        /// <summary>
+        /// returns the fill percentage of the fueltank
+        /// </summary>
+        /// <returns></returns>
         public float GetFillPercentage()
         {
             return (float) this.fuelAmount / (float) this.fuelCapacity * 100;

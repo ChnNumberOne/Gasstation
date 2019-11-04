@@ -14,7 +14,7 @@ namespace Gasstation.Implementation
         {
             this.fuelType = fuelType;
             this.fuelCapacity = fuelCapacity;
-            this.fuelAmount = 0;
+            this.currentFuelAmount = 0;
         }
 
         // fields
@@ -23,7 +23,7 @@ namespace Gasstation.Implementation
         private FuelType fuelType;
 
         // the amount of fuel in the fueltank
-        private int fuelAmount;
+        private int currentFuelAmount;
 
         // the top fill warn level of the fueltank ( e.g. do something above 70% fill)
         private int topFillWarnLevel;
@@ -57,14 +57,14 @@ namespace Gasstation.Implementation
       
         public int AddFuelToTank(int amount)
         {
-            if (this.fuelAmount + amount < this.fuelCapacity)
+            if (this.currentFuelAmount + amount < this.fuelCapacity)
             {
-                this.fuelAmount += amount;
+                this.currentFuelAmount += amount;
                 return amount;
             }
 
-            int fillableAmount = this.fuelCapacity - this.fuelAmount;
-            this.fuelAmount += fillableAmount;
+            int fillableAmount = this.fuelCapacity - this.currentFuelAmount;
+            this.currentFuelAmount += fillableAmount;
             return fillableAmount;
 
         }
@@ -76,14 +76,14 @@ namespace Gasstation.Implementation
     
         public int DrainFuelFromTank(int amount)
         {
-            if (this.fuelAmount - amount >= 0)
+            if (this.currentFuelAmount - amount >= 0)
             {
-                this.fuelAmount -= amount;
+                this.currentFuelAmount -= amount;
                 return amount;
             }
 
-            int drainableAmount = amount - this.fuelAmount;
-            this.fuelAmount -= drainableAmount;
+            int drainableAmount = amount - this.currentFuelAmount;
+            this.currentFuelAmount -= drainableAmount;
             return drainableAmount;
 
         }
@@ -94,7 +94,7 @@ namespace Gasstation.Implementation
         /// <returns></returns>
         public float GetFillPercentage()
         {
-            return (float) this.fuelAmount / (float) this.fuelCapacity * 100;
+            return (float) this.currentFuelAmount / (float) this.fuelCapacity * 100;
         }
 
 

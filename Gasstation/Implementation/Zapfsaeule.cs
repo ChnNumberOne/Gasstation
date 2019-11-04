@@ -51,8 +51,8 @@ namespace Gasstation.Implementation
 
         public void StartTanking(int amntOfFuel) 
         {
-            // wieso entfernen wir den Zapfhahn wenn wir tanken mit dem wir tanken?
-            currentlySelectedZapfhahn.removeFromFuelTank(amntOfFuel);
+            if(currentlySelectedZapfhahn)
+            currentlySelectedZapfhahn.RemoveFromFuelTank(amntOfFuel);
         }
 
         public void FinishTanking() 
@@ -115,13 +115,13 @@ namespace Gasstation.Implementation
             // locks Zapfhahn
             public void LockZapfhahn() 
             {
-                isLocked = true;
+                this.isLocked = true;
             }
 
             // unlocks Zapfhahn
             public void UnlockZapfhahn() 
             {
-                isLocked = false;
+                this.isLocked = false;
             }
 
             // changes fueltank of Zapfhahn
@@ -129,22 +129,24 @@ namespace Gasstation.Implementation
             {
                 this.fuelTank = fuelTank;
             }
-
-            // removes certain amount of fuel from fueltank
-            // was ist mit returns?
-            public int removeFromFuelTank(int fuel) 
+            
+            /// <summary>
+            /// Bezieht den Benzinbetrag vom Tank
+            /// </summary>
+            /// <param name="fuel"></param>
+            /// <returns></returns>
+            public int RemoveFromFuelTank(int fuel) 
             {
-                drainedFuelTotal += fuel;
-                fuelTank.DrainFuelFromTank(fuel);
-                return drainedFuelTotal;
+                return this.fuelTank.DrainFuelFromTank(fuel);
             }
 
-            // get total drained fuel and lock zapfhahn
+            // gibt bereits den total Drained by RemoveFromFuelTank zurück als return!
+            // ist der rest wirklich nötig und wenn ja muss es hier sein?
             public int FinishFueling() 
             {
                 int totalDrained = drainedFuelTotal;
                 drainedFuelTotal = 0;
-                isLocked = true;
+                this.isLocked = true;
                 return totalDrained;
             }
 

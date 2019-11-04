@@ -41,25 +41,42 @@ namespace Gasstation.Implementation
 
         public void SaveConfig()
         {
+            try
+            {
+
             IFormatter formatterSave = new BinaryFormatter();
             Stream streamSave = new FileStream("D:/Daten/test.config", FileMode.Create, FileAccess.Write, FileShare.None);
             formatterSave.Serialize(streamSave, this);
             streamSave.Close();
+
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e.StackTrace);
+            }
         }
 
         public void ReadConfig()
         {
-            IFormatter formatterLoad = new BinaryFormatter();
-            Stream streamLoad = new FileStream("D:/Daten/test.config", FileMode.Open, FileAccess.Read, FileShare.Read);
-            Config output = (Config) formatterLoad.Deserialize(streamLoad);
-            this.fuelTanks = output.fuelTanks;
-            foreach (FuelTank ft in this.fuelTanks)
+            try
             {
-                
-                Console.WriteLine(ft.GetFuelType());
+                IFormatter formatterLoad = new BinaryFormatter();
+                Stream streamLoad = new FileStream("D:/Daten/test.config", FileMode.Open, FileAccess.Read, FileShare.Read);
+                Config output = (Config)formatterLoad.Deserialize(streamLoad);
+                this.fuelTanks = output.fuelTanks;
+                foreach (FuelTank ft in this.fuelTanks)
+                {
+
+                    Console.WriteLine(ft.GetFuelType());
+                }
+                streamLoad.Close();
+
+            } catch(Exception e)
+            {
+                Console.WriteLine(e.StackTrace);
             }
-            streamLoad.Close();
-            
+
+
 
         }
     }

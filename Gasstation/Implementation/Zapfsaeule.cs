@@ -37,7 +37,7 @@ namespace Gasstation.Implementation
         {
             // [RESOLVED]
             // Arrow Function Nach Beispiel Kassenautomat (List.Find() with custom condition) 
-            currentlySelectedZapfhahn = zapfhaene.Find(x => x.GetFuelTank.GetFuelType() == fuelType);
+            currentlySelectedZapfhahn = zapfhaene.Find(x => x.GetFuelTank().GetFuelType() == fuelType);
             /*
             foreach (Zapfhahn zpf in zapfhaene) 
             {

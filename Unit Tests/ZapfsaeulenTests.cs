@@ -7,7 +7,7 @@ using Gasstation.Implementation;
 public class ZapfsaeulenTests
 {
     [TestMethod]
-    public void ZapfsaeulenTests()
+    public void ZapfsaueleTest1()
 	{
         
 	}

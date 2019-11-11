@@ -14,6 +14,8 @@ namespace Gasstation.Implementation
 
         static Zapfsaeule selectedZapfsaeule;
 
+        static DataContext datacontext;
+
 
 
      

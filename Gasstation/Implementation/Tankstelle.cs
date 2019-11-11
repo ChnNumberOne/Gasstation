@@ -14,6 +14,8 @@ namespace Gasstation.Implementation
 
         static Zapfsaeule selectedZapfsaeule;
 
+
+
      
 
         /// <summary>
@@ -26,7 +28,13 @@ namespace Gasstation.Implementation
 
         }
 
+        public static void createFuelTank(FuelType fuelType, int fuelCapacity)
+        {
+            FuelTank fuelTank = new FuelTank(fuelType, fuelCapacity);
+        }
         
+
+    
 
     }
 }

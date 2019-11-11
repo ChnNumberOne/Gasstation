@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 namespace Gasstation.Implementation
 {
     [Serializable]
-    class FuelType
+    public class FuelType
     {
 
         public FuelType(string name, int costPerLiterInCent)

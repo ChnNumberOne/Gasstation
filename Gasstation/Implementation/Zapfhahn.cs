@@ -17,11 +17,6 @@ namespace Gasstation.Implementation
         // saves amount of total drained fuel
         private int drainedFuelTotal = 0;
 
-        // constructor that creates a new fueltank
-        public Zapfhahn(FuelType fuelType, int fuelCapacity)
-        {
-            fuelTank = new FuelTank(fuelType, fuelCapacity);
-        }
 
         // constructor that uses an already created fueltank
         public Zapfhahn(FuelTank fuelTank)
@@ -29,13 +24,17 @@ namespace Gasstation.Implementation
             this.fuelTank = fuelTank;
         }
 
-        // locks Zapfhahn
+        /// <summary>
+        /// Locks this Zapfhahn
+        /// </summary>
         public void LockZapfhahn()
         {
             this.isLocked = true;
         }
 
-        // unlocks Zapfhahn
+        /// <summary>
+        /// Unlocks this Zapfhahn
+        /// </summary>
         public void UnlockZapfhahn()
         {
             this.isLocked = false;
@@ -57,28 +56,7 @@ namespace Gasstation.Implementation
             return this.fuelTank.DrainFuelFromTank(fuel);
         }
 
-        //  [NOTE] func FinishFueling wird warscheinlich entfernt/nicht gebraucht. -Benji
-
-        /*
-         * @Thomas die Idee dahinter war, wenn ein Nutzer mehrere male hintereinander auftankt
-         * (weil er nacher z.B merkt, dass es nicht genug fuel ist), das er mit FinishFueling()
-         * "Bestaetigt", dass er nicht mehr tanken würde.
-         * Dies war gedacht, um eine entgueltige Quittung zu erstellen.
-         * 
-         * Die Funktion wird warscheinlich eh nacher entfernt, hatte einfach gemeint zu erklaeren,
-         * was die denkweise dahinter war.
-         */
-
-        // gibt bereits den total Drained by RemoveFromFuelTank zurück als return!
-        // ist der rest wirklich nötig und wenn ja muss es hier sein?
-        /*
-        public int FinishFueling() 
-        {
-            int totalDrained = drainedFuelTotal;
-            drainedFuelTotal = 0;
-            this.isLocked = true;
-            return totalDrained;
-        }*/
+     
 
         // returns fueltank (For information in Configuration for GUI)
         public FuelTank GetFuelTank()

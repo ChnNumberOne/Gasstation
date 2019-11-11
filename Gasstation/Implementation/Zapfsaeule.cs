@@ -9,10 +9,6 @@ namespace Gasstation.Implementation
     class Zapfsaeule
     {
 
-        // Sieht nicht schlecht aus aber:
-        // Deutsch Englisch nicht mixen
-        // Gewisse List Suchen können deutlich vereinfacht werden (und sind damit wahrscheinlich auch besser für die Performance)
-
         public Zapfsaeule(List<FuelTank> fuelTanks)
         {
           
@@ -23,14 +19,16 @@ namespace Gasstation.Implementation
             }
         }
 
-        private List<FuelTank> fuelTanks = new List<FuelTank>();
         private List<Zapfhahn> zapfhaene = new List<Zapfhahn>();
 
         private Zapfhahn currentlySelectedZapfhahn;
 
 
-        private FuelTank selectedFuelTank;
-
+        /// <summary>
+        /// Select a Zapfhahn by getting the first Zapfhahn that has the FUeltype requested
+        /// </summary>
+        /// <param name="fuelType"></param>
+        //TODO: also check if the Zapfhahn inst used by another person
         public void SelectZapfhahn(FuelType fuelType) 
         {
             currentlySelectedZapfhahn = zapfhaene.Find(x => x.GetFuelTank().GetFuelType() == fuelType);
@@ -47,6 +45,8 @@ namespace Gasstation.Implementation
             }
         }
 
+       
+
         // unlocks all zapfhaehne for after purchasing fuel
         public void UnlockAllZapfhaehne() 
         {
@@ -54,14 +54,11 @@ namespace Gasstation.Implementation
          
         }
       
-        public void SelectFuelType(FuelType fuelType)
+
+        public void LockAllZapfhaehne()
         {
-
-            this.selectedFuelTank = fuelTanks.Find(x => x.GetFuelType() == fuelType);
-        
+            this.zapfhaene.ForEach(x => x.LockZapfhahn());
         }
-
-        // nested class Zapfhahn to access from within Zapfsaeule
      
     }
 }

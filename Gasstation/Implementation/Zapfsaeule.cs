@@ -9,17 +9,15 @@ namespace Gasstation.Implementation
     class Zapfsaeule
     {
 
-        public Zapfsaeule(List<FuelTank> fuelTanks)
+        public Zapfsaeule(List<Zapfhahn> zapfhaehne)
         {
+            this.zapfhaene = zapfhaehne;
           
-            foreach (FuelTank ft in fuelTanks) 
-            {
-                Zapfhahn zapfhahn = new Zapfhahn(ft);
-                this.zapfhaene.Add(zapfhahn);
-            }
         }
 
-        private List<Zapfhahn> zapfhaene = new List<Zapfhahn>();
+       
+
+        private List<Zapfhahn> zapfhaene;
 
         private Zapfhahn currentlySelectedZapfhahn;
 

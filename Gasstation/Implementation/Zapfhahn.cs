@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Gasstation.Implementation
 {
-    class Zapfhahn
+    public class Zapfhahn
     {
         // bool for seeing if zapfhahn can be accessed
         private bool isLocked = false;

@@ -6,29 +6,27 @@ using System.Threading.Tasks;
 
 namespace Gasstation.Implementation
 {
-    class Tankstelle
+    public static class Tankstelle
     {
         //List<Kasse>
 
-        List<Zapfsaeule> zapfsaeulen;
+        static List<Zapfsaeule> zapfsaeulen = new List<Zapfsaeule>();
 
-        Zapfsaeule selectedZapfsaeule;
+        static Zapfsaeule selectedZapfsaeule;
 
-        public Tankstelle()
-        {
-            this.zapfsaeulen = new List<Zapfsaeule>();
-        }
-
+     
 
         /// <summary>
         /// Takes a Number for the Zapfsaeule the Customer wants
         /// </summary>
         /// <param name="zapfsaeulenNummer"></param>
-        public void CustomerSelectZapfsauele(int zapfsaeulenNummer)
+        public static void CustomerSelectZapfsauele(int zapfsaeulenNummer)
         {
-            this.selectedZapfsaeule = this.zapfsaeulen[zapfsaeulenNummer];
+            selectedZapfsaeule = zapfsaeulen[zapfsaeulenNummer];
 
         }
+
+        
 
     }
 }

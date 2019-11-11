@@ -47,18 +47,19 @@ namespace Gasstation
             testFuelTypes.Add(testFuelType);
             testFuelTypes.Add(testFuelType2);
             testFuelTypes.Add(testFuelType3);
-          
 
 
 
 
-            FuelTank newCreatedFuelTank = new FuelTank(new FuelType("Benzin",125), 1000);
-            Button eventButton = (Button) e.Source;
-            StackPanel stackPanel = (StackPanel) eventButton.Parent;
+
+            FuelTank newCreatedFuelTank = new FuelTank(new FuelType("Benzin", 125), 1000);
+            Button eventButton = (Button)e.Source;
+            StackPanel stackPanel = (StackPanel)eventButton.Parent;
 
             Button newTankButton = new Button();
             newTankButton.Content = "Tank " + (counter++);
-            newTankButton.Click += (s, events) => {
+            newTankButton.Click += (s, events) =>
+            {
                 newCreatedFuelTank.AddFuelToTank(100);
                 Console.WriteLine(newCreatedFuelTank.GetFillPercentage());
                 newCreatedFuelTank.DrainFuelFromTank(50);
@@ -77,6 +78,18 @@ namespace Gasstation
             config.ReadConfig();
 
 
+
+            // test für Zapfsaeule
+            Zapfsaeule zapfS = new Zapfsaeule(fuelTanks);
+
+            // kann nicht getestet werden wegen fehler in Methode StartTanking
+            zapfS.StartTanking(120);
+            
+
+            zapfS.SelectZapfhahn(testFuelType);
+            zapfS.StartTanking(120);
+            zapfS.UnlockAllZapfhaehne();
+            zapfS.StartTanking(120);
         }
 
 

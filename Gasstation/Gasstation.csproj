@@ -56,6 +56,8 @@
       <SubType>Designer</SubType>
     </ApplicationDefinition>
     <Compile Include="Implementation\Config.cs" />
+    <Compile Include="Implementation\Tankstelle.cs" />
+    <Compile Include="Implementation\Zapfhahn.cs" />
     <Compile Include="Testfolder\TankstellenKonfiguration.cs" />
     <Page Include="MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>

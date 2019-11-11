@@ -1,6 +1,7 @@
 using System;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Gasstation;
+using Gasstation.Implementation;
 
 namespace Unit_Tests
 {
@@ -12,6 +13,12 @@ namespace Unit_Tests
         {
             int x = 5;
             Assert.AreEqual(5, 5);
+      
+        }
+
+        public void TestZapfhahnSelection()
+        {
+            Zapfsaeule zapfsaeule = new Zapfsaeule();
         }
     }
 }

@@ -18,7 +18,8 @@ namespace Unit_Tests
 
         public void TestZapfhahnSelection()
         {
-            Zapfsaeule zapfsaeule = new Zapfsaeule();
+            // deprecated 
+            // Zapfsaeule zapfsaeule = new Zapfsaeule();
         }
     }
 }

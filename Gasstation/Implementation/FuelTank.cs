@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 namespace Gasstation.Implementation
 {
     [Serializable]
-    class FuelTank
+    public class FuelTank
     {
         // constructor
         public FuelTank(FuelType fuelType, int fuelCapacity)

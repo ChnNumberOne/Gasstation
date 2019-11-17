@@ -8,21 +8,51 @@ namespace Gasstation.Implementation
 {
     public class Zapfhahn
     {
-        // bool for seeing if zapfhahn can be accessed
+        // Important Notes and TOOD:
+        // each Zapfhahn has an entire list of Tanks ( Because its easier)
+
+
+      
         private bool isLocked = false;
 
-        // fuel tank that gets accessed by this zapfhahn
-        private FuelTank fuelTank;
+        private List<FuelTank> fuelTanks;
+
+
+
 
         // saves amount of total drained fuel
         private int drainedFuelTotal = 0;
 
 
-        // constructor that uses an already created fueltank
-        public Zapfhahn(FuelTank fuelTank)
+
+        /// <summary>
+        /// Erstellt einen Zapfhahn für einen STRING fueltypeName
+        /// Sucht alle Tanks dieses fuelTypes heraus und bindet diese auf den zapfhahn
+        /// </summary>
+        /// <param name="fuelType"></param>
+
+        public Zapfhahn(string fuelTypeName)
         {
-            this.fuelTank = fuelTank;
+            this.fuelTanks = GasstationState.AvailableFuelTanks.FindAll(tank => tank.GetFuelType().GetFuelTypeName() == fuelTypeName);
         }
+
+
+        /// <summary>
+        /// Boolean Check if this is locked
+        /// </summary>
+        /// <returns></returns>
+        public bool IsLocked()
+        {
+            if (this.isLocked)
+            {
+                return true;
+            }
+            return false;
+        }
+
+
+
+
 
         /// <summary>
         /// Locks this Zapfhahn
@@ -41,27 +71,28 @@ namespace Gasstation.Implementation
         }
 
         // changes fueltank of Zapfhahn
-        public void ChangeFuelTank(FuelTank fuelTank)
-        {
-            this.fuelTank = fuelTank;
-        }
+        // TODO: need rework
+        //public void ChangeFuelTank(FuelTank fuelTank)
+        //{
+        //    this.fuelTank = fuelTank;
+        //}
 
-        /// <summary>
-        /// Bezieht den Benzinbetrag vom Tank
-        /// </summary>
-        /// <param name="fuel"></param>
-        /// <returns></returns>
-        public int RemoveFromFuelTank(int fuel)
-        {
-            return this.fuelTank.DrainFuelFromTank(fuel);
-        }
+        ///// <summary>
+        ///// Bezieht den Benzinbetrag vom Tank
+        ///// </summary>
+        ///// <param name="fuel"></param>
+        ///// <returns></returns>
+        //public int RemoveFromFuelTank(int fuel)
+        //{
+        //    return this.fuelTank.DrainFuelFromTank(fuel);
+        //}
 
      
 
-        // returns fueltank (For information in Configuration for GUI)
-        public FuelTank GetFuelTank()
-        {
-            return fuelTank;
-        }
+        //// returns fueltank (For information in Configuration for GUI)
+        //public FuelTank GetFuelTank()
+        //{
+        //    return fuelTank;
+        //}
     }
 }

@@ -55,9 +55,12 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="Implementation\Benzin.cs" />
+    <Compile Include="Implementation\Bleifrei.cs" />
     <Compile Include="Implementation\Config.cs" />
+    <Compile Include="Implementation\Diesel.cs" />
     <Compile Include="Implementation\GasstationState.cs" />
-    <Compile Include="Implementation\IZapfsauele.cs" />
+    <Compile Include="Interfaces\IFuelType.cs" />
     <Compile Include="Implementation\Tankstelle.cs" />
     <Compile Include="Implementation\Zapfhahn.cs" />
     <Compile Include="Testfolder\TankstellenKonfiguration.cs" />
@@ -70,7 +73,6 @@
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="Implementation\FuelTank.cs" />
-    <Compile Include="Implementation\FuelType.cs" />
     <Compile Include="Implementation\Zapfsaeule.cs" />
     <Compile Include="MainWindow.xaml.cs">
       <DependentUpon>MainWindow.xaml</DependentUpon>
@@ -104,5 +106,6 @@
   <ItemGroup>
     <None Include="App.config" />
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

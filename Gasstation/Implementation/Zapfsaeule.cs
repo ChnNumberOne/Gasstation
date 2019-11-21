@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Gasstation.Implementation
 {
-    public class Zapfsaeule : IZapfsauele
+    public class Zapfsaeule
     {
 
         public Zapfsaeule(List<Zapfhahn> zapfhaehne)

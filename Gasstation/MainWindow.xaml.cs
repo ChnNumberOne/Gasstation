@@ -169,7 +169,20 @@ namespace Gasstation
             //zapfS.UnlockAllZapfhaehne();
             //zapfS.StartTanking(120);
         }
+         private void AlterButton_Click(object sender, RoutedEventArgs e)
+        {
 
+        }
+
+        private void CheckStatsButton_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        private void CustomerViewButton_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
 
     }
 }

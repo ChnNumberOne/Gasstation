@@ -74,7 +74,7 @@ namespace Gasstation.Implementation
         /// <param name="amount"></param>
         /// <returns></returns>
     
-        public int DrainFuelFromTank(int amount)
+        public int DrainFuel(int amount)
         {
             if (this.currentFuelAmount - amount >= 0)
             {

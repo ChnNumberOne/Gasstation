@@ -64,7 +64,7 @@ namespace Gasstation
         {
 
             // erstelle alle Zapfhaehne
-            Zapfsaeule zs = Tankstelle.createZapfsaeule();
+            Zapfsaeule zs = Tankstelle.CreateZapfsaeule();
             GasstationState.AvailableZapfsaeulen.Add(zs);
             Console.WriteLine("#### AUSGABE GESPEICHERTER FUELTYPES ####");
             foreach (FuelTank ft in GasstationState.AvailableFuelTanks)

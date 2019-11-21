@@ -6,16 +6,16 @@ using System.Threading.Tasks;
 
 namespace Gasstation.Implementation
 {
-    public class Zapfhahn
+    public class Zapfhahn : IZapfhahn
     {
         // Important Notes and TOOD:
         // each Zapfhahn has an entire list of Tanks ( Because its easier)
 
 
-      
+
         private bool isLocked = false;
 
-        private List<FuelTank> fuelTanks;
+        private FuelTank fuelTank;
 
 
 
@@ -27,13 +27,13 @@ namespace Gasstation.Implementation
 
         /// <summary>
         /// Erstellt einen Zapfhahn für einen STRING fueltypeName
-        /// Sucht alle Tanks dieses fuelTypes heraus und bindet diese auf den zapfhahn
+        /// Sucht den Tank dieses fuelTypes heraus und bindet diese auf den zapfhahn
         /// </summary>
         /// <param name="fuelType"></param>
 
         public Zapfhahn(string fuelTypeName)
         {
-            this.fuelTanks = GasstationState.AvailableFuelTanks.FindAll(tank => tank.GetFuelType().GetFuelTypeName() == fuelTypeName);
+            this.fuelTank = GasstationState.AvailableFuelTanks.Find(tank => tank.GetFuelType().GetFuelTypeName() == fuelTypeName);
         }
 
 
@@ -70,29 +70,24 @@ namespace Gasstation.Implementation
             this.isLocked = false;
         }
 
-        // changes fueltank of Zapfhahn
-        // TODO: need rework
-        //public void ChangeFuelTank(FuelTank fuelTank)
-        //{
-        //    this.fuelTank = fuelTank;
-        //}
+        public int DrainFuelFromTank(int fuelToDrain)
+        {
+            return this.fuelTank.DrainFuel(fuelToDrain);
 
-        ///// <summary>
-        ///// Bezieht den Benzinbetrag vom Tank
-        ///// </summary>
-        ///// <param name="fuel"></param>
-        ///// <returns></returns>
-        //public int RemoveFromFuelTank(int fuel)
-        //{
-        //    return this.fuelTank.DrainFuelFromTank(fuel);
-        //}
 
-     
+        }
 
-        //// returns fueltank (For information in Configuration for GUI)
-        //public FuelTank GetFuelTank()
-        //{
-        //    return fuelTank;
-        //}
+
+    }
+
+    public interface IZapfhahn
+    {
+        FuelType GetFuleType();
+
+        bool IsLocked();
+
+        void Drain(int amount);
+
+        void Release();
     }
 }

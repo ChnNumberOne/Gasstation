@@ -22,18 +22,51 @@ namespace Gasstation
     /// </summary>
     public partial class MainWindow : Window
     {
+        public static Frame MainFrame;
+
         public MainWindow()
         {
 
             InitializeComponent();
-            ApplicationSetup();
-
+            //MainMenuControl.Content = new WelcomePage();
+            MainFrame = MainMenuControl;
+            //ApplicationSetup();
+            AppSetup();
 
 
 
         }
 
 
+        public void AppSetup() 
+        {
+            FuelType ft = new FuelType("Test", 10);
+            FuelTank[] ftArray = new FuelTank[]{
+            new FuelTank(ft, 1000),
+            new FuelTank(ft, 100),
+            new FuelTank(ft, 10)
+            };
+
+            for (int i = 1; i <= 5; i++)
+            {
+                List<Zapfhahn> zapfhahns = new List<Zapfhahn>();
+                
+                for (int j = 0; j < 3; j++)
+                {
+                    GasstationState.AvailableFuelTanks.Add(ftArray[j]);
+                    Zapfhahn zapfhahn = new Zapfhahn("Test");
+                    zapfhahns.Add(zapfhahn);
+                }
+                Zapfsaeule zapfsaeule = new Zapfsaeule(zapfhahns);
+                GasstationState.AvailableZapfsaeulen.Add(zapfsaeule);
+            }
+        }
+
+        public static void SetContent(object newPage)
+        {
+            MainFrame.Content = newPage;
+        }
+        /*
         public void ApplicationSetup()
         {
             // === Beispiel wie  eine Zapfsaeule erstellt wird. ===
@@ -183,6 +216,6 @@ namespace Gasstation
         {
 
         }
-
+        */
     }
 }

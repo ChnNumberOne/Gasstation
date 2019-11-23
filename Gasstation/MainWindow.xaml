@@ -6,20 +6,23 @@
         xmlns:local="clr-namespace:Gasstation"
         mc:Ignorable="d"
         Title="MainWindow" Height="450" Width="800">
-
+<!--
   <Window.Resources>
     <ResourceDictionary>
       <ResourceDictionary.MergedDictionaries>
         <ResourceDictionary Source="Styles/Styles.xaml"></ResourceDictionary>
       </ResourceDictionary.MergedDictionaries>
     </ResourceDictionary>
-  </Window.Resources>
+  </Window.Resources>-->
   
     <Grid>
         <!--<StackPanel Name="TankDisplay" HorizontalAlignment="Left" Height="399" Margin="10,10,0,0" VerticalAlignment="Top" Width="122">
             <Button Click="Button_Click">Create New Tank</Button>
        
         </StackPanel>-->
+              <Frame NavigationUIVisibility="Hidden" Name="MainMenuControl" Margin="5"></Frame>
+
+        <!--
       <Grid.ColumnDefinitions>
         <ColumnDefinition Width="*"></ColumnDefinition>
         <ColumnDefinition Width="*"></ColumnDefinition>
@@ -53,6 +56,6 @@
           Edit as owner
         </Button>
         <TextBlock>Change or add items</TextBlock>
-      </StackPanel>
+      </StackPanel>-->
     </Grid>
 </Window>

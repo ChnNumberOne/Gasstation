@@ -21,6 +21,10 @@ namespace Gasstation.Implementation
 
         private Zapfhahn currentlySelectedZapfhahn;
 
+        public List<Zapfhahn> GetZapfhaene() 
+        {
+            return zapfhaehne;
+        }
 
         public Zapfhahn GetZapfhahnOfFuelType(FuelType requestedFuelType)
         {

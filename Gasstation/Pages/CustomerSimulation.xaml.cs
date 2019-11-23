@@ -25,6 +25,15 @@ namespace Gasstation.Pages
         public CustomerSimulation()
         {
             InitializeComponent();
+            RefreshPage();
+            
+        }
+
+        private void RefreshPage()
+        {
+            ZapfsaeulenPanel.Children.Clear();
+            ZapfhahnPanel.Children.Clear();
+
             int i = 0;
             foreach (Zapfsaeule zapfsaeule in GasstationState.AvailableZapfsaeulen)
             {
@@ -36,17 +45,22 @@ namespace Gasstation.Pages
                 };
                 button.Click += (s, e) => 
                 {
+                    ZapfhahnPanel.Children.Clear();
                     Zapfsaeule zapfsaeule1 = zapfsaeule;
                     Button b = (Button)s;
-                    //ZapfhahnPanel.Children.Remove();
+                    foreach (Zapfhahn zapfhahn in zapfsaeule1.GetZapfhaene())
+                    {
+                        Button zpfButton = new Button()
+                        {
+                            Content = zapfhahn.GetFuelTypeName(),
+                            MinWidth = 50,
+                            Margin = new Thickness(1)
+                        };
+                        ZapfhahnPanel.Children.Add(zpfButton);
+                    }
                 };
                 ZapfsaeulenPanel.Children.Add(button);
             }
-        }
-
-        private void AddZapfhahnButton()
-        {
-
         }
 
         private void ZapfsaeuleButton_Click(object sender, RoutedEventArgs e)

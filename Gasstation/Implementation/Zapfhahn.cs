@@ -17,7 +17,7 @@ namespace Gasstation.Implementation
 
         private List<FuelTank> fuelTanks;
 
-
+        private string fuelTypeName;
 
 
         // saves amount of total drained fuel
@@ -34,8 +34,13 @@ namespace Gasstation.Implementation
         public Zapfhahn(string fuelTypeName)
         {
             this.fuelTanks = GasstationState.AvailableFuelTanks.FindAll(tank => tank.GetFuelType().GetFuelTypeName() == fuelTypeName);
+            this.fuelTypeName = fuelTypeName;
         }
 
+        public string GetFuelTypeName() 
+        {
+            return fuelTypeName;
+        }
 
         /// <summary>
         /// Boolean Check if this is locked

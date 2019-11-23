@@ -22,3 +22,27 @@ C:\Users\zoronjicb\Desktop\Others\Visual Studio Projects\2019 WPF OOP Repetition
 C:\Users\zoronjicb\Desktop\Others\Visual Studio Projects\2019 WPF OOP Repetition\WPF OOP Testing\WPF OOP Testing\obj\Debug\Views\TankView.baml
 C:\Users\zoronjicb\Desktop\Others\Visual Studio Projects\2019 WPF OOP Repetition\WPF OOP Testing\WPF OOP Testing\obj\Debug\Views\ZapfseulenView.baml
 C:\Users\zoronjicb\Desktop\Others\Visual Studio Projects\2019 WPF OOP Repetition\WPF OOP Testing\WPF OOP Testing\obj\Debug\WPF OOP Testing.csprojAssemblyReference.cache
+C:\Users\Beni\Source\Repos\Gasstation\old code\WPF OOP Testing\WPF OOP Testing\bin\Debug\WPF OOP Testing.exe.config
+C:\Users\Beni\Source\Repos\Gasstation\old code\WPF OOP Testing\WPF OOP Testing\bin\Debug\WPF OOP Testing.exe
+C:\Users\Beni\Source\Repos\Gasstation\old code\WPF OOP Testing\WPF OOP Testing\bin\Debug\WPF OOP Testing.pdb
+C:\Users\Beni\Source\Repos\Gasstation\old code\WPF OOP Testing\WPF OOP Testing\obj\Debug\WPF OOP Testing.csprojAssemblyReference.cache
+C:\Users\Beni\Source\Repos\Gasstation\old code\WPF OOP Testing\WPF OOP Testing\obj\Debug\Fenster\AlterItemsPage.g.cs
+C:\Users\Beni\Source\Repos\Gasstation\old code\WPF OOP Testing\WPF OOP Testing\obj\Debug\Fenster\LogInPage.g.cs
+C:\Users\Beni\Source\Repos\Gasstation\old code\WPF OOP Testing\WPF OOP Testing\obj\Debug\MainWindow.g.cs
+C:\Users\Beni\Source\Repos\Gasstation\old code\WPF OOP Testing\WPF OOP Testing\obj\Debug\Views\TankView.g.cs
+C:\Users\Beni\Source\Repos\Gasstation\old code\WPF OOP Testing\WPF OOP Testing\obj\Debug\Views\ZapfseulenView.g.cs
+C:\Users\Beni\Source\Repos\Gasstation\old code\WPF OOP Testing\WPF OOP Testing\obj\Debug\App.g.cs
+C:\Users\Beni\Source\Repos\Gasstation\old code\WPF OOP Testing\WPF OOP Testing\obj\Debug\GeneratedInternalTypeHelper.g.cs
+C:\Users\Beni\Source\Repos\Gasstation\old code\WPF OOP Testing\WPF OOP Testing\obj\Debug\WPF OOP Testing_MarkupCompile.cache
+C:\Users\Beni\Source\Repos\Gasstation\old code\WPF OOP Testing\WPF OOP Testing\obj\Debug\WPF OOP Testing_MarkupCompile.lref
+C:\Users\Beni\Source\Repos\Gasstation\old code\WPF OOP Testing\WPF OOP Testing\obj\Debug\Fenster\AlterItemsPage.baml
+C:\Users\Beni\Source\Repos\Gasstation\old code\WPF OOP Testing\WPF OOP Testing\obj\Debug\Fenster\LogInPage.baml
+C:\Users\Beni\Source\Repos\Gasstation\old code\WPF OOP Testing\WPF OOP Testing\obj\Debug\MainWindow.baml
+C:\Users\Beni\Source\Repos\Gasstation\old code\WPF OOP Testing\WPF OOP Testing\obj\Debug\Styles\Styles.baml
+C:\Users\Beni\Source\Repos\Gasstation\old code\WPF OOP Testing\WPF OOP Testing\obj\Debug\Views\TankView.baml
+C:\Users\Beni\Source\Repos\Gasstation\old code\WPF OOP Testing\WPF OOP Testing\obj\Debug\Views\ZapfseulenView.baml
+C:\Users\Beni\Source\Repos\Gasstation\old code\WPF OOP Testing\WPF OOP Testing\obj\Debug\WPF OOP Testing.g.resources
+C:\Users\Beni\Source\Repos\Gasstation\old code\WPF OOP Testing\WPF OOP Testing\obj\Debug\WPF_OOP_Testing.Properties.Resources.resources
+C:\Users\Beni\Source\Repos\Gasstation\old code\WPF OOP Testing\WPF OOP Testing\obj\Debug\WPF OOP Testing.csproj.GenerateResource.cache
+C:\Users\Beni\Source\Repos\Gasstation\old code\WPF OOP Testing\WPF OOP Testing\obj\Debug\WPF OOP Testing.exe
+C:\Users\Beni\Source\Repos\Gasstation\old code\WPF OOP Testing\WPF OOP Testing\obj\Debug\WPF OOP Testing.pdb

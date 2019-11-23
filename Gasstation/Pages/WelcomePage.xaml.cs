@@ -13,7 +13,7 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 
-namespace WPF_OOP_Improvements.Pages
+namespace Gasstation.Pages
 {
     /// <summary>
     /// Interaktionslogik für WelcomePage.xaml

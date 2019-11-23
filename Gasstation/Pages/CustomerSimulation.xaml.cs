@@ -12,9 +12,9 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
-using WPF_OOP_Improvements.Classes;
+using Gasstation.Implementation;
 
-namespace WPF_OOP_Improvements.Pages
+namespace Gasstation.Pages
 {
     /// <summary>
     /// Interaktionslogik für CustomerSimulation.xaml

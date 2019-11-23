@@ -64,10 +64,47 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
+    <!--Add XAML files as seen bellow-->
     <Page Include="Styles\MainStyle.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
+    
+    <Page Include="Pages\CustomerSimulation.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Compile Include="Pages\CustomerSimulation.xaml.cs">
+      <DependentUpon>Pages\CustomerSimulation.xaml</DependentUpon>
+      <SubType>Code</SubType>
+    </Compile>
+
+    <Page Include="Pages\DisplayWelcome.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Compile Include="Pages\DisplayWelcome.xaml.cs">
+      <DependentUpon>Pages\DisplayWelcome.xaml</DependentUpon>
+      <SubType>Code</SubType>
+    </Compile>
+
+    <Page Include="Pages\WelcomePage.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Compile Include="Pages\WelcomePage.xaml.cs">
+      <DependentUpon>Pages\WelcomePage.xaml</DependentUpon>
+      <SubType>Code</SubType>
+    </Compile>
+    <!--Ending of special XAML files-->
+    <!--Images and other ressources-->
+    <!--<ItemGroup>
+      <Resource Include="Icons\20999.png" />
+      <Resource Include="Icons\Fuel.png" />
+      <Resource Include="Icons\Key_lock.png" />
+      <Resource Include="Icons\Tankstelle.png" />
+    </ItemGroup>-->
+    <!--Ending of images and other ressources-->
     <Compile Include="App.xaml.cs">
       <DependentUpon>App.xaml</DependentUpon>
       <SubType>Code</SubType>

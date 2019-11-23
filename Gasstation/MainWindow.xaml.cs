@@ -14,6 +14,7 @@ using System.Windows.Navigation;
 using System.Windows.Shapes;
 using Gasstation.Implementation;
 using Gasstation.Testfolder;
+using Gasstation.Pages;
 
 namespace Gasstation
 {
@@ -28,7 +29,7 @@ namespace Gasstation
         {
 
             InitializeComponent();
-            //MainMenuControl.Content = new WelcomePage();
+            MainMenuControl.Content = new WelcomePage();
             MainFrame = MainMenuControl;
             //ApplicationSetup();
             AppSetup();

@@ -26,13 +26,12 @@ namespace Gasstation.Pages
         {
             InitializeComponent();
             int i = 0;
-            foreach (Zapfsaeule zapfsaeule in StaticConfig.Zapfsaeulen)
+            foreach (Zapfsaeule zapfsaeule in GasstationState.AvailableZapfsaeulen)
             {
                 i++;
                 Button button = new Button()
                 {
-                    Content = zapfsaeule.Name,
-                    Name = zapfsaeule.Name.Replace(" ", "") + i,
+                    Content = i.ToString(),
                     Margin = new Thickness(0, 1, 0, 1)
                 };
                 button.Click += (s, e) => 

@@ -12,60 +12,60 @@ namespace Gasstation.Implementation
         public Zapfsaeule(List<Zapfhahn> zapfhaehne)
         {
             this.zapfhaehne = zapfhaehne;
-          
+
         }
 
-       
+        private FuelType selectedFuelType;
+
+        private int drainedAmountOfFuel;
 
         private List<Zapfhahn> zapfhaehne;
 
-        private Zapfhahn currentlySelectedZapfhahn;
 
         public List<Zapfhahn> GetZapfhaene() 
         {
             return zapfhaehne;
         }
 
-        public Zapfhahn GetZapfhahnOfFuelType(FuelType requestedFuelType)
+        public Zapfhahn SelectZapfhahnOfFuelType(FuelType requestedFuelType)
         {
-            return this.zapfhaehne.Find(x => x.Equals(requestedFuelType));
-        }
 
-        public void GetFuelFromSelectedZapfhahn()
-        {
-            // if it isnt locked
-            if (!currentlySelectedZapfhahn.IsLocked())
+            Zapfhahn selectedZapfhahn = this.zapfhaehne.Single(x => x.Equals(requestedFuelType));
+            if (selectedZapfhahn != null)
             {
-                // get fuel from tank
-            } else
-            {
-                // error message tank is locked
-                Console.WriteLine("Warning: Zapfhahn is currently locked");
+                this.LockAllZapfhaehne();
+                selectedZapfhahn.UnlockZapfhahn();
             }
+            return selectedZapfhahn;
         }
-
-
-
-
-       
 
 
 
 
 
         // unlocks all zapfhaehne for after purchasing fuel
-        public void UnlockAllZapfhaehne() 
+        public void UnlockAllZapfhaehne()
         {
             this.zapfhaehne.ForEach(x => x.UnlockZapfhahn());
-         
+
         }
-      
+
 
         public void LockAllZapfhaehne()
         {
             this.zapfhaehne.ForEach(x => x.LockZapfhahn());
         }
 
+
+        public void RequestFuelFromZapfhahn(int fuelAmount, FuelType requestedFuelType)
+        {
+            // Zapfhahn auswählen und Treibstoff beziehen. bezogene Menge an Zapfsaeule geben
+            Zapfhahn selectedZapfhahn = SelectZapfhahnOfFuelType(requestedFuelType);
+      
+            this.drainedAmountOfFuel = selectedZapfhahn.DrainFuelFromTank(fuelAmount);
+            
+
+        }
 
 
 

@@ -6,24 +6,16 @@ using System.Threading.Tasks;
 
 namespace Gasstation.Implementation
 {
-    public class Benzin : IFuelType
+    public class Benzin : FuelType
     {
 
-        private int costPerLiterInCent;
-
-        public int GetCostPerLiterInCent()
+        public Benzin()
+          
         {
-            return this.costPerLiterInCent;
+            this.name = "Benzin";
+            this.costPerLiterInCent = 0;
         }
 
-        public string GetFuelTypeName()
-        {
-            return "Benzin";
-        }
-
-        public void SetCostPerLiterInCent(int newCostPerLiterInCent)
-        {
-            this.costPerLiterInCent = newCostPerLiterInCent;
-        }
+       
     }
 }

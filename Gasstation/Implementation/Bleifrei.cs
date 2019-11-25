@@ -6,24 +6,14 @@ using System.Threading.Tasks;
 
 namespace Gasstation.Implementation
 {
-    public class Bleifrei : IFuelType
+    public class Bleifrei : FuelType
     {
 
-        private int costPerLiterInCent;
-
-        public int GetCostPerLiterInCent()
+        public Bleifrei()
         {
-            return this.costPerLiterInCent;
+            this.costPerLiterInCent = 0;
+            this.name = "Bleifrei";
         }
-
-        public string GetFuelTypeName()
-        {
-            return "Bleifrei";
-        }
-
-        public void SetCostPerLiterInCent(int newCostPerLiterInCent)
-        {
-            this.costPerLiterInCent = newCostPerLiterInCent;
-    }
+   
     }
 }

@@ -8,6 +8,7 @@ namespace Gasstation.Implementation
 {
     public static class GasstationState
     {
+       
 
         public static List<FuelType> AvailableFuelTypes = new List<FuelType>();
 

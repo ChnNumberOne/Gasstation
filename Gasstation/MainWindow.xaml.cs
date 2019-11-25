@@ -33,19 +33,22 @@ namespace Gasstation
             MainFrame = MainMenuControl;
             //ApplicationSetup();
             AppSetup();
-
+            List<Zapfhahn> zpfh = new List<Zapfhahn>();
+            zpfh.Add(new Zapfhahn("Diesel"));
+            Zapfsaeule zpf = new Zapfsaeule(zpfh);
+            GasstationState.AvailableZapfsaeulen.Add(zpf);
 
 
         }
 
 
         public void AppSetup() 
-        {
-            FuelType ft = new FuelType("Test", 10);
+        {   
+           
             FuelTank[] ftArray = new FuelTank[]{
-            new FuelTank(ft, 1000),
-            new FuelTank(ft, 100),
-            new FuelTank(ft, 10)
+            new FuelTank(new Benzin(), 1000),
+            new FuelTank(new Diesel(), 100),
+            new FuelTank(new Bleifrei(), 10)
             };
 
             for (int i = 1; i <= 5; i++)

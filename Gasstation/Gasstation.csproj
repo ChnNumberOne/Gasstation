@@ -59,6 +59,7 @@
     <Compile Include="Implementation\Bleifrei.cs" />
     <Compile Include="Implementation\Config.cs" />
     <Compile Include="Implementation\Diesel.cs" />
+    <Compile Include="Implementation\FuelType.cs" />
     <Compile Include="Implementation\GasstationState.cs" />
     <Compile Include="Interfaces\IFuelType.cs" />
     <Compile Include="Implementation\Tankstelle.cs" />
@@ -73,7 +74,6 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-    
     <Page Include="Pages\CustomerSimulation.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
@@ -82,7 +82,6 @@
       <DependentUpon>Pages\CustomerSimulation.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
-
     <Page Include="Pages\DisplayWelcome.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
@@ -91,7 +90,6 @@
       <DependentUpon>Pages\DisplayWelcome.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
-
     <Page Include="Pages\WelcomePage.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>

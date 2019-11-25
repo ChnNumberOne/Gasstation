@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Gasstation.Implementation
 {
-    public class Zapfhahn : IZapfhahn
+    public class Zapfhahn
     {
         // Important Notes and TOOD:
         // each Zapfhahn has an entire list of Tanks ( Because its easier)
@@ -38,7 +38,7 @@ namespace Gasstation.Implementation
 
         public string GetFuelTypeName() 
         {
-            return fuelTypeName;
+            return this.fuelTypeName;
         }
 
         /// <summary>

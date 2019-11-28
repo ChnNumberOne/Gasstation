@@ -33,37 +33,43 @@ namespace Gasstation
             MainFrame = MainMenuControl;
             //ApplicationSetup();
             AppSetup();
-            List<Zapfhahn> zpfh = new List<Zapfhahn>();
-            zpfh.Add(new Zapfhahn("Diesel"));
-            Zapfsaeule zpf = new Zapfsaeule(zpfh);
-            GasstationState.AvailableZapfsaeulen.Add(zpf);
+            
 
 
         }
 
 
         public void AppSetup() 
-        {   
-           
-            FuelTank[] ftArray = new FuelTank[]{
-            new FuelTank(new Benzin(), 1000),
-            new FuelTank(new Diesel(), 100),
-            new FuelTank(new Bleifrei(), 10)
+        {
+            // Erstellen der FuelTypes und zuweisen auf State
+            GasstationState.AvailableFuelTypes = new List<FuelType>
+            {
+                new Benzin(),
+                new Diesel(),
+                new Bleifrei(),
+
             };
 
-            for (int i = 1; i <= 5; i++)
+            // für jeden FuelType ein Tank erstellen und zuweisen auf State
+            GasstationState.AvailableFuelTanks = new List<FuelTank>();
+            foreach(FuelType fuelType in GasstationState.AvailableFuelTypes)
             {
-                List<Zapfhahn> zapfhahns = new List<Zapfhahn>();
-                
-                for (int j = 0; j < 3; j++)
+                GasstationState.AvailableFuelTanks.Add(new FuelTank(fuelType, 1000));
+            }
+
+            // 5 Zapfsaeulen generieren
+            for(int i = 0; i < 5; i++)
+            {
+                List<Zapfhahn> zapfhaehneFuerSaeule = new List<Zapfhahn>();
+                foreach (FuelType fuelType in GasstationState.AvailableFuelTypes)
                 {
-                    GasstationState.AvailableFuelTanks.Add(ftArray[j]);
-                    Zapfhahn zapfhahn = new Zapfhahn("Test");
-                    zapfhahns.Add(zapfhahn);
+                    zapfhaehneFuerSaeule.Add(new Zapfhahn(fuelType));
                 }
-                Zapfsaeule zapfsaeule = new Zapfsaeule(zapfhahns);
+
+                Zapfsaeule zapfsaeule = new Zapfsaeule(zapfhaehneFuerSaeule);
                 GasstationState.AvailableZapfsaeulen.Add(zapfsaeule);
             }
+           
         }
 
         public static void SetContent(object newPage)

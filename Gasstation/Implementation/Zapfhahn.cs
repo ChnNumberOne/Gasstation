@@ -17,7 +17,6 @@ namespace Gasstation.Implementation
 
         private FuelTank fuelTank;
 
-        private string fuelTypeName;
 
 
         // saves amount of total drained fuel
@@ -31,15 +30,19 @@ namespace Gasstation.Implementation
         /// </summary>
         /// <param name="fuelType"></param>
 
-        public Zapfhahn(string fuelTypeName)
+        public Zapfhahn(FuelType fuelType)
         {
-            this.fuelTank = GasstationState.AvailableFuelTanks.Find(tank => tank.GetFuelType().GetFuelTypeName() == fuelTypeName);
+            this.fuelTank = GasstationState.AvailableFuelTanks.Find(tank => tank.GetFuelType().GetFuelTypeName() == fuelType.GetFuelTypeName());
         }
 
-        public string GetFuelTypeName() 
+
+        public FuelTank GetFuelTank()
         {
-            return this.fuelTypeName;
+            return this.fuelTank;
         }
+
+
+
 
         /// <summary>
         /// Boolean Check if this is locked
@@ -84,14 +87,5 @@ namespace Gasstation.Implementation
 
     }
 
-    public interface IZapfhahn
-    {
-        FuelType GetFuleType();
-
-        bool IsLocked();
-
-        void Drain(int amount);
-
-        void Release();
-    }
+   
 }

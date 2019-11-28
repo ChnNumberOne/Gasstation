@@ -40,17 +40,18 @@ namespace Gasstation.Implementation
         /// <returns></returns>
         public static Zapfsaeule CreateZapfsaeule()
         {
-            List<Zapfhahn> zapfhaehneForZapfseaule = new List<Zapfhahn>();
-            foreach (FuelType ft in GasstationState.AvailableFuelTypes)
-            {
-                Zapfhahn zapfhahn = new Zapfhahn(ft.GetFuelTypeName());
-                zapfhaehneForZapfseaule.Add(zapfhahn);
-            }
+            //List<Zapfhahn> zapfhaehneForZapfseaule = new List<Zapfhahn>();
+            //foreach (FuelType ft in GasstationState.AvailableFuelTypes)
+            //{
+            //    Zapfhahn zapfhahn = new Zapfhahn(ft.GetFuelTypeName());
+            //    zapfhaehneForZapfseaule.Add(zapfhahn);
+            //}
 
 
-            Zapfsaeule newCreatedZapfaseule = new Zapfsaeule(zapfhaehneForZapfseaule);
-            GasstationState.AvailableZapfsaeulen.Add(newCreatedZapfaseule);
-            return newCreatedZapfaseule;
+            //Zapfsaeule newCreatedZapfaseule = new Zapfsaeule(zapfhaehneForZapfseaule);
+            //GasstationState.AvailableZapfsaeulen.Add(newCreatedZapfaseule);
+            //return newCreatedZapfaseule;
+            return null;
 
         }
 

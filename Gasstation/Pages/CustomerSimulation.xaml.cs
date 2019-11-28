@@ -46,13 +46,12 @@ namespace Gasstation.Pages
                 button.Click += (s, e) => 
                 {
                     ZapfhahnPanel.Children.Clear();
-                    Zapfsaeule zapfsaeule1 = zapfsaeule;
                     Button b = (Button)s;
-                    foreach (Zapfhahn zapfhahn in zapfsaeule1.GetZapfhaene())
+                    foreach (Zapfhahn zapfhahn in zapfsaeule.GetZapfhaene())
                     {
                         Button zpfButton = new Button()
                         {
-                            Content = zapfhahn.GetFuelTypeName(),
+                            Content = zapfhahn.GetFuelTank().GetFuelType().GetFuelTypeName(),
                             MinWidth = 50,
                             Margin = new Thickness(1)
                         };

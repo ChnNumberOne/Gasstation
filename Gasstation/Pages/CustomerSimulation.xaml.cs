@@ -31,40 +31,59 @@ namespace Gasstation.Pages
 
         private void RefreshPage()
         {
+
+
             ZapfsaeulenPanel.Children.Clear();
             ZapfhahnPanel.Children.Clear();
 
+            
             int i = 0;
             foreach (Zapfsaeule zapfsaeule in GasstationState.AvailableZapfsaeulen)
             {
                 i++;
-                Button button = new Button()
+                Button zapfsaeuleButton = new Button()
                 {
                     Content = i.ToString(),
                     Margin = new Thickness(0, 1, 0, 1)
                 };
-                button.Click += (s, e) => 
+                zapfsaeuleButton.Click += (s, e) => 
                 {
                     ZapfhahnPanel.Children.Clear();
-                    Button b = (Button)s;
+              
+                    
                     foreach (Zapfhahn zapfhahn in zapfsaeule.GetZapfhaene())
                     {
-                        Button zpfButton = new Button()
+
+                        // Auswahl Treibstoff
+                        Button zapfhahnButton = new Button()
                         {
                             Content = zapfhahn.GetFuelTank().GetFuelType().GetFuelTypeName(),
                             MinWidth = 50,
                             Margin = new Thickness(1)
                         };
-                        ZapfhahnPanel.Children.Add(zpfButton);
+                        zapfhahnButton.Click += (sZapfhahn, eZapfhahn) =>
+                        {
+                            zapfsaeule.Selectzapfhahn(zapfhahn);
+                           
+                           
+                        };
+                        ZapfhahnPanel.Children.Add(zapfhahnButton);
+
+                        // Treibstoff Beziehen
+
+
+
+                        // Treibstoff Bezug senden
+
                     }
                 };
-                ZapfsaeulenPanel.Children.Add(button);
+                ZapfsaeulenPanel.Children.Add(zapfsaeuleButton);
             }
         }
 
         private void ZapfsaeuleButton_Click(object sender, RoutedEventArgs e)
         {
-            Button b = (Button)sender;
+         
         }
 
             private void BackToMenu_Click(object sender, RoutedEventArgs e)
@@ -74,7 +93,7 @@ namespace Gasstation.Pages
 
         private void FuelToTakeOut_TextChanged(object sender, TextChangedEventArgs e)
         {
-
+            // Textfeld zum Ausgabe zu machen.
         }
     }
 }

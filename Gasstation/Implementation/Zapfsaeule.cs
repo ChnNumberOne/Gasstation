@@ -21,22 +21,24 @@ namespace Gasstation.Implementation
 
         private List<Zapfhahn> zapfhaehne;
 
+        private Zapfhahn selectedZapfhahn;
+
 
         public List<Zapfhahn> GetZapfhaene() 
         {
             return zapfhaehne;
         }
 
-        public Zapfhahn SelectZapfhahnOfFuelType(FuelType requestedFuelType)
+        public void Selectzapfhahn(Zapfhahn requestedZapfhahn)
         {
 
-            Zapfhahn selectedZapfhahn = this.zapfhaehne.Single(x => x.Equals(requestedFuelType));
-            if (selectedZapfhahn != null)
-            {
-                this.LockAllZapfhaehne();
-                selectedZapfhahn.UnlockZapfhahn();
-            }
-            return selectedZapfhahn;
+            //Zapfhahn selectedZapfhahn = this.zapfhaehne.Single(x => x.Equals(requestedFuelType));
+            //if (selectedZapfhahn != null)
+            //{
+            //    this.LockAllZapfhaehne();
+            //    selectedZapfhahn.UnlockZapfhahn();
+            //}
+            this.selectedZapfhahn = requestedZapfhahn;
         }
 
 
@@ -60,9 +62,9 @@ namespace Gasstation.Implementation
         public void RequestFuelFromZapfhahn(int fuelAmount, FuelType requestedFuelType)
         {
             // Zapfhahn auswählen und Treibstoff beziehen. bezogene Menge an Zapfsaeule geben
-            Zapfhahn selectedZapfhahn = SelectZapfhahnOfFuelType(requestedFuelType);
+            //Zapfhahn selectedZapfhahn = SelectZapfhahnOfFuelType(requestedFuelType);
       
-            this.drainedAmountOfFuel = selectedZapfhahn.DrainFuelFromTank(fuelAmount);
+            //this.drainedAmountOfFuel = selectedZapfhahn.DrainFuelFromTank(fuelAmount);
             
 
         }

@@ -35,6 +35,7 @@ namespace Gasstation.Implementation
             this.fuelTank = GasstationState.AvailableFuelTanks.Find(tank => tank.GetFuelType().GetFuelTypeName() == fuelType.GetFuelTypeName());
         }
 
+       
 
         public FuelTank GetFuelTank()
         {

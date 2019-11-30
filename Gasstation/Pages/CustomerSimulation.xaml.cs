@@ -109,7 +109,7 @@ namespace Gasstation.Pages
             }
             else 
             {
-                ErrorBlock.Text = "Input is not a number!";
+                ErrorBlock.Text = "Input is invalid!";
                 CostBox.Text = "";
             }
         }

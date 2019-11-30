@@ -94,6 +94,24 @@ namespace Gasstation.Pages
         private void FuelToTakeOut_TextChanged(object sender, TextChangedEventArgs e)
         {
             // Textfeld zum Ausgabe zu machen.
+            int intFuel;
+            if (int.TryParse(FuelToTakeOut.Text, out intFuel)) 
+            {
+                ErrorBlock.Text = "";
+
+                // Just a simple test for calculating the cost per liter
+                CostBox.Text = (intFuel * 10).ToString() + ".-";
+            }
+            else if (string.IsNullOrEmpty(FuelToTakeOut.Text)) 
+            {
+                ErrorBlock.Text = "";
+                CostBox.Text = "";
+            }
+            else 
+            {
+                ErrorBlock.Text = "Input is not a number!";
+                CostBox.Text = "";
+            }
         }
     }
 }

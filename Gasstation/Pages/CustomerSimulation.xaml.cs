@@ -22,11 +22,30 @@ namespace Gasstation.Pages
     public partial class CustomerSimulation : Page
     {
 
+
+
+        // Bugtracker
+
+        // if the Fueltype is selected and a number is put in. Changing the fueltype will not update the price calculated.
+        // diverse null pointers
+
+
         public CustomerSimulation()
         {
             InitializeComponent();
             RefreshPage();
             
+        }
+
+        private Zapfhahn selectedZapfhahn;
+
+        private int userLiterAmount;
+
+        private void DisplayTotalFuelValue()
+        {
+            if(selectedZapfhahn != null) { 
+                CostBox.Text = this.userLiterAmount * (float)selectedZapfhahn.GetFuelTank().GetFuelType().GetCostPerLiterInCent() / 100 + ".-";
+            }
         }
 
         private void RefreshPage()
@@ -57,19 +76,29 @@ namespace Gasstation.Pages
                         // Auswahl Treibstoff
                         Button zapfhahnButton = new Button()
                         {
+                            // TODO: bad Practice ( Better idea?)
                             Content = zapfhahn.GetFuelTank().GetFuelType().GetFuelTypeName(),
                             MinWidth = 50,
                             Margin = new Thickness(1)
                         };
                         zapfhahnButton.Click += (sZapfhahn, eZapfhahn) =>
                         {
+                            
                             zapfsaeule.Selectzapfhahn(zapfhahn);
+
+                            // TODO: bad Practie look at this with f
+                            this.selectedZapfhahn = zapfhahn;
+                         
+                            SelectedFuelLabel.Content = zapfhahn.GetFuelTank().GetFuelType().GetFuelTypeName();
+                            CostPerLiterTextBlock.Text = ((float)zapfhahn.GetFuelTank().GetFuelType().GetCostPerLiterInCent()/ 100).ToString();
+                            DisplayTotalFuelValue();
                            
                            
                         };
                         ZapfhahnPanel.Children.Add(zapfhahnButton);
 
                         // Treibstoff Beziehen
+                            
 
 
 
@@ -94,13 +123,13 @@ namespace Gasstation.Pages
         private void FuelToTakeOut_TextChanged(object sender, TextChangedEventArgs e)
         {
             // Textfeld zum Ausgabe zu machen.
-            int intFuel;
-            if (int.TryParse(FuelToTakeOut.Text, out intFuel)) 
+
+            if (int.TryParse(FuelToTakeOut.Text, out this.userLiterAmount)) 
             {
                 ErrorBlock.Text = "";
 
                 // Just a simple test for calculating the cost per liter
-                CostBox.Text = (intFuel * 10).ToString() + ".-";
+                DisplayTotalFuelValue();
             }
             else if (string.IsNullOrEmpty(FuelToTakeOut.Text)) 
             {
@@ -111,6 +140,14 @@ namespace Gasstation.Pages
             {
                 ErrorBlock.Text = "Input is invalid!";
                 CostBox.Text = "";
+            }
+        }
+
+        private void TakeFuel_Click(object sender, RoutedEventArgs e)
+        {
+            if(this.selectedZapfhahn != null) { 
+            this.selectedZapfhahn.DrainFuelFromTank(this.userLiterAmount);
+            Console.WriteLine(this.selectedZapfhahn.GetFuelTank().GetFillPercentage());
             }
         }
     }

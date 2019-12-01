@@ -13,7 +13,7 @@ namespace Gasstation.Implementation
           
         {
             this.name = "Benzin";
-            this.costPerLiterInCent = 0;
+            this.costPerLiterInCent = 120;
         }
 
        

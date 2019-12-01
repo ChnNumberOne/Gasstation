@@ -81,8 +81,9 @@ namespace Gasstation.Implementation
                 this.currentFuelAmount -= amount;
                 return amount;
             }
+           int drainableAmount = this.currentFuelAmount;
 
-            int drainableAmount = amount - this.currentFuelAmount;
+           
             this.currentFuelAmount -= drainableAmount;
             return drainableAmount;
 

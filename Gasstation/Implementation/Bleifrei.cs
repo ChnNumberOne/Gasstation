@@ -11,7 +11,7 @@ namespace Gasstation.Implementation
 
         public Bleifrei()
         {
-            this.costPerLiterInCent = 0;
+            this.costPerLiterInCent = 105;
             this.name = "Bleifrei";
         }
    

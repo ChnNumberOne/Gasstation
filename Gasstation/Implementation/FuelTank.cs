@@ -14,7 +14,7 @@ namespace Gasstation.Implementation
         {
             this.fuelType = fuelType;
             this.fuelCapacity = fuelCapacity;
-            this.currentFuelAmount = 0;
+            this.currentFuelAmount = 1000;
         }
 
         // fields

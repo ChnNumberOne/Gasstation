@@ -16,6 +16,17 @@ namespace Gasstation.Implementation
 
         public static List<Zapfsaeule> AvailableZapfsaeulen = new List<Zapfsaeule>();
 
+        public static List<Transaction> TransactionHistory = new List<Transaction>();
+
+
+
+        public static void AddTransaction(Transaction newTransaction)
+        {
+            TransactionHistory.Add(newTransaction);
+
+        }
 
     }
+
+
 }

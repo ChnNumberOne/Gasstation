@@ -26,8 +26,9 @@ namespace Gasstation.Pages
 
         // Bugtracker
 
-        // if the Fueltype is selected and a number is put in. Changing the fueltype will not update the price calculated.
-        // diverse null pointers
+        // Zapfsaeulen Locken bisher aber unlocken nicht
+        // Mit F Besprechen wegen Aufrufen in Programm von Objekten.
+
 
 
         public CustomerSimulation()
@@ -38,6 +39,8 @@ namespace Gasstation.Pages
         }
 
         private Zapfhahn selectedZapfhahn;
+
+        private Zapfsaeule selectedZapfsaeule;
 
         private int userLiterAmount;
 
@@ -68,6 +71,7 @@ namespace Gasstation.Pages
                 zapfsaeuleButton.Click += (s, e) => 
                 {
                     ZapfhahnPanel.Children.Clear();
+                    this.selectedZapfsaeule = zapfsaeule;
               
                     
                     foreach (Zapfhahn zapfhahn in zapfsaeule.GetZapfhaene())
@@ -143,12 +147,41 @@ namespace Gasstation.Pages
             }
         }
 
+
+        // beide mit f besprechen. Bessere Variante??
+
+        // muss warscheinlich in die Tankstelle static
+        // Framework Methode
         private void TakeFuel_Click(object sender, RoutedEventArgs e)
         {
-            if(this.selectedZapfhahn != null) { 
-            this.selectedZapfhahn.DrainFuelFromTank(this.userLiterAmount);
-            Console.WriteLine(this.selectedZapfhahn.GetFuelTank().GetFillPercentage());
+            if(selectedZapfsaeule != null)
+            {
+                this.selectedZapfsaeule.RequestFuelFromZapfhahn(this.userLiterAmount);
+            } else
+            {
+                Console.WriteLine("Keine Zapfsaeule gewaehlt");
             }
+            
+        }
+
+
+        // Muss warscheinlich in die Tankstelle static
+        // Framework Methode
+        private void FinishTanking_Click(object sender, RoutedEventArgs e)
+        {
+       
+
+            if (this.selectedZapfsaeule.GetCurrentFuelTransaction() > 0)
+            {
+                this.selectedZapfsaeule.LockAllZapfhaehne();
+                this.selectedZapfsaeule.CreateTransaction();
+              
+            } else
+            {
+                Console.WriteLine(" Keine Bezüge gemacht");
+            }
+
+
         }
     }
 }

@@ -17,11 +17,11 @@ namespace Gasstation.Implementation
 
         private FuelType selectedFuelType;
 
-        private int drainedAmountOfFuel;
-
         private List<Zapfhahn> zapfhaehne;
 
         private Zapfhahn selectedZapfhahn;
+
+        private int currentFuelTransaction = 0;
 
 
         public List<Zapfhahn> GetZapfhaene() 
@@ -32,15 +32,10 @@ namespace Gasstation.Implementation
         public void Selectzapfhahn(Zapfhahn requestedZapfhahn)
         {
 
-            //Zapfhahn selectedZapfhahn = this.zapfhaehne.Single(x => x.Equals(requestedFuelType));
-            //if (selectedZapfhahn != null)
-            //{
-            //    this.LockAllZapfhaehne();
-            //    selectedZapfhahn.UnlockZapfhahn();
-            //}
             this.selectedZapfhahn = requestedZapfhahn;
         }
 
+      
 
 
 
@@ -59,16 +54,47 @@ namespace Gasstation.Implementation
         }
 
 
-        public void RequestFuelFromZapfhahn(int fuelAmount, FuelType requestedFuelType)
+        public void RequestFuelFromZapfhahn(int fuelAmount)
         {
-            // Zapfhahn auswählen und Treibstoff beziehen. bezogene Menge an Zapfsaeule geben
-            //Zapfhahn selectedZapfhahn = SelectZapfhahnOfFuelType(requestedFuelType);
-      
-            //this.drainedAmountOfFuel = selectedZapfhahn.DrainFuelFromTank(fuelAmount);
+
+            if (selectedZapfhahn != null)
+            {
+                // kann nur aufgerufen werden wenn er nicht gelockt ist.
+                Console.WriteLine("not null");
+                if (!selectedZapfhahn.IsLocked())
+                {
+                    Console.WriteLine("not locked");
+                    // alle bis auf diesen locken
+                    LockAllZapfhaehne();
+                    selectedZapfhahn.UnlockZapfhahn();
+
+                    // fuel beziehen
+                    this.currentFuelTransaction += selectedZapfhahn.DrainFuelFromTank(fuelAmount);
+
+
+                } else
+                {
+                    Console.WriteLine("Access Denied Zapfhahn locked");
+                }
+               
+                
+
+            }
             
 
         }
 
+        public Transaction CreateTransaction()
+        {
+
+            return new Transaction(this.selectedFuelType.GetCostPerLiterInCent(), this.currentFuelTransaction);
+        }
+
+
+        public int GetCurrentFuelTransaction()
+        {
+            return this.currentFuelTransaction;
+        }
 
 
 

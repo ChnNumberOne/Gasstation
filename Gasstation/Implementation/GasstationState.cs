@@ -20,11 +20,7 @@ namespace Gasstation.Implementation
 
 
 
-        public static void AddTransaction(Transaction newTransaction)
-        {
-            TransactionHistory.Add(newTransaction);
-
-        }
+     
 
     }
 

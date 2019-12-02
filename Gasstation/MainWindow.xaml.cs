@@ -41,34 +41,7 @@ namespace Gasstation
 
         public void AppSetup() 
         {
-            // Erstellen der FuelTypes und zuweisen auf State
-            GasstationState.AvailableFuelTypes = new List<FuelType>
-            {
-                new Benzin(),
-                new Diesel(),
-                new Bleifrei(),
-
-            };
-
-            // für jeden FuelType ein Tank erstellen und zuweisen auf State
-            GasstationState.AvailableFuelTanks = new List<FuelTank>();
-            foreach(FuelType fuelType in GasstationState.AvailableFuelTypes)
-            {
-                GasstationState.AvailableFuelTanks.Add(new FuelTank(fuelType, 1000));
-            }
-
-            // 5 Zapfsaeulen generieren
-            for(int i = 0; i < 5; i++)
-            {
-                List<Zapfhahn> zapfhaehneFuerSaeule = new List<Zapfhahn>();
-                foreach (FuelType fuelType in GasstationState.AvailableFuelTypes)
-                {
-                    zapfhaehneFuerSaeule.Add(new Zapfhahn(fuelType));
-                }
-
-                Zapfsaeule zapfsaeule = new Zapfsaeule(zapfhaehneFuerSaeule);
-                GasstationState.AvailableZapfsaeulen.Add(zapfsaeule);
-            }
+            
            
         }
 

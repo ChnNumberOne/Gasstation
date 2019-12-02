@@ -72,7 +72,6 @@
                 <TextBlock Name="CostBox"></TextBlock>
               </WrapPanel>
               <Button Name="TakeFuel" Margin="0 3" Click="TakeFuel_Click">Take Fuel</Button>
-              <Button Name="FinishTanking" Click="FinishTanking_Click">Finish Tanking</Button>
             </StackPanel>
             <StackPanel Grid.Column="2" Margin="5">
                 <Label>Kasse</Label>

@@ -1,17 +1,6 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
 using Gasstation.Implementation;
 
 namespace Gasstation.Pages
@@ -35,7 +24,6 @@ namespace Gasstation.Pages
         {
             InitializeComponent();
             RefreshPage();
-            
         }
 
         private Zapfhahn selectedZapfhahn;
@@ -44,23 +32,22 @@ namespace Gasstation.Pages
 
         private int userLiterAmount;
 
-        private void DisplayTotalFuelValue()
+        private Tankstelle tankstelle;
+
+        private void DisplayTotalFuelValue(IFuelType fuelType)
         {
-            if(selectedZapfhahn != null) { 
-                CostBox.Text = this.userLiterAmount * (float)selectedZapfhahn.GetFuelTank().GetFuelType().GetCostPerLiterInCent() / 100 + ".-";
-            }
+            CostBox.Text = this.userLiterAmount * (decimal)fuelType.GetCostPerLiterInCent() / 100 + ".-";
         }
 
         private void RefreshPage()
         {
-
+            this.tankstelle = Tankstelle.Current();
 
             ZapfsaeulenPanel.Children.Clear();
             ZapfhahnPanel.Children.Clear();
-
             
             int i = 0;
-            foreach (Zapfsaeule zapfsaeule in GasstationState.AvailableZapfsaeulen)
+            foreach (Zapfsaeule zapfsaeule in tankstelle.GetAllZapfsauelen())
             {
                 i++;
                 Button zapfsaeuleButton = new Button()
@@ -68,58 +55,42 @@ namespace Gasstation.Pages
                     Content = i.ToString(),
                     Margin = new Thickness(0, 1, 0, 1)
                 };
-                zapfsaeuleButton.Click += (s, e) => 
-                {
-                    ZapfhahnPanel.Children.Clear();
-                    this.selectedZapfsaeule = zapfsaeule;
-              
-                    
-                    foreach (Zapfhahn zapfhahn in zapfsaeule.GetZapfhaene())
-                    {
-
-                        // Auswahl Treibstoff
-                        Button zapfhahnButton = new Button()
-                        {
-                            // TODO: bad Practice ( Better idea?)
-                            Content = zapfhahn.GetFuelTank().GetFuelType().GetFuelTypeName(),
-                            MinWidth = 50,
-                            Margin = new Thickness(1)
-                        };
-                        zapfhahnButton.Click += (sZapfhahn, eZapfhahn) =>
-                        {
-                            
-                            zapfsaeule.Selectzapfhahn(zapfhahn);
-
-                            // TODO: bad Practie look at this with f
-                            this.selectedZapfhahn = zapfhahn;
-                         
-                            SelectedFuelLabel.Content = zapfhahn.GetFuelTank().GetFuelType().GetFuelTypeName();
-                            CostPerLiterTextBlock.Text = ((float)zapfhahn.GetFuelTank().GetFuelType().GetCostPerLiterInCent()/ 100).ToString();
-                            DisplayTotalFuelValue();
-                           
-                           
-                        };
-                        ZapfhahnPanel.Children.Add(zapfhahnButton);
-
-                        // Treibstoff Beziehen
-                            
-
-
-
-                        // Treibstoff Bezug senden
-
-                    }
-                };
+                zapfsaeuleButton.Click += (s, e) => SelectZapfsauele(zapfsaeule);
                 ZapfsaeulenPanel.Children.Add(zapfsaeuleButton);
             }
         }
 
-        private void ZapfsaeuleButton_Click(object sender, RoutedEventArgs e)
+        private void SelectZapfsauele(Zapfsaeule zapfsaeule)
         {
-         
+            this.selectedZapfsaeule = zapfsaeule;
+            ZapfhahnPanel.Children.Clear();
+
+            foreach (Zapfhahn zapfhahn in zapfsaeule.GetZapfhaene())
+            {
+                Button zapfhahnButton = new Button()
+                {
+                    // TODO: bad Practice ( Better idea?)
+                    Content = zapfhahn.GetFuelType().GetFuelTypeName(),
+                    MinWidth = 50,
+                    Margin = new Thickness(1)
+                };
+
+                zapfhahnButton.Click += (s, e) => SelectZapfhahn(zapfhahn);                
+                ZapfhahnPanel.Children.Add(zapfhahnButton);
+            }
         }
 
-            private void BackToMenu_Click(object sender, RoutedEventArgs e)
+        private void SelectZapfhahn(Zapfhahn zapfhahn)
+        {
+            this.selectedZapfhahn = zapfhahn;
+
+            IFuelType fuelType = this.selectedZapfhahn.GetFuelType();
+            SelectedFuelLabel.Content = fuelType.GetFuelTypeName();
+            CostPerLiterTextBlock.Text = $"{(decimal)fuelType.GetCostPerLiterInCent() / 100}";
+            DisplayTotalFuelValue(fuelType);
+        }
+
+        private void BackToMenu_Click(object sender, RoutedEventArgs e)
         {
             MainWindow.SetContent(new WelcomePage());
         }
@@ -128,19 +99,19 @@ namespace Gasstation.Pages
         {
             // Textfeld zum Ausgabe zu machen.
 
-            if (int.TryParse(FuelToTakeOut.Text, out this.userLiterAmount)) 
+            if (int.TryParse(FuelToTakeOut.Text, out this.userLiterAmount))
             {
                 ErrorBlock.Text = "";
 
                 // Just a simple test for calculating the cost per liter
-                DisplayTotalFuelValue();
+                DisplayTotalFuelValue(this.selectedZapfhahn.GetFuelType());
             }
-            else if (string.IsNullOrEmpty(FuelToTakeOut.Text)) 
+            else if (string.IsNullOrEmpty(FuelToTakeOut.Text))
             {
                 ErrorBlock.Text = "";
                 CostBox.Text = "";
             }
-            else 
+            else
             {
                 ErrorBlock.Text = "Input is invalid!";
                 CostBox.Text = "";
@@ -154,34 +125,15 @@ namespace Gasstation.Pages
         // Framework Methode
         private void TakeFuel_Click(object sender, RoutedEventArgs e)
         {
-            if(selectedZapfsaeule != null)
+            if (selectedZapfsaeule != null)
             {
-                this.selectedZapfsaeule.RequestFuelFromZapfhahn(this.userLiterAmount);
-            } else
+                this.tankstelle.PumpGasFromZapfsauele(this.selectedZapfsaeule, this.selectedZapfhahn.GetFuelType(), this.userLiterAmount);
+                // display locked state
+            }
+            else
             {
                 Console.WriteLine("Keine Zapfsaeule gewaehlt");
             }
-            
-        }
-
-
-        // Muss warscheinlich in die Tankstelle static
-        // Framework Methode
-        private void FinishTanking_Click(object sender, RoutedEventArgs e)
-        {
-       
-
-            if (this.selectedZapfsaeule.GetCurrentFuelTransaction() > 0)
-            {
-                this.selectedZapfsaeule.LockAllZapfhaehne();
-                this.selectedZapfsaeule.CreateTransaction();
-              
-            } else
-            {
-                Console.WriteLine(" Keine Bezüge gemacht");
-            }
-
-
         }
     }
 }

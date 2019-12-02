@@ -1,28 +1,13 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace Gasstation.Implementation
+﻿namespace Gasstation.Implementation
 {
     public class Zapfhahn
     {
         // Important Notes and TOOD:
         // each Zapfhahn has an entire list of Tanks ( Because its easier)
 
-
-
         private bool isLocked = false;
 
-        private FuelTank fuelTank;
-
-
-
-        // saves amount of total drained fuel
-        private int drainedFuelTotal = 0;
-
-
+        private readonly IFuelType fueltype;
 
         /// <summary>
         /// Erstellt einen Zapfhahn für einen STRING fueltypeName
@@ -30,39 +15,24 @@ namespace Gasstation.Implementation
         /// </summary>
         /// <param name="fuelType"></param>
 
-        public Zapfhahn(FuelType fuelType)
+        public Zapfhahn(IFuelType fuelType)
         {
-            this.fuelTank = GasstationState.AvailableFuelTanks.Find(tank => tank.GetFuelType().GetFuelTypeName() == fuelType.GetFuelTypeName());
+            this.fueltype = fuelType;
         }
 
-       
-
-        public FuelTank GetFuelTank()
+        internal IFuelType GetFuelType()
         {
-            return this.fuelTank;
+            return fueltype;
         }
-
-       
-
-
-
-
+        
         /// <summary>
         /// Boolean Check if this is locked
         /// </summary>
         /// <returns></returns>
         public bool IsLocked()
         {
-            if (this.isLocked)
-            {
-                return true;
-            }
-            return false;
+            return this.isLocked;
         }
-
-
-
-
 
         /// <summary>
         /// Locks this Zapfhahn
@@ -79,17 +49,5 @@ namespace Gasstation.Implementation
         {
             this.isLocked = false;
         }
-
-        public int DrainFuelFromTank(int fuelToDrain)
-        {
-            
-            return this.fuelTank.DrainFuel(fuelToDrain);
-
-
-        }
-
-
-    }
-
-   
+    }   
 }

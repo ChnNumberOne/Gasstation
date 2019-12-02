@@ -15,7 +15,6 @@ namespace Gasstation.Implementation
 
         }
 
-        private FuelType selectedFuelType;
 
         private List<Zapfhahn> zapfhaehne;
 
@@ -54,41 +53,44 @@ namespace Gasstation.Implementation
         }
 
 
-        public void RequestFuelFromZapfhahn(int fuelAmount)
-        {
+        //public void RequestFuelFromZapfhahn(int fuelAmount)
+        //{
 
-            if (selectedZapfhahn != null)
-            {
-                // kann nur aufgerufen werden wenn er nicht gelockt ist.
-                Console.WriteLine("not null");
-                if (!selectedZapfhahn.IsLocked())
-                {
-                    Console.WriteLine("not locked");
-                    // alle bis auf diesen locken
-                    LockAllZapfhaehne();
-                    selectedZapfhahn.UnlockZapfhahn();
+        //    if (selectedZapfhahn != null)
+        //    {
+        //        // kann nur aufgerufen werden wenn er nicht gelockt ist.
+        //        Console.WriteLine("not null");
+        //        if (!selectedZapfhahn.IsLocked())
+        //        {
+                   
+        //            Console.WriteLine("not locked");
+        //            // alle bis auf diesen locken
+        //            LockAllZapfhaehne();
+        //            selectedZapfhahn.UnlockZapfhahn();
 
-                    // fuel beziehen
-                    this.currentFuelTransaction += selectedZapfhahn.DrainFuelFromTank(fuelAmount);
+        //            // fuel beziehen
+        //            this.currentFuelTransaction += selectedZapfhahn.DrainFuelFromTank(fuelAmount);
 
 
-                } else
-                {
-                    Console.WriteLine("Access Denied Zapfhahn locked");
-                }
+        //        } else
+        //        {
+        //            Console.WriteLine("Access Denied Zapfhahn locked");
+        //        }
                
                 
 
-            }
+        //    }
             
 
-        }
+        //}
 
-        public Transaction CreateTransaction()
-        {
-
-            return new Transaction(this.selectedFuelType.GetCostPerLiterInCent(), this.currentFuelTransaction);
-        }
+        //public Transaction CreateTransaction()
+        //{
+        //    // again clean this with f
+        //    Console.WriteLine("Transaction created");
+        //    return new Transaction(this.selectedZapfhahn.GetFuelTank().GetFuelType().GetCostPerLiterInCent(), this.currentFuelTransaction);
+          
+        //}
 
 
         public int GetCurrentFuelTransaction()

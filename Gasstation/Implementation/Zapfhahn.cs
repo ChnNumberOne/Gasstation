@@ -37,7 +37,7 @@
         /// <summary>
         /// Locks this Zapfhahn
         /// </summary>
-        public void LockZapfhahn()
+        public void Lock()
         {
             this.isLocked = true;
         }
@@ -45,9 +45,11 @@
         /// <summary>
         /// Unlocks this Zapfhahn
         /// </summary>
-        public void UnlockZapfhahn()
+        public void Unlock()
         {
             this.isLocked = false;
         }
+
+       
     }   
 }

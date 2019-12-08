@@ -32,5 +32,7 @@ namespace Gasstation.Implementation
         {
             this.costPerLiterInCent = newCostPerLiterInCent;
         }
+
+        
     }
 }

@@ -14,7 +14,7 @@ namespace Gasstation.Implementation
 
         public static List<FuelTank> AvailableFuelTanks = new List<FuelTank>();
 
-        public static List<Zapfsaeule> AvailableZapfsaeulen = new List<Zapfsaeule>();
+     
 
         public static List<Transaction> TransactionHistory = new List<Transaction>();
 

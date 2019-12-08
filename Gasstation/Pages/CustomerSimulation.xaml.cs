@@ -11,15 +11,6 @@ namespace Gasstation.Pages
     public partial class CustomerSimulation : Page
     {
 
-
-
-        // Bugtracker
-
-        // Zapfsaeulen Locken bisher aber unlocken nicht
-        // Mit F Besprechen wegen Aufrufen in Programm von Objekten.
-
-
-
         public CustomerSimulation()
         {
             InitializeComponent();
@@ -41,11 +32,14 @@ namespace Gasstation.Pages
 
         private void RefreshPage()
         {
+            // Singleton Initalisieren
             this.tankstelle = Tankstelle.Current();
 
+            // Clear GUI
             ZapfsaeulenPanel.Children.Clear();
             ZapfhahnPanel.Children.Clear();
             
+            // Load Again
             int i = 0;
             foreach (Zapfsaeule zapfsaeule in tankstelle.GetAllZapfsauelen())
             {
@@ -55,26 +49,30 @@ namespace Gasstation.Pages
                     Content = i.ToString(),
                     Margin = new Thickness(0, 1, 0, 1)
                 };
+                // Set Function on Button
                 zapfsaeuleButton.Click += (s, e) => SelectZapfsauele(zapfsaeule);
                 ZapfsaeulenPanel.Children.Add(zapfsaeuleButton);
             }
         }
 
+        
         private void SelectZapfsauele(Zapfsaeule zapfsaeule)
         {
+            // set selection and clear children
             this.selectedZapfsaeule = zapfsaeule;
             ZapfhahnPanel.Children.Clear();
 
+            // set new Zapfhaehne
             foreach (Zapfhahn zapfhahn in zapfsaeule.GetZapfhaene())
             {
                 Button zapfhahnButton = new Button()
                 {
-                    // TODO: bad Practice ( Better idea?)
+                    // Doppelaufruf ist okay nicht perfekt
                     Content = zapfhahn.GetFuelType().GetFuelTypeName(),
                     MinWidth = 50,
                     Margin = new Thickness(1)
                 };
-
+                // set Function to Button
                 zapfhahnButton.Click += (s, e) => SelectZapfhahn(zapfhahn);                
                 ZapfhahnPanel.Children.Add(zapfhahnButton);
             }
@@ -82,8 +80,10 @@ namespace Gasstation.Pages
 
         private void SelectZapfhahn(Zapfhahn zapfhahn)
         {
+            // set selection
             this.selectedZapfhahn = zapfhahn;
 
+            // get Information and Display
             IFuelType fuelType = this.selectedZapfhahn.GetFuelType();
             SelectedFuelLabel.Content = fuelType.GetFuelTypeName();
             CostPerLiterTextBlock.Text = $"{(decimal)fuelType.GetCostPerLiterInCent() / 100}";
@@ -97,13 +97,14 @@ namespace Gasstation.Pages
 
         private void FuelToTakeOut_TextChanged(object sender, TextChangedEventArgs e)
         {
-            // Textfeld zum Ausgabe zu machen.
+            
 
             if (int.TryParse(FuelToTakeOut.Text, out this.userLiterAmount))
             {
                 ErrorBlock.Text = "";
 
                 // Just a simple test for calculating the cost per liter
+                // Helper Methode Bezug hier gespeicher? UGH probably not good
                 DisplayTotalFuelValue(this.selectedZapfhahn.GetFuelType());
             }
             else if (string.IsNullOrEmpty(FuelToTakeOut.Text))
@@ -119,10 +120,6 @@ namespace Gasstation.Pages
         }
 
 
-        // beide mit f besprechen. Bessere Variante??
-
-        // muss warscheinlich in die Tankstelle static
-        // Framework Methode
         private void TakeFuel_Click(object sender, RoutedEventArgs e)
         {
             if (selectedZapfsaeule != null)
@@ -132,6 +129,7 @@ namespace Gasstation.Pages
             }
             else
             {
+                // Errorhandling GUI
                 Console.WriteLine("Keine Zapfsaeule gewaehlt");
             }
         }

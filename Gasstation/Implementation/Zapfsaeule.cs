@@ -15,7 +15,6 @@ namespace Gasstation.Implementation
 
         }
 
-
         private List<Zapfhahn> zapfhaehne;
 
         private Zapfhahn selectedZapfhahn;
@@ -23,7 +22,7 @@ namespace Gasstation.Implementation
         private int currentFuelTransaction = 0;
 
 
-        public List<Zapfhahn> GetZapfhaene() 
+        public List<Zapfhahn> GetZapfhaene()
         {
             return zapfhaehne;
         }
@@ -34,63 +33,48 @@ namespace Gasstation.Implementation
             this.selectedZapfhahn = requestedZapfhahn;
         }
 
+        public void LockUnused(IFuelType fuelType)
+        {
+            // Lockt jedesmal // Flag setzen?
+
+            IEnumerable<Zapfhahn> zapfhaehneToLock = zapfhaehne.FindAll(x => fuelType != x.GetFuelType()).ToList();
+            foreach(Zapfhahn zapfhahnToLock in zapfhaehneToLock)
+            {
+                zapfhahnToLock.Lock();
+            }
+
+            
+            
+        }
+
+        public void Unlock()
+        {
+            // Entsperren aller Zapfhaehne
+        }
+
+        public void GetFuelOfType(FuelType fueltype)
+        {
+            Zapfhahn zapfhahn = zapfhaehne.Find(x => fueltype == x.GetFuelType());
+        
+        }
+
+        
       
 
 
 
 
-        // unlocks all zapfhaehne for after purchasing fuel
-        public void UnlockAllZapfhaehne()
-        {
-            this.zapfhaehne.ForEach(x => x.UnlockZapfhahn());
-
-        }
 
 
-        public void LockAllZapfhaehne()
-        {
-            this.zapfhaehne.ForEach(x => x.LockZapfhahn());
-        }
 
 
-        //public void RequestFuelFromZapfhahn(int fuelAmount)
-        //{
-
-        //    if (selectedZapfhahn != null)
-        //    {
-        //        // kann nur aufgerufen werden wenn er nicht gelockt ist.
-        //        Console.WriteLine("not null");
-        //        if (!selectedZapfhahn.IsLocked())
-        //        {
-                   
-        //            Console.WriteLine("not locked");
-        //            // alle bis auf diesen locken
-        //            LockAllZapfhaehne();
-        //            selectedZapfhahn.UnlockZapfhahn();
-
-        //            // fuel beziehen
-        //            this.currentFuelTransaction += selectedZapfhahn.DrainFuelFromTank(fuelAmount);
 
 
-        //        } else
-        //        {
-        //            Console.WriteLine("Access Denied Zapfhahn locked");
-        //        }
-               
-                
 
-        //    }
-            
 
-        //}
 
-        //public Transaction CreateTransaction()
-        //{
-        //    // again clean this with f
-        //    Console.WriteLine("Transaction created");
-        //    return new Transaction(this.selectedZapfhahn.GetFuelTank().GetFuelType().GetCostPerLiterInCent(), this.currentFuelTransaction);
-          
-        //}
+
+
 
 
         public int GetCurrentFuelTransaction()
@@ -108,28 +92,5 @@ namespace Gasstation.Implementation
 
 
 
-
-
-        // TODO: need Rework
-        /// <summary>
-        /// Select a Zapfhahn by getting the first Zapfhahn that has the FUeltype requested
-        /// </summary>
-        /// <param name="fuelType"></param>
-        //TODO: also check if the Zapfhahn inst used by another person
-        //public void SelectZapfhahn(FuelType fuelType) 
-        //{
-        //    currentlySelectedZapfhahn = zapfhaene.Find(x => x.GetFuelTank().GetFuelType() == fuelType);
-
-        //}
-
-
-        //// Starts tanking from currently selected Zapfhahn
-        //public void StartTanking(int amntOfFuel) 
-        //{
-        //    // was passiert mit dem output aus RemoveFromFuelTank?
-        //    if(this.currentlySelectedZapfhahn != null) { 
-        //        this.currentlySelectedZapfhahn.RemoveFromFuelTank(amntOfFuel);
-        //    }
-        //}
     }
 }

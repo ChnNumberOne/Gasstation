@@ -15,6 +15,8 @@ namespace Gasstation.Implementation
 
         }
 
+        private bool lockStatus = false;
+
         private List<Zapfhahn> zapfhaehne;
 
         private Zapfhahn selectedZapfhahn;
@@ -33,29 +35,25 @@ namespace Gasstation.Implementation
             this.selectedZapfhahn = requestedZapfhahn;
         }
 
-        public void LockUnused(IFuelType fuelType)
+        public void Lock()
         {
-            // Lockt jedesmal // Flag setzen?
-
-            IEnumerable<Zapfhahn> zapfhaehneToLock = zapfhaehne.FindAll(x => fuelType != x.GetFuelType()).ToList();
-            foreach(Zapfhahn zapfhahnToLock in zapfhaehneToLock)
-            {
-                zapfhahnToLock.Lock();
-            }
-
-            
-            
+            this.lockStatus = true;
         }
 
         public void Unlock()
         {
-            // Entsperren aller Zapfhaehne
+            this.lockStatus = false;
         }
 
         public void GetFuelOfType(FuelType fueltype)
         {
             Zapfhahn zapfhahn = zapfhaehne.Find(x => fueltype == x.GetFuelType());
         
+        }
+
+        public bool isLocked()
+        {
+            return lockStatus;
         }
 
         

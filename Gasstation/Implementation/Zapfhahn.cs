@@ -5,7 +5,7 @@
         // Important Notes and TOOD:
         // each Zapfhahn has an entire list of Tanks ( Because its easier)
 
-        private bool isLocked = false;
+      
 
         private readonly IFuelType fueltype;
 
@@ -29,27 +29,7 @@
         /// Boolean Check if this is locked
         /// </summary>
         /// <returns></returns>
-        public bool IsLocked()
-        {
-            return this.isLocked;
-        }
-
-        /// <summary>
-        /// Locks this Zapfhahn
-        /// </summary>
-        public void Lock()
-        {
-            this.isLocked = true;
-        }
-
-        /// <summary>
-        /// Unlocks this Zapfhahn
-        /// </summary>
-        public void Unlock()
-        {
-            this.isLocked = false;
-        }
-
+  
        
     }   
 }

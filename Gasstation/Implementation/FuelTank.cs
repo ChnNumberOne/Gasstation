@@ -76,6 +76,7 @@ namespace Gasstation.Implementation
     
         public int DrainFuel(int amount)
         {
+            Console.WriteLine(fuelType.GetFuelTypeName());
             if (this.currentFuelAmount - amount >= 0)
             {
                 this.currentFuelAmount -= amount;
@@ -85,6 +86,7 @@ namespace Gasstation.Implementation
 
            
             this.currentFuelAmount -= drainableAmount;
+        
             return drainableAmount;
 
         }

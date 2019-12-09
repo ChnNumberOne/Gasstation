@@ -8,7 +8,23 @@ namespace Gasstation.Implementation
     {
 
         // für Benjamin : 
-        // 
+
+        // 1.
+
+        // Observable Collection. geht im gleichen Zug zu 2.
+
+        // 2.
+
+        // Die Business Logik soll im grunde genommen die GUI Logik ergänzen
+        // Heisst: was in der Buisnesslogik passiert muss ja jetzt auch angezeigt werden.
+        // Buttons disablen für die Fueltypes wenn einer ausgewählt wurde auf der Zapfsaeule
+        // Nutzer wählt Diesel auf Säule 1
+        // Nutzer wählt Starten
+        // Nutzer wählt Benzin auf Säule 1 <- soll das GUI nicht erlauben Button.disable
+
+
+        // 3. Feld Amount of Fuel to Take out -> remove
+
 
         // ODERMATT WIRD TESTEN:
         // GRUNDFUNKTIONEN

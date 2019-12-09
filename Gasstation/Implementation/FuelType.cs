@@ -15,7 +15,7 @@ namespace Gasstation.Implementation
 
         public FuelType()
         {
-            GasstationState.AvailableFuelTypes.Add(this);
+            
         }
 
         public int GetCostPerLiterInCent()

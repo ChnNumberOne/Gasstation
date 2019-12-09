@@ -7,6 +7,9 @@ namespace Gasstation.Implementation
     public class Tankstelle
     {
 
+        // für Benjamin : 
+        // 
+
         // ODERMATT WIRD TESTEN:
         // GRUNDFUNKTIONEN
         // ZWEITE SEITE:
@@ -71,26 +74,29 @@ namespace Gasstation.Implementation
         // Sprit Bezug
         public void PumpGasFromZapfsauele(Zapfsaeule zapfsaeule, IFuelType fuelType, decimal amount)
         {
-            // Lock selected Zapfsaeule
-            // TODO: durchdenk den nochmal später
-            if (!zapfsaeule.isLocked())
+
+            // Zapfsaeule sperren fals nicht gesperrt und Tankprozess starten
+            if (zapfsaeule.isTanking())
             {
-                zapfsaeule.Lock();
-
-                Console.WriteLine(fuelType);
-
-                FuelTank currentFuelTank = this.AvailableFuelTanks.Find(x => x.GetFuelType() == fuelType);
-
-
-                // Get Fueltype of selected Zapfsaeule
-                System.Timers.Timer aTimer = new System.Timers.Timer();
-                aTimer.Elapsed += (s, e) => currentFuelTank.DrainFuel(1);
-                aTimer.Interval = 100;
-                aTimer.Enabled = true;
-
+                zapfsaeule.StopTankingTimer();
             }
+            else
+            {
+                if (!zapfsaeule.isLocked())
+                {
+                    zapfsaeule.Lock();
 
-            // Wie brechen wir den Timer ab?
+                    Console.WriteLine(fuelType);
+
+                    FuelTank currentFuelTank = this.AvailableFuelTanks.Find(x => x.GetFuelType() == fuelType);
+
+                    zapfsaeule.StartTankingTimer(currentFuelTank);
+
+                }
+            }
+         
+
+            // Timer abbrechen über Zapfsaeule.StopTankingTimer()
         }
     }
 }

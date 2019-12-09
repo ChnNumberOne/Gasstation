@@ -60,7 +60,6 @@
     <Compile Include="Implementation\Config.cs" />
     <Compile Include="Implementation\Diesel.cs" />
     <Compile Include="Implementation\FuelType.cs" />
-    <Compile Include="Implementation\GasstationState.cs" />
     <Compile Include="Implementation\Transaction.cs" />
     <Compile Include="Interfaces\IFuelType.cs" />
     <Compile Include="Implementation\Tankstelle.cs" />

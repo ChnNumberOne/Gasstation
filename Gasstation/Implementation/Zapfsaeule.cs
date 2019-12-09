@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Timers;
 
 namespace Gasstation.Implementation
 {
@@ -16,6 +17,10 @@ namespace Gasstation.Implementation
         }
 
         private bool lockStatus = false;
+
+        private bool tankingState = false;
+
+        private Timer tankingTimer;
 
         private List<Zapfhahn> zapfhaehne;
 
@@ -55,7 +60,24 @@ namespace Gasstation.Implementation
         {
             return lockStatus;
         }
+            
+        public void StartTankingTimer(FuelTank currentFuelTank)
+        {
+            this.tankingState = true;
+            this.tankingTimer = new Timer();
+            this.tankingTimer.Elapsed += (s, e) => currentFuelTank.DrainFuel(1);
+            this.tankingTimer.Interval = 100;
+            this.tankingTimer.Enabled = true;
+        }
+        public void StopTankingTimer()
+        {
+            this.tankingTimer.Stop();
+        }
 
+        public bool isTanking()
+        {
+            return this.tankingState;
+        }
         
       
 

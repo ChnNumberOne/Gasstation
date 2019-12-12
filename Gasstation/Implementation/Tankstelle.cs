@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Linq;
 
 namespace Gasstation.Implementation
@@ -45,7 +46,7 @@ namespace Gasstation.Implementation
             return currentInstance ?? (currentInstance = new Tankstelle());
         }
 
-        public List<Zapfsaeule> AvailableZapfsaeulen = new List<Zapfsaeule>();
+        public ObservableCollection<Zapfsaeule> AvailableZapfsaeulen = new ObservableCollection<Zapfsaeule>();
 
         public List<FuelTank> AvailableFuelTanks = new List<FuelTank>();
 
@@ -72,16 +73,21 @@ namespace Gasstation.Implementation
             IEnumerable<Zapfsaeule> zapfsauelen =
                 Enumerable
                 .Range(0, 5)
-                .Select(x => {
+                .Select(x =>
+                {
                     IEnumerable<Zapfhahn> zapfhaehneFuerSaeule = this.AvailableFuelTypes.Select(fuelType => new Zapfhahn(fuelType));
                     return new Zapfsaeule(zapfhaehneFuerSaeule.ToList());
                 });
-            this.AvailableZapfsaeulen.AddRange(zapfsauelen);
+
+            foreach(Zapfsaeule e in zapfsauelen)
+            {
+                this.AvailableZapfsaeulen.Add(e);
+            }
         }
 
       
         // Zapfhaehne readonly zurückgeben
-        public List<Zapfsaeule> GetAllZapfsauelen()
+        public IList<Zapfsaeule> GetAllZapfsauelen()
         {
 
             return this.AvailableZapfsaeulen;

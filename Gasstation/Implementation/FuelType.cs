@@ -13,6 +13,18 @@ namespace Gasstation.Implementation
 
         protected string name;
 
+        public string Name
+        {
+            get
+            {
+                return name;
+            }
+            set
+            {
+                name = value;
+            }
+        }
+
         public FuelType()
         {
             GasstationState.AvailableFuelTypes.Add(this);

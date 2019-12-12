@@ -26,8 +26,9 @@
             <ColumnDefinition Width="200"></ColumnDefinition>
             <ColumnDefinition Width="*"></ColumnDefinition>
         </Grid.ColumnDefinitions>
-        <Button Name="BackToMenu" Click="BackToMenu_Click">Back to menu</Button>
-
+        <DockPanel Background="DarkGray" Grid.ColumnSpan="3">
+            <Button Name="BackToMenu" Click="BackToMenu_Click" Margin="3">Back to menu</Button>
+        </DockPanel>
         <StackPanel Grid.Row="1" Grid.RowSpan="2" Background="LightGray">
             <Label FontSize="20">Zapfsäulen</Label>
             <ScrollViewer>

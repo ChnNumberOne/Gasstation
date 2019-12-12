@@ -21,6 +21,9 @@ namespace Gasstation.Pages
     /// </summary>
     public partial class AlterItems : Page
     {
+        private Zapfsaeule currentlySelectedZapfsaeule;
+        private Button currentlySelectedZapfsaeuleButton;
+
         public AlterItems()
         {
             InitializeComponent();
@@ -40,12 +43,10 @@ namespace Gasstation.Pages
                     Content = i.ToString(),
                     Margin = new Thickness(0, 1, 0, 1)
                 };
-                button.Click += (s, e) =>
-                {
-                    this.DataContext = zapfsaeule;
-                };
+                button.Click += (s, e) => { Zapfsaeule_Click(s, e, zapfsaeule); };
                 ButtonsPanel.Children.Add(button);
             }
+            SelectFuelType.ItemsSource = GasstationState.AvailableFuelTypes;
         }
 
         private void BackToMenuButton_Click(object sender, RoutedEventArgs e)
@@ -53,16 +54,14 @@ namespace Gasstation.Pages
             MainWindow.SetContent(new WelcomePage());
         }
 
-        private void FuelOverview_Click(object sender, RoutedEventArgs e)
+        private void Zapfsaeule_Click(object sender, RoutedEventArgs e, Zapfsaeule zapfsaeule)
         {
-            
+            this.DataContext = zapfsaeule;
+            currentlySelectedZapfsaeule = zapfsaeule;
+            Button button = (Button)sender;
+            ZapfsaeulenIndex.Content = button.Content;
+            currentlySelectedZapfsaeuleButton = button;
         }
-
-        private void ZapfseulenOverview_Click(object sender, RoutedEventArgs e)
-        {
-
-        }
-
 
         private void SelectZapfseule_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
@@ -72,21 +71,22 @@ namespace Gasstation.Pages
         private void ZapfsaeuleAddButton_Click(object sender, RoutedEventArgs e)
         {
             Zapfsaeule zapfsaeule = Tankstelle.CreateZapfsaeule();
-            Button button = new Button()
+            /*Button button = new Button()
             {
-                Content = GasstationState.AvailableZapfsaeulen.Count + 1,
+                Content = GasstationState.AvailableZapfsaeulen.Count.ToString(),
                 Margin = new Thickness(0, 1, 0, 1)
             };
-            button.Click += (s, ev) =>
-            {
-                this.DataContext = zapfsaeule;
-            };
-            ButtonsPanel.Children.Add(button);
+            button.Click += (s, ev) => { Zapfsaeule_Click(s, e, zapfsaeule); };
+            ButtonsPanel.Children.Add(button);*/
+            RefreshPage();
         }
-
+        
         private void ZapfsaeuleLoeschenButton_Click(object sender, RoutedEventArgs e)
         {
-
+            //ButtonsPanel.Children.Remove(currentlySelectedZapfsaeuleButton);
+            GasstationState.AvailableZapfsaeulen.Remove(currentlySelectedZapfsaeule);
+            currentlySelectedZapfsaeule = null;
+            RefreshPage();
         }
     }
 }

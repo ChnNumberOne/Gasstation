@@ -1,13 +1,16 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
 namespace Gasstation.Implementation
 {
-    public class Zapfsaeule
+    public class Zapfsaeule : INotifyPropertyChanged
     {
+        // Event for PropertyChanged
+        public event PropertyChangedEventHandler PropertyChanged;
 
         public Zapfsaeule(List<Zapfhahn> zapfhaehne)
         {
@@ -20,7 +23,19 @@ namespace Gasstation.Implementation
 
         private int drainedAmountOfFuel;
 
-        public List<Zapfhahn> Zapfhaehne { get; set; }
+        private List<Zapfhahn> zapfhaehne;
+        public List<Zapfhahn> Zapfhaehne 
+        {
+            get
+            {
+                return zapfhaehne;
+            } 
+            set
+            {
+                zapfhaehne = value;
+                OnPropertyChanged("Zapfhaehne");
+            }
+        }
 
 
         public List<Zapfhahn> GetZapfhaene() 
@@ -72,8 +87,15 @@ namespace Gasstation.Implementation
 
 
 
-
-
+        // Alerts everytime a property is changed
+        protected void OnPropertyChanged(string name)
+        {
+            PropertyChangedEventHandler handler = PropertyChanged;
+            if (handler != null)
+            {
+                handler(this, new PropertyChangedEventArgs(name));
+            }
+        }
 
 
 

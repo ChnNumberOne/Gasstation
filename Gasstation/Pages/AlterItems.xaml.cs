@@ -88,5 +88,16 @@ namespace Gasstation.Pages
             currentlySelectedZapfsaeule = null;
             RefreshPage();
         }
+
+        private void CreateZapfhahnButton_Click(object sender, RoutedEventArgs e)
+        {
+            FuelType fuelType = (FuelType)SelectFuelType.SelectedItem;
+            currentlySelectedZapfsaeule.Zapfhaehne.Add(new Zapfhahn(fuelType.GetFuelTypeName()));
+        }
+
+        private void DeleteZapfhahnButton_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
     }
 }

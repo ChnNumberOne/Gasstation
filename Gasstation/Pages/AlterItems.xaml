@@ -53,16 +53,22 @@
             <Label VerticalAlignment="Center">Zapfhähne</Label>
                 <WrapPanel>
                 <Label FontSize="16">Anzahl Zapfhähne:</Label>
-                <TextBlock x:Name="AnzZapfsäulenBox" Text="{Binding Path=Zapgsaeule.Zapfhaehne.Count}"></TextBlock>
+                <TextBlock x:Name="AnzZapfsäulenBox" Text="{Binding Path=Zapfsaeule.Zapfhaehne.Count}"></TextBlock>
             </WrapPanel>
             <ComboBox Name="SelectZapfhahn" ItemsSource="{Binding Path=Zapfsaeule.Zapfhaehne}" 
                     DisplayMemberPath="Name"
-                    SelectedValuePath="id" SelectionChanged="SelectZapfseule_SelectionChanged">
+                    SelectionChanged="SelectZapfseule_SelectionChanged">
             </ComboBox>
-            <Label FontSize="16" Margin="0 40 0 0">Select fueltype</Label>
+            <StackPanel  Margin="0 30">
+                <Label FontSize="16">Select fueltype</Label>
 
-            <ComboBox Name="SelectFuelType"
+                <ComboBox Name="SelectFuelType"
                       DisplayMemberPath="Name"></ComboBox>
+            </StackPanel>
+            <StackPanel>
+                <Button Content="Create Zapfhahn" Margin="0 3" Name="CreateZapfhahnButton" Click="CreateZapfhahnButton_Click"></Button>
+                <Button Content="Delete Zapfhahn" Name="DeleteZapfhahnButton" Click="DeleteZapfhahnButton_Click"></Button>
+            </StackPanel>
             
             <!--<Label Content="{Binding Path=Tankstelle.id}" FontSize="40" Foreground="Red"></Label>-->
         </StackPanel>

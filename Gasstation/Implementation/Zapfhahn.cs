@@ -23,6 +23,12 @@ namespace Gasstation.Implementation
         // saves amount of total drained fuel
         private int drainedFuelTotal = 0;
 
+        public string Name 
+        { get
+            {
+                return fuelTypeName;
+            } 
+        }
 
 
         /// <summary>

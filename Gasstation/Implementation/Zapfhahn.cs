@@ -23,7 +23,7 @@ namespace Gasstation.Implementation
         // saves amount of total drained fuel
         private int drainedFuelTotal = 0;
 
-        public string Name 
+        public string ZapfhahnName 
         { get
             {
                 return fuelTypeName;
@@ -40,6 +40,7 @@ namespace Gasstation.Implementation
         public Zapfhahn(string fuelTypeName)
         {
             this.fuelTank = GasstationState.AvailableFuelTanks.Find(tank => tank.GetFuelType().GetFuelTypeName() == fuelTypeName);
+            this.fuelTypeName = fuelTypeName;
         }
 
         public string GetFuelTypeName() 

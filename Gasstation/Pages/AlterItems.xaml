@@ -56,7 +56,7 @@
                 <TextBlock x:Name="AnzZapfsäulenBox" Text="{Binding Path=Zapfsaeule.Zapfhaehne.Count}"></TextBlock>
             </WrapPanel>
             <ComboBox Name="SelectZapfhahn" ItemsSource="{Binding Path=Zapfsaeule.Zapfhaehne}" 
-                    DisplayMemberPath="Name"
+                    DisplayMemberPath="ZapfhahnName"
                     SelectionChanged="SelectZapfseule_SelectionChanged">
             </ComboBox>
             <StackPanel  Margin="0 30">

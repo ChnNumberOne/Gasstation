@@ -47,6 +47,7 @@ namespace Gasstation.Pages
                 ButtonsPanel.Children.Add(button);
             }
             SelectFuelType.ItemsSource = GasstationState.AvailableFuelTypes;
+            SelectZapfhahn.ItemsSource
         }
 
         private void BackToMenuButton_Click(object sender, RoutedEventArgs e)
@@ -57,6 +58,7 @@ namespace Gasstation.Pages
         private void Zapfsaeule_Click(object sender, RoutedEventArgs e, Zapfsaeule zapfsaeule)
         {
             this.DataContext = zapfsaeule;
+            SelectZapfhahn.ItemsSource = zapfsaeule.Zapfhaehne;
             currentlySelectedZapfsaeule = zapfsaeule;
             Button button = (Button)sender;
             ZapfsaeulenIndex.Content = button.Content;
@@ -91,8 +93,9 @@ namespace Gasstation.Pages
 
         private void CreateZapfhahnButton_Click(object sender, RoutedEventArgs e)
         {
-            FuelType fuelType = (FuelType)SelectFuelType.SelectedItem;
-            currentlySelectedZapfsaeule.Zapfhaehne.Add(new Zapfhahn(fuelType.GetFuelTypeName()));
+            FuelType ft = (FuelType)SelectFuelType.SelectedItem;
+            currentlySelectedZapfsaeule.Zapfhaehne.Add(new Zapfhahn(ft.GetFuelTypeName()));
+            RefreshPage();
         }
 
         private void DeleteZapfhahnButton_Click(object sender, RoutedEventArgs e)

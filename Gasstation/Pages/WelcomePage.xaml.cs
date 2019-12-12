@@ -38,7 +38,7 @@ namespace Gasstation.Pages
 
         private void AlterButton_Click(object sender, RoutedEventArgs e)
         {
-
+            MainWindow.SetContent(new AlterItems());
         }
     }
 }

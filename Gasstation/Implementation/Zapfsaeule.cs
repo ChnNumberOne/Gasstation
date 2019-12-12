@@ -11,7 +11,8 @@ namespace Gasstation.Implementation
 
         public Zapfsaeule(List<Zapfhahn> zapfhaehne)
         {
-            this.zapfhaehne = zapfhaehne;
+            Zapfhaehne = new List<Zapfhahn>();
+            this.Zapfhaehne = zapfhaehne;
 
         }
 
@@ -19,18 +20,18 @@ namespace Gasstation.Implementation
 
         private int drainedAmountOfFuel;
 
-        private List<Zapfhahn> zapfhaehne;
+        public List<Zapfhahn> Zapfhaehne { get; set; }
 
 
         public List<Zapfhahn> GetZapfhaene() 
         {
-            return zapfhaehne;
+            return Zapfhaehne;
         }
 
         public Zapfhahn SelectZapfhahnOfFuelType(FuelType requestedFuelType)
         {
 
-            Zapfhahn selectedZapfhahn = this.zapfhaehne.Single(x => x.Equals(requestedFuelType));
+            Zapfhahn selectedZapfhahn = this.Zapfhaehne.Single(x => x.Equals(requestedFuelType));
             if (selectedZapfhahn != null)
             {
                 this.LockAllZapfhaehne();
@@ -46,14 +47,14 @@ namespace Gasstation.Implementation
         // unlocks all zapfhaehne for after purchasing fuel
         public void UnlockAllZapfhaehne()
         {
-            this.zapfhaehne.ForEach(x => x.UnlockZapfhahn());
+            this.Zapfhaehne.ForEach(x => x.UnlockZapfhahn());
 
         }
 
 
         public void LockAllZapfhaehne()
         {
-            this.zapfhaehne.ForEach(x => x.LockZapfhahn());
+            this.Zapfhaehne.ForEach(x => x.LockZapfhahn());
         }
 
 

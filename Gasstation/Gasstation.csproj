@@ -64,10 +64,17 @@
     <Compile Include="Interfaces\IFuelType.cs" />
     <Compile Include="Implementation\Tankstelle.cs" />
     <Compile Include="Implementation\Zapfhahn.cs" />
+    <Compile Include="Pages\AlterItems.xaml.cs">
+      <DependentUpon>AlterItems.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Testfolder\TankstellenKonfiguration.cs" />
     <Page Include="MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Pages\AlterItems.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
     </Page>
     <!--Add XAML files as seen bellow-->
     <Page Include="Styles\MainStyle.xaml">

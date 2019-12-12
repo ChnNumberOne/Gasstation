@@ -46,7 +46,7 @@ namespace Gasstation.Implementation
             return currentInstance ?? (currentInstance = new Tankstelle());
         }
 
-        public ObservableCollection<Zapfsaeule> AvailableZapfsaeulen = new ObservableCollection<Zapfsaeule>();
+        public List<Zapfsaeule> AvailableZapfsaeulen = new List<Zapfsaeule>();
 
         public List<FuelTank> AvailableFuelTanks = new List<FuelTank>();
 
@@ -78,11 +78,8 @@ namespace Gasstation.Implementation
                     IEnumerable<Zapfhahn> zapfhaehneFuerSaeule = this.AvailableFuelTypes.Select(fuelType => new Zapfhahn(fuelType));
                     return new Zapfsaeule(zapfhaehneFuerSaeule.ToList());
                 });
+            AvailableZapfsaeulen.AddRange(zapfsauelen);
 
-            foreach(Zapfsaeule e in zapfsauelen)
-            {
-                this.AvailableZapfsaeulen.Add(e);
-            }
         }
 
       

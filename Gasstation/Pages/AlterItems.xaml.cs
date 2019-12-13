@@ -32,6 +32,9 @@ namespace Gasstation.Pages
 
         private void RefreshPage()
         {
+            DataContext = null;
+            ZapfsaeulenIndex.Content = null;
+            ErrorCostBoxLabel.Text = "";
             ButtonsPanel.Children.Clear();
 
             int i = 0;
@@ -48,6 +51,7 @@ namespace Gasstation.Pages
             }
             SelectZapfhahn.ItemsSource = null;
             SelectFuelType.ItemsSource = GasstationState.AvailableFuelTypes;
+            SelectFuelTypeCostPerL.ItemsSource = GasstationState.AvailableFuelTypes;
         }
 
         private void BackToMenuButton_Click(object sender, RoutedEventArgs e)
@@ -63,11 +67,6 @@ namespace Gasstation.Pages
             Button button = (Button)sender;
             ZapfsaeulenIndex.Content = button.Content;
             currentlySelectedZapfsaeuleButton = button;
-        }
-
-        private void SelectZapfseule_SelectionChanged(object sender, SelectionChangedEventArgs e)
-        {
-
         }
 
         private void ZapfsaeuleAddButton_Click(object sender, RoutedEventArgs e)
@@ -86,21 +85,65 @@ namespace Gasstation.Pages
         private void ZapfsaeuleLoeschenButton_Click(object sender, RoutedEventArgs e)
         {
             //ButtonsPanel.Children.Remove(currentlySelectedZapfsaeuleButton);
-            GasstationState.AvailableZapfsaeulen.Remove(currentlySelectedZapfsaeule);
-            currentlySelectedZapfsaeule = null;
-            RefreshPage();
+            if (currentlySelectedZapfsaeule != null)
+            {
+                if (MessageBox.Show("Delete Zapfsaeule?", "Question", MessageBoxButton.YesNo, MessageBoxImage.Warning) == MessageBoxResult.Yes)
+                {
+                    GasstationState.AvailableZapfsaeulen.Remove(currentlySelectedZapfsaeule);
+                    currentlySelectedZapfsaeule = null;
+                    RefreshPage();
+                }
+            }
         }
 
         private void CreateZapfhahnButton_Click(object sender, RoutedEventArgs e)
         {
-            FuelType ft = (FuelType)SelectFuelType.SelectedItem;
-            currentlySelectedZapfsaeule.Zapfhaehne.Add(new Zapfhahn(ft.GetFuelTypeName()));
-            RefreshPage();
+            if (SelectFuelType.SelectedItem != null && currentlySelectedZapfsaeule != null)
+            {
+                FuelType ft = (FuelType)SelectFuelType.SelectedItem;
+                currentlySelectedZapfsaeule.Zapfhaehne.Add(new Zapfhahn(ft.GetFuelTypeName()));
+                SelectZapfhahn.ItemsSource = null;
+                SelectZapfhahn.ItemsSource = currentlySelectedZapfsaeule.Zapfhaehne;
+            }
         }
 
         private void DeleteZapfhahnButton_Click(object sender, RoutedEventArgs e)
         {
+            if (SelectZapfhahn.SelectedItem != null)
+            {
+                currentlySelectedZapfsaeule.Zapfhaehne.Remove((Zapfhahn)SelectZapfhahn.SelectedItem);
+                SelectZapfhahn.ItemsSource = null;
+                SelectZapfhahn.ItemsSource = currentlySelectedZapfsaeule.Zapfhaehne;
+            }
+        }
 
+        private void SelectFuelTypeCostPerL_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            CurrentCostPerLiter.Content = (((FuelType)SelectFuelTypeCostPerL.SelectedItem).CostPerLiterInCent / 100m).ToString("C2");
+        }
+
+        private void SaveCostPerLiter_Click(object sender, RoutedEventArgs e)
+        {
+            int costInCent;
+            if (int.TryParse(CostPerLiterBox.Text, out costInCent) && SelectFuelTypeCostPerL.SelectedItem != null)
+            {
+                ((FuelType)SelectFuelTypeCostPerL.SelectedItem).CostPerLiterInCent = costInCent;
+                CurrentCostPerLiter.Content = "";
+                CurrentCostPerLiter.Content = (((FuelType)SelectFuelTypeCostPerL.SelectedItem).CostPerLiterInCent / 100m).ToString("C2");
+            }
+        }
+
+        private void CostPerLiterBox_TextChanged(object sender, TextChangedEventArgs e)
+        {
+            int ignoreInt;
+            if (!int.TryParse(CostPerLiterBox.Text, out ignoreInt) && !string.IsNullOrEmpty(CostPerLiterBox.Text))
+            {
+                ErrorCostBoxLabel.Text = "Input not valid";
+            }
+            else
+            {
+                ErrorCostBoxLabel.Text = "";
+            }
         }
     }
 }

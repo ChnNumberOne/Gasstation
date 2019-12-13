@@ -30,6 +30,18 @@ namespace Gasstation.Implementation
             GasstationState.AvailableFuelTypes.Add(this);
         }
 
+        public int CostPerLiterInCent
+        {
+            get
+            {
+                return this.costPerLiterInCent;
+            }
+            set
+            {
+                this.costPerLiterInCent = value;
+            }
+        }
+
         public int GetCostPerLiterInCent()
         {
             return this.costPerLiterInCent;

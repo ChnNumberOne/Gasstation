@@ -14,7 +14,7 @@ namespace Gasstation.Implementation
 
         public Zapfsaeule(List<Zapfhahn> zapfhaehne)
         {
-            Zapfhaehne = new List<Zapfhahn>();
+            //this.Zapfhaehne = new List<Zapfhahn>();
             this.Zapfhaehne = zapfhaehne;
 
         }
@@ -28,19 +28,33 @@ namespace Gasstation.Implementation
         {
             get
             {
-                return zapfhaehne;
+                /*
+                List<Zapfhahn> zpfs = new List<Zapfhahn>();
+                foreach (Zapfhahn zpf in zapfhaehne)
+                {
+                    zpfs.Add(zpf);
+                }
+                return zpfs;*/
+                return this.zapfhaehne;
             } 
             set
             {
-                zapfhaehne = value;
-                OnPropertyChanged("Zapfhaehne");
+                /*
+                BindingList<Zapfhahn> zpfs = new BindingList<Zapfhahn>();
+                foreach (Zapfhahn zpf in value)
+                {
+                    zpfs.Add(zpf);
+                }
+                zapfhaehne = zpfs;
+                OnPropertyChanged("Zapfhaehne");*/
+                this.zapfhaehne = value;
             }
         }
 
 
         public List<Zapfhahn> GetZapfhaene() 
         {
-            return Zapfhaehne;
+            return this.Zapfhaehne;
         }
 
         public Zapfhahn SelectZapfhahnOfFuelType(FuelType requestedFuelType)

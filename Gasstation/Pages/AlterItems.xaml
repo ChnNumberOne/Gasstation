@@ -45,32 +45,44 @@
                 <Button x:Name="ZapfsaeuleLoeschenButton" Margin="0 2" Click="ZapfsaeuleLoeschenButton_Click">Zapfsäule löschen</Button>
             </StackPanel>
         </DockPanel>
-        <StackPanel Grid.Column="1" Grid.Row="1" Margin="10">
-            <WrapPanel>
-                <Label Content="Zapfsäule:" FontSize="25" FontWeight="Medium"></Label>
-                <Label FontSize="25" FontWeight="Medium" Name="ZapfsaeulenIndex"></Label>
-            </WrapPanel>
-            <Label VerticalAlignment="Center">Zapfhähne</Label>
+        <WrapPanel Grid.Column="1" Grid.Row="1" Margin="5">
+            <StackPanel Margin="2">
                 <WrapPanel>
-                <Label FontSize="16">Anzahl Zapfhähne:</Label>
-                <TextBlock x:Name="AnzZapfsäulenBox" Text="{Binding Path=Zapfsaeule.Zapfhaehne.Count}"></TextBlock>
-            </WrapPanel>
-            <ComboBox Name="SelectZapfhahn" ItemsSource="{Binding Path=Zapfsaeule.Zapfhaehne}" 
-                    DisplayMemberPath="ZapfhahnName"
-                    SelectionChanged="SelectZapfseule_SelectionChanged">
-            </ComboBox>
-            <StackPanel  Margin="0 30">
-                <Label FontSize="16">Select fueltype</Label>
+                    <Label Content="Zapfsäule:" FontSize="25" FontWeight="Medium"></Label>
+                    <Label FontSize="25" FontWeight="Medium" Name="ZapfsaeulenIndex"></Label>
+                </WrapPanel>
+                <Label VerticalAlignment="Center">Zapfhähne</Label>
+                <WrapPanel>
+                    <Label FontSize="16">Anzahl Zapfhähne:</Label>
+                    <TextBlock x:Name="AnzZapfsäulenBox" Text="{Binding Path=Zapfsaeule.Zapfhaehne.Count}"></TextBlock>
+                </WrapPanel>
+                <ComboBox Name="SelectZapfhahn" ItemsSource="{Binding Path=Zapfsaeule.Zapfhaehne}" 
+                        DisplayMemberPath="ZapfhahnName">
+                </ComboBox>
+                <StackPanel  Margin="0 30">
+                    <Label FontSize="16">Select fueltype</Label>
 
-                <ComboBox Name="SelectFuelType"
-                      DisplayMemberPath="Name"></ComboBox>
+                    <ComboBox Name="SelectFuelType"
+                          DisplayMemberPath="Name"></ComboBox>
+                </StackPanel>
+                <StackPanel>
+                    <Button Content="Create Zapfhahn" Margin="0 3" Name="CreateZapfhahnButton" Click="CreateZapfhahnButton_Click"></Button>
+                    <Button Content="Delete Zapfhahn" Name="DeleteZapfhahnButton" Click="DeleteZapfhahnButton_Click"></Button>
+                </StackPanel>
+
+                <!--<Label Content="{Binding Path=Tankstelle.id}" FontSize="40" Foreground="Red"></Label>-->
             </StackPanel>
-            <StackPanel>
-                <Button Content="Create Zapfhahn" Margin="0 3" Name="CreateZapfhahnButton" Click="CreateZapfhahnButton_Click"></Button>
-                <Button Content="Delete Zapfhahn" Name="DeleteZapfhahnButton" Click="DeleteZapfhahnButton_Click"></Button>
+            <StackPanel Margin="2">
+                <Label Content="Set cost per liter" FontSize="16"/>
+                <ComboBox Name="SelectFuelTypeCostPerL"
+                          DisplayMemberPath="Name"
+                          SelectionChanged="SelectFuelTypeCostPerL_SelectionChanged"></ComboBox>
+                <Label Name="CurrentCostPerLiter" Content="" FontSize="14"></Label>
+                <Label Content="Cost/Liter in cent:" FontSize="12"/>
+                <TextBox Name="CostPerLiterBox" TextChanged="CostPerLiterBox_TextChanged"></TextBox>
+                <Button Name="SaveCostPerLiter" Content="Save" Margin="0 2" Click="SaveCostPerLiter_Click"></Button>
+                <TextBlock Name="ErrorCostBoxLabel" FontSize="10" Foreground="Red" Text=""></TextBlock>
             </StackPanel>
-            
-            <!--<Label Content="{Binding Path=Tankstelle.id}" FontSize="40" Foreground="Red"></Label>-->
-        </StackPanel>
+        </WrapPanel>
     </Grid>
 </Page>

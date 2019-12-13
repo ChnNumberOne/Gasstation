@@ -18,7 +18,7 @@
 
     <Grid>
         <StackPanel HorizontalAlignment="Center">
-            <Image Source="../Icons/Tankstelle.png" Height="200" Margin="10" HorizontalAlignment="Center">
+            <Image Source="../Images/Zapfsaeule.png" Height="200" Margin="10" HorizontalAlignment="Center">
             </Image>
             <Label HorizontalAlignment="Center" FontSize="40" Padding="-5">Welcome!</Label>
             <TextBlock FontSize="17" HorizontalAlignment="Center">Chose what you want to do next.</TextBlock>

@@ -27,7 +27,7 @@
             <ColumnDefinition></ColumnDefinition>
         </Grid.ColumnDefinitions>
 
-        <Frame Name="QuickDisplayFrame" Grid.ColumnSpan="3" Margin="3"></Frame>
+        <Frame Name="QuickDisplayFrame" Grid.ColumnSpan="3" Margin="3" VerticalAlignment="Center"></Frame>
 
         <StackPanel Grid.Row="1">
             <Button x:Name="CustomerViewButton" Margin="5" Height="50" Click="CustomerViewButton_Click">

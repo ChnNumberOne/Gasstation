@@ -5,7 +5,7 @@
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
       xmlns:local="clr-namespace:Gasstation.Pages"
       mc:Ignorable="d" 
-      d:DesignHeight="450" d:DesignWidth="800"
+      d:DesignHeight="600" d:DesignWidth="950"
       Title="AlterItems">
 
     <Page.Resources>
@@ -18,7 +18,7 @@
     <Grid>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="auto"></ColumnDefinition>
-            <ColumnDefinition Width="auto"></ColumnDefinition>
+            <ColumnDefinition></ColumnDefinition>
             <ColumnDefinition></ColumnDefinition>
         </Grid.ColumnDefinitions>
         <Grid.RowDefinitions>
@@ -45,7 +45,7 @@
                 <Button x:Name="ZapfsaeuleLoeschenButton" Margin="0 2" Click="ZapfsaeuleLoeschenButton_Click">Zapfsäule löschen</Button>
             </StackPanel>
         </DockPanel>
-        <WrapPanel Grid.Column="1" Grid.Row="1" Margin="5">
+        <StackPanel Grid.Column="1" Grid.Row="1" Margin="5" Grid.RowSpan="2">
             <StackPanel Margin="2">
                 <WrapPanel>
                     <Label Content="Zapfsäule:" FontSize="25" FontWeight="Medium"></Label>
@@ -59,7 +59,7 @@
                 <ComboBox Name="SelectZapfhahn" ItemsSource="{Binding Path=Zapfsaeule.Zapfhaehne}" 
                         DisplayMemberPath="ZapfhahnName">
                 </ComboBox>
-                <StackPanel  Margin="0 30">
+                <StackPanel  Margin="0 30 0 5">
                     <Label FontSize="16">Select fueltype</Label>
 
                     <ComboBox Name="SelectFuelType"
@@ -72,7 +72,8 @@
 
                 <!--<Label Content="{Binding Path=Tankstelle.id}" FontSize="40" Foreground="Red"></Label>-->
             </StackPanel>
-            <StackPanel Margin="2">
+            <WrapPanel Margin="2 5">
+                <StackPanel>
                 <Label Content="Set cost per liter" FontSize="16"/>
                 <ComboBox Name="SelectFuelTypeCostPerL"
                           DisplayMemberPath="Name"
@@ -82,9 +83,10 @@
                 <TextBox Name="CostPerLiterBox" TextChanged="CostPerLiterBox_TextChanged"></TextBox>
                 <Button Name="SaveCostPerLiter" Content="Save" Margin="0 2" Click="SaveCostPerLiter_Click"></Button>
                 <TextBlock Name="ErrorCostBoxLabel" FontSize="10" Foreground="Red" Text=""></TextBlock>
-                <Image Source="../Images/Zapfsaeule.png" Width="100"></Image>
-            </StackPanel>
-        </WrapPanel>
+                </StackPanel>
+                    <Image Source="../Images/Zapfsaeule.png" Width="120" Margin="10"></Image>
+            </WrapPanel>
+        </StackPanel>
         <StackPanel Grid.Column="2" Grid.Row="1" Margin="5" Grid.RowSpan="2">
             <WrapPanel>
                 <Image Source="../Images/FuelTankIcon.png" Width="100"></Image>

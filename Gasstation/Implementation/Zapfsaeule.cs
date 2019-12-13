@@ -16,6 +16,7 @@ namespace Gasstation.Implementation
         {
             //this.Zapfhaehne = new List<Zapfhahn>();
             this.Zapfhaehne = zapfhaehne;
+            //GasstationState.AvailableZapfsaeulen.Add(this);
 
         }
 

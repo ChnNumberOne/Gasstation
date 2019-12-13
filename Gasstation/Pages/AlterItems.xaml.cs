@@ -52,6 +52,8 @@ namespace Gasstation.Pages
             SelectZapfhahn.ItemsSource = null;
             SelectFuelType.ItemsSource = GasstationState.AvailableFuelTypes;
             SelectFuelTypeCostPerL.ItemsSource = GasstationState.AvailableFuelTypes;
+            SelectFuelTank.ItemsSource = null;
+            SelectFuelTank.ItemsSource = GasstationState.AvailableFuelTanks;
         }
 
         private void BackToMenuButton_Click(object sender, RoutedEventArgs e)

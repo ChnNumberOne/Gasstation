@@ -15,6 +15,16 @@ namespace Gasstation.Implementation
             this.fuelType = fuelType;
             this.fuelCapacity = fuelCapacity;
             this.currentFuelAmount = 0;
+            GasstationState.AvailableFuelTanks.Add(this);
+        }
+
+        // properties (for GUI)
+        public string FuelTypeName
+        {
+            get
+            {
+                return fuelType.GetFuelTypeName();
+            }
         }
 
         // fields

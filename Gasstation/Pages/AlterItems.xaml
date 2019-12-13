@@ -86,7 +86,15 @@
             </StackPanel>
         </WrapPanel>
         <StackPanel Grid.Column="2" Grid.Row="1" Margin="5">
-            
+            <WrapPanel>
+                <Image Source="../Images/FuelTankIcon.png" Width="150"></Image>
+                <Label>
+                    <TextBlock FontSize="35">Fuel<LineBreak/>Tank</TextBlock>
+                </Label>
+            </WrapPanel>
+            <TextBlock>Select fuel tank</TextBlock>
+            <ComboBox Name="SelectFuelTank"
+                          DisplayMemberPath="FuelTypeName"/>
         </StackPanel>
     </Grid>
 </Page>

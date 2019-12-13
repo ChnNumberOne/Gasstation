@@ -19,11 +19,11 @@ namespace Gasstation.Implementation
         }
 
         // properties (for GUI)
-        public string FuelTypeName
+        public string FuelTankName
         {
             get
             {
-                return fuelType.GetFuelTypeName();
+                return fuelType.GetFuelTypeName() + " (" + fuelCapacity.ToString() + "L)";
             }
         }
 

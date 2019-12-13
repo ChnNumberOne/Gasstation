@@ -49,9 +49,12 @@ namespace Gasstation.Pages
                 button.Click += (s, e) => { Zapfsaeule_Click(s, e, zapfsaeule); };
                 ButtonsPanel.Children.Add(button);
             }
-            SelectZapfhahn.ItemsSource = null;
             SelectFuelType.ItemsSource = GasstationState.AvailableFuelTypes;
             SelectFuelTypeCostPerL.ItemsSource = GasstationState.AvailableFuelTypes;
+            SelectFTFuelType.ItemsSource = GasstationState.AvailableFuelTypes;
+            SelectZapfhahn.ItemsSource = null;
+
+
             SelectFuelTank.ItemsSource = null;
             SelectFuelTank.ItemsSource = GasstationState.AvailableFuelTanks;
         }
@@ -132,6 +135,7 @@ namespace Gasstation.Pages
                 ((FuelType)SelectFuelTypeCostPerL.SelectedItem).CostPerLiterInCent = costInCent;
                 CurrentCostPerLiter.Content = "";
                 CurrentCostPerLiter.Content = (((FuelType)SelectFuelTypeCostPerL.SelectedItem).CostPerLiterInCent / 100m).ToString("C2");
+                CostPerLiterBox.Text = "";
             }
         }
 
@@ -140,11 +144,55 @@ namespace Gasstation.Pages
             int ignoreInt;
             if (!int.TryParse(CostPerLiterBox.Text, out ignoreInt) && !string.IsNullOrEmpty(CostPerLiterBox.Text))
             {
-                ErrorCostBoxLabel.Text = "Input not valid";
+                ErrorCostBoxLabel.Text = "Input not valid.";
             }
             else
             {
                 ErrorCostBoxLabel.Text = "";
+            }
+        }
+
+        private void CreateFuelTankButton_Click(object sender, RoutedEventArgs e)
+        {
+            int amountOfLiters;
+            if (int.TryParse(FuelTankCapacityBox.Text, out amountOfLiters) && SelectFTFuelType.SelectedItem != null)
+            {
+                new FuelTank((FuelType)SelectFTFuelType.SelectedItem, amountOfLiters);
+                FuelTankCapacityBox.Text = "";
+                RefreshPage();
+            }
+        }
+
+        private void DeleteFuelTankButton_Click(object sender, RoutedEventArgs e)
+        {
+            if (SelectFuelTank.SelectedItem != null)
+            {
+                if (MessageBox.Show("Delete fueltank?", "Question", MessageBoxButton.YesNo, MessageBoxImage.Warning) == MessageBoxResult.Yes)
+                {
+                    GasstationState.AvailableFuelTanks.Remove((FuelTank)SelectFuelTank.SelectedItem);
+                    RefreshPage();
+                }
+            }
+        }
+
+        private void SelectFuelTank_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            if (SelectFuelTank.SelectedItem != null)
+            {
+                CurrentFuelText.Text = ((FuelTank)SelectFuelTank.SelectedItem).GetFillPercentage().ToString("n2") + "%";
+            }
+        }
+
+        private void FuelTankCapacityBox_TextChanged(object sender, TextChangedEventArgs e)
+        {
+            int ignoreInt;
+            if (!int.TryParse(FuelTankCapacityBox.Text, out ignoreInt) && !string.IsNullOrEmpty(FuelTankCapacityBox.Text))
+            {
+                ErrorFuelTankBlock.Text = "Input not valid.";
+            }
+            else
+            {
+                ErrorFuelTankBlock.Text = "";
             }
         }
     }

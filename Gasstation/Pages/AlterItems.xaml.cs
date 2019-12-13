@@ -51,6 +51,7 @@ namespace Gasstation.Pages
             }
             SelectFuelType.ItemsSource = GasstationState.AvailableFuelTypes;
             SelectFuelTypeCostPerL.ItemsSource = GasstationState.AvailableFuelTypes;
+            SelectFTFuelType.ItemsSource = null;
             SelectFTFuelType.ItemsSource = GasstationState.AvailableFuelTypes;
             SelectZapfhahn.ItemsSource = null;
 

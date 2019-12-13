@@ -46,8 +46,8 @@ namespace Gasstation.Pages
                 button.Click += (s, e) => { Zapfsaeule_Click(s, e, zapfsaeule); };
                 ButtonsPanel.Children.Add(button);
             }
+            SelectZapfhahn.ItemsSource = null;
             SelectFuelType.ItemsSource = GasstationState.AvailableFuelTypes;
-            SelectZapfhahn.ItemsSource
         }
 
         private void BackToMenuButton_Click(object sender, RoutedEventArgs e)

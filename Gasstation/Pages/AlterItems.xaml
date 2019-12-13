@@ -82,7 +82,11 @@
                 <TextBox Name="CostPerLiterBox" TextChanged="CostPerLiterBox_TextChanged"></TextBox>
                 <Button Name="SaveCostPerLiter" Content="Save" Margin="0 2" Click="SaveCostPerLiter_Click"></Button>
                 <TextBlock Name="ErrorCostBoxLabel" FontSize="10" Foreground="Red" Text=""></TextBlock>
+                <Image Source="../Images/Zapfsaeule.png" Width="100"></Image>
             </StackPanel>
         </WrapPanel>
+        <StackPanel Grid.Column="2" Grid.Row="1" Margin="5">
+            
+        </StackPanel>
     </Grid>
 </Page>

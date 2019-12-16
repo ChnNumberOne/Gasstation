@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Media;
 using Gasstation.Implementation;
 
 namespace Gasstation.Pages
@@ -13,6 +14,7 @@ namespace Gasstation.Pages
 
         public CustomerSimulation()
         {
+            
             InitializeComponent();
             RefreshPage();
         }
@@ -21,13 +23,11 @@ namespace Gasstation.Pages
 
         private Zapfsaeule selectedZapfsaeule;
 
-        private int userLiterAmount;
-
         private Tankstelle tankstelle;
 
-        private void DisplayTotalFuelValue(IFuelType fuelType)
+        private void DisplayTotalFuelValue(IFuelType fuelType, int currentFuelTransaction)
         {
-            CostBox.Text = this.userLiterAmount * (decimal)fuelType.GetCostPerLiterInCent() / 100 + ".-";
+            CostBox.Text = currentFuelTransaction * (decimal)fuelType.GetCostPerLiterInCent() / 100 + ".-";
         }
 
         private void RefreshPage()
@@ -67,7 +67,7 @@ namespace Gasstation.Pages
             {
                 Button zapfhahnButton = new Button()
                 {
-                    // Doppelaufruf ist okay nicht perfekt
+              
                     Content = zapfhahn.GetFuelType().GetFuelTypeName(),
                     MinWidth = 50,
                     Margin = new Thickness(1)
@@ -87,7 +87,7 @@ namespace Gasstation.Pages
             IFuelType fuelType = this.selectedZapfhahn.GetFuelType();
             SelectedFuelLabel.Content = fuelType.GetFuelTypeName();
             CostPerLiterTextBlock.Text = $"{(decimal)fuelType.GetCostPerLiterInCent() / 100}";
-            DisplayTotalFuelValue(fuelType);
+            DisplayTotalFuelValue(fuelType,1);
         }
 
         private void BackToMenu_Click(object sender, RoutedEventArgs e)
@@ -99,33 +99,23 @@ namespace Gasstation.Pages
         {
             
 
-            if (int.TryParse(FuelToTakeOut.Text, out this.userLiterAmount))
-            {
-                ErrorBlock.Text = "";
-
-                // Just a simple test for calculating the cost per liter
-                // Helper Methode Bezug hier gespeicher? UGH probably not good
-                DisplayTotalFuelValue(this.selectedZapfhahn.GetFuelType());
-            }
-            else if (string.IsNullOrEmpty(FuelToTakeOut.Text))
-            {
-                ErrorBlock.Text = "";
-                CostBox.Text = "";
-            }
-            else
-            {
-                ErrorBlock.Text = "Input is invalid!";
-                CostBox.Text = "";
-            }
+        
         }
 
 
         private void TakeFuel_Click(object sender, RoutedEventArgs e)
         {
-            if (selectedZapfsaeule != null)
+            if (selectedZapfsaeule != null && selectedZapfhahn != null)
             {
-                this.tankstelle.PumpGasFromZapfsauele(this.selectedZapfsaeule, this.selectedZapfhahn.GetFuelType(), this.userLiterAmount);
-                // display locked state
+                Button tankingButton = (Button)sender;
+                tankingButton.Content = "Stop";
+                foreach(Button b in ZapfhahnPanel.Children)
+                {
+                    b.IsEnabled = false;
+                    b.Background = Brushes.LightGray;
+                }
+                this.tankstelle.PumpGasFromZapfsauele(this.selectedZapfsaeule, this.selectedZapfhahn.GetFuelType(), DisplayTotalFuelValue);
+          
             }
             else
             {

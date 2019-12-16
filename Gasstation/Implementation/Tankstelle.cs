@@ -8,25 +8,6 @@ namespace Gasstation.Implementation
     public class Tankstelle
     {
 
-        // für Benjamin : 
-
-        // 1.
-
-        // Observable Collection. geht im gleichen Zug zu 2.
-
-        // 2.
-
-        // Die Business Logik soll im grunde genommen die GUI Logik ergänzen
-        // Heisst: was in der Buisnesslogik passiert muss ja jetzt auch angezeigt werden.
-        // Buttons disablen für die Fueltypes wenn einer ausgewählt wurde auf der Zapfsaeule
-        // Nutzer wählt Diesel auf Säule 1
-        // Nutzer wählt Starten
-        // Nutzer wählt Benzin auf Säule 1 <- soll das GUI nicht erlauben Button.disable
-
-
-        // 3. Feld Amount of Fuel to Take out -> remove
-
-
         // ODERMATT WIRD TESTEN:
         // GRUNDFUNKTIONEN
         // ZWEITE SEITE:
@@ -34,8 +15,6 @@ namespace Gasstation.Implementation
         // FEHLERKONTROLLE UMSETZEN
         // DATENPERSISTENZ UND EXCEPTIONHANDLING MÜSSEN UMGESETZT WERDEN
         // DOKUMENTATION MUSS SO VERFASST SEIN, DASS ODERMATT DRAUSKOMMT
-
-        // ObservableCollection
 
 
         // Singleton
@@ -51,6 +30,10 @@ namespace Gasstation.Implementation
         public List<FuelTank> AvailableFuelTanks = new List<FuelTank>();
 
         public List<FuelType> AvailableFuelTypes = new List<FuelType>();
+
+        public List<Transaction> OpenTransactions = new List<Transaction>();
+
+        public List<Transaction> CompletedTransactions = new List<Transaction>();
 
         // Konstruktor mit Basiswerten Initialisierung
         private Tankstelle()
@@ -91,31 +74,26 @@ namespace Gasstation.Implementation
         }
 
         // Sprit Bezug
-        public void PumpGasFromZapfsauele(Zapfsaeule zapfsaeule, IFuelType fuelType, decimal amount)
+        public void PumpGasFromZapfsauele(Zapfsaeule zapfsaeule, IFuelType fuelType, Action<FuelType,int> callback)
         {
 
-            // Zapfsaeule sperren fals nicht gesperrt und Tankprozess starten
             if (zapfsaeule.isTanking())
-            {
-                zapfsaeule.StopTankingTimer();
+            {   //2
+                // beenden vom Tankprozess
+                Transaction finishedTransaction = zapfsaeule.StopTankingTimer();
+                OpenTransactions.Add(finishedTransaction);
             }
             else
-            {
+            {   //1
+                // wenn nicht gesperrt starten
                 if (!zapfsaeule.isLocked())
                 {
                     zapfsaeule.Lock();
-
-                    Console.WriteLine(fuelType);
-
                     FuelTank currentFuelTank = this.AvailableFuelTanks.Find(x => x.GetFuelType() == fuelType);
-
-                    zapfsaeule.StartTankingTimer(currentFuelTank);
+                    zapfsaeule.StartTankingTimer(currentFuelTank, callback);
 
                 }
             }
-         
-
-            // Timer abbrechen über Zapfsaeule.StopTankingTimer()
         }
     }
 }

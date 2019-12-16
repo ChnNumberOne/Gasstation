@@ -63,13 +63,9 @@
               <WrapPanel>
                 <Label FontSize="20">Cost Per liter:</Label>
                 <TextBlock Name="CostPerLiterTextBlock" Text=" "></TextBlock>
-              </WrapPanel>
-              <Label FontSize="20">Amount of fuel to take out:</Label>
-              <TextBox Name="FuelToTakeOut" TextChanged="FuelToTakeOut_TextChanged"></TextBox>
-              <TextBlock Name="ErrorBlock" Foreground="Red" FontSize="10" Text=" "></TextBlock>
-              <WrapPanel>
+             
                 <Label FontSize="20" Content="Cost: "></Label>
-                <TextBlock Name="CostBox"></TextBlock>
+                    <TextBlock Name="CostBox"></TextBlock>
               </WrapPanel>
               <Button Name="TakeFuel" Margin="0 3" Click="TakeFuel_Click">Take Fuel</Button>
             </StackPanel>

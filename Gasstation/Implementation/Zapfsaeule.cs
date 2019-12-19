@@ -99,6 +99,15 @@ namespace Gasstation.Implementation
         }
 
 
+        // Creates a pump nozzle for the current gas pump
+        public void CreatePumpNozzle(FuelType fuelType)
+        {
+            if (!this.Zapfhaehne.Exists(x => x.GetFuelTypeName() == fuelType.GetFuelTypeName()))
+            {
+                Zapfhahn zapfhahn = new Zapfhahn(fuelType.GetFuelTypeName());
+                this.Zapfhaehne.Add(zapfhahn);
+            }
+        }
 
 
 

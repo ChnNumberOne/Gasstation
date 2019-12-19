@@ -104,11 +104,9 @@ namespace Gasstation.Pages
 
         private void CreateZapfhahnButton_Click(object sender, RoutedEventArgs e)
         {
-            if (SelectFuelType.SelectedItem != null && currentlySelectedZapfsaeule != null && 
-                !currentlySelectedZapfsaeule.Zapfhaehne.Exists(x => x.GetFuelTypeName() == ((FuelType)SelectFuelType.SelectedItem).GetFuelTypeName()))
+            if (SelectFuelType.SelectedItem != null && currentlySelectedZapfsaeule != null)
             {
-                FuelType ft = (FuelType)SelectFuelType.SelectedItem;
-                currentlySelectedZapfsaeule.Zapfhaehne.Add(new Zapfhahn(ft.GetFuelTypeName()));
+                currentlySelectedZapfsaeule.CreatePumpNozzle((FuelType)SelectFuelType.SelectedItem);
                 SelectZapfhahn.ItemsSource = null;
                 SelectZapfhahn.ItemsSource = currentlySelectedZapfsaeule.Zapfhaehne;
             }

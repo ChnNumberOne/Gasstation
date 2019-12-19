@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Gasstation.Implementation
 {
-    public abstract class FuelType : IFuelType
+    public class FuelType : IFuelType
     {
 
         protected int costPerLiterInCent;
@@ -27,6 +27,19 @@ namespace Gasstation.Implementation
 
         public FuelType()
         {
+            GasstationState.AvailableFuelTypes.Add(this);
+        }
+
+        public FuelType(string name)
+        {
+            this.Name = name;
+            GasstationState.AvailableFuelTypes.Add(this);
+        }
+
+
+        public FuelType(string name, int fuelCapacity)
+        {
+            new FuelTank(this, fuelCapacity);
             GasstationState.AvailableFuelTypes.Add(this);
         }
 

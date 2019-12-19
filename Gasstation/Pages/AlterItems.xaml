@@ -109,16 +109,21 @@
                 <Button Margin="0 0 1 0" Name="FillTankButton" Content="Fill tank" Click="FillTankButton_Click"/>
                 <Button Margin="1 0 0 0" Name="EmptyFuel" Content="Dump fuel" Click="EmptyFuel_Click"/>
             </UniformGrid>
-            <TextBlock FontFamily="12" Margin="0 10">Fuel type</TextBlock><!--
-            <ComboBox Name="SelectFTFuelType"
-                          DisplayMemberPath="Name"></ComboBox>
-            <TextBlock FontFamily="12">Fuel capacity (Liter):</TextBlock>
-            <TextBox Name="FuelTankCapacityBox" TextChanged="FuelTankCapacityBox_TextChanged"></TextBox>
-            <TextBlock Name="ErrorFuelTankBlock" Text="" FontSize="12" Foreground="Red"></TextBlock>
-            <Button Margin="0 2" Name="CreateFuelTankButton" Click="CreateFuelTankButton_Click">Create FuelTank</Button>
-            <Button Name="DeleteFuelTankButton" Click="DeleteFuelTankButton_Click">Delete FuelTank</Button>
-            -->
-            
+            <Label FontSize="20" Margin="0 10 0 0"> Create fuel type</Label>
+            <UniformGrid Columns="2">
+                <TextBlock FontSize="14" Text="Fuel type name:"/>
+                <TextBlock Name="FuelTypeErrorBox" FontSize="14" Foreground="Red" Text="" HorizontalAlignment="Right"/>
+            </UniformGrid>
+            <TextBox Name="FuelTypeNameBox" FontSize="14" Height="25" TextChanged="FuelTypeNameBox_TextChanged"/>
+            <UniformGrid Columns="2">
+                <TextBlock FontSize="14" Text="Max. tank capacity:"/>
+                <TextBlock Name="MaxTankErrorBlock" FontSize="14" Foreground="Red" Text="" HorizontalAlignment="Right"/>
+            </UniformGrid>
+            <UniformGrid Columns="3">
+                <TextBox FontSize="14" Height="25" Name="MaxTankCapacityBox" TextChanged="MaxTankCapacityBox_TextChanged"/>
+                <Label FontSize="14" Content="Liters"/>
+            </UniformGrid>
+            <Button Content="Create fueltype" Name="CreateFuelTypeButton" Margin="0 2" Click="CreateFuelTypeButton_Click"/>
         </StackPanel>
     </Grid>
 </Page>

@@ -196,6 +196,43 @@ namespace Gasstation.Pages
                 FuelTankBox.Text = "";
             }
         }
+
+        private void FuelTypeNameBox_TextChanged(object sender, TextChangedEventArgs e)
+        {
+            if (GasstationState.FuelTypeExists(FuelTypeNameBox.Text))
+            {
+                FuelTypeErrorBox.Text = "Fueltype already exists!";
+            }
+            else FuelTypeErrorBox.Text = "";
+        }
+
+        private void MaxTankCapacityBox_TextChanged(object sender, TextChangedEventArgs e)
+        {
+            int ignoreInt;
+            if (!int.TryParse(MaxTankCapacityBox.Text, out ignoreInt) && !string.IsNullOrEmpty(MaxTankCapacityBox.Text) || MaxTankCapacityBox.Text.Contains('-'))
+            {
+                MaxTankErrorBlock.Text = "Input not valid.";
+            }
+            else
+            {
+                MaxTankErrorBlock.Text = "";
+            }
+        }
+
+        private void CreateFuelTypeButton_Click(object sender, RoutedEventArgs e)
+        {
+            int maxCapacity;
+            if (FuelTypeErrorBox.Text == "" && MaxTankErrorBlock.Text == ""
+                && !string.IsNullOrEmpty(MaxTankCapacityBox.Text)
+                && !string.IsNullOrEmpty(FuelTypeNameBox.Text)
+                && int.TryParse(MaxTankCapacityBox.Text, out maxCapacity))
+            {
+                new FuelType(FuelTypeNameBox.Text, maxCapacity);
+                //FuelTypeNameBox.Text = "";
+                MaxTankCapacityBox.Text = "";
+                SelectFuelType.SelectedItem = null;
+            }
+        }
         /*
 private void CreateFuelTankButton_Click(object sender, RoutedEventArgs e)
 {
@@ -214,8 +251,8 @@ if (SelectFuelTank.SelectedItem != null)
 {
 if (MessageBox.Show("Delete fueltank?", "Question", MessageBoxButton.YesNo, MessageBoxImage.Warning) == MessageBoxResult.Yes)
 {
-  GasstationState.AvailableFuelTanks.Remove((FuelTank)SelectFuelTank.SelectedItem);
-  RefreshPage();
+GasstationState.AvailableFuelTanks.Remove((FuelTank)SelectFuelTank.SelectedItem);
+RefreshPage();
 }
 }
 }

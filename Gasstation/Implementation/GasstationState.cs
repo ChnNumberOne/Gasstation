@@ -16,6 +16,13 @@ namespace Gasstation.Implementation
 
         public static List<Zapfsaeule> AvailableZapfsaeulen = new List<Zapfsaeule>();
 
-
+        public static bool FuelTypeExists(string fuelTypeName)
+        {
+            if (AvailableFuelTypes.Exists(x => x.GetFuelTypeName().ToUpper() == fuelTypeName.ToUpper()))
+            {
+                return true;
+            }
+            return false;
+        }
     }
 }

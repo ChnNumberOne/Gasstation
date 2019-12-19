@@ -78,7 +78,7 @@
                 </ScrollViewer>
                 <Label FontSize="20">Betrag:</Label>
                 <TextBlock Name="Betrag"></TextBlock>
-                <Button Name="PayBetrag">Pay!</Button>
+                <Button Name="PayBetrag" Click="PayBetrag_Click">Pay!</Button>
             </StackPanel>
         </Grid>
     </Grid>

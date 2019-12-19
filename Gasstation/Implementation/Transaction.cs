@@ -32,5 +32,16 @@ namespace Gasstation.Implementation
 
         private int amount = 0;
 
+        public int GetCostPerLiterInCent()
+        {
+            return this.costPerLiterInCent;
+        }
+
+        public int GetTotalFuelAmount()
+        {
+            return this.amount;
+        }
+            
+
     }
 }

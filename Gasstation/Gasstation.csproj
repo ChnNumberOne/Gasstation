@@ -58,8 +58,11 @@
     <Compile Include="Implementation\Benzin.cs" />
     <Compile Include="Implementation\Bleifrei.cs" />
     <Compile Include="Implementation\Config.cs" />
+    <Compile Include="Implementation\Container.cs" />
     <Compile Include="Implementation\Diesel.cs" />
     <Compile Include="Implementation\FuelType.cs" />
+    <Compile Include="Implementation\Kassenautomat.cs" />
+    <Compile Include="Implementation\Tankstellenkasse.cs" />
     <Compile Include="Implementation\Transaction.cs" />
     <Compile Include="Interfaces\IFuelType.cs" />
     <Compile Include="Implementation\Tankstelle.cs" />
@@ -147,6 +150,5 @@
   <ItemGroup>
     <None Include="App.config" />
   </ItemGroup>
-  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

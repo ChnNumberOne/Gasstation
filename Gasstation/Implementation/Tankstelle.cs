@@ -31,9 +31,12 @@ namespace Gasstation.Implementation
 
         public List<FuelType> AvailableFuelTypes = new List<FuelType>();
 
-        public List<Transaction> OpenTransactions = new List<Transaction>();
+        public List<Container> Cointypes = new List<Container>();
 
-        public List<Transaction> CompletedTransactions = new List<Transaction>();
+        public Tankstellenkasse tankstellenkasse;
+
+
+      
 
         // Konstruktor mit Basiswerten Initialisierung
         private Tankstelle()
@@ -63,6 +66,15 @@ namespace Gasstation.Implementation
                 });
             AvailableZapfsaeulen.AddRange(zapfsauelen);
 
+
+            // Erstellen einer Tankstellenkasse
+            this.Cointypes.Add(new Container(10, 0, 1000, 100, 900, 100));
+            this.Cointypes.Add(new Container(20, 0, 1000, 100, 900, 100));
+            this.Cointypes.Add(new Container(50, 0, 1000, 100, 900, 100));
+            this.Cointypes.Add(new Container(100, 0, 1000, 100, 900, 100));
+            this.Cointypes.Add(new Container(200, 0, 1000, 100, 900, 100));
+            this.Cointypes.Add(new Container(500, 0, 1000, 100, 900, 100));
+            this.tankstellenkasse = new Tankstellenkasse(this.Cointypes, 10000);
         }
 
       
@@ -74,14 +86,14 @@ namespace Gasstation.Implementation
         }
 
         // Sprit Bezug
-        public void PumpGasFromZapfsauele(Zapfsaeule zapfsaeule, IFuelType fuelType, Action<FuelType,int> callback)
+        public void PumpGasFromZapfsauele(Zapfsaeule zapfsaeule, IFuelType fuelType, Action<FuelType,int,Zapfsaeule> callback)
         {
 
             if (zapfsaeule.isTanking())
             {   //2
                 // beenden vom Tankprozess
-                Transaction finishedTransaction = zapfsaeule.StopTankingTimer();
-                OpenTransactions.Add(finishedTransaction);
+                // Beendete Transaktion speichern
+                this.tankstellenkasse.AddTransaction(zapfsaeule.StopTankingTimer());
             }
             else
             {   //1
@@ -94,6 +106,21 @@ namespace Gasstation.Implementation
 
                 }
             }
+        }
+
+        // TODO: BENJAMIN
+        public void PayBill()
+        {
+            // Das hier brauche ich Dringend wenn du das GUI was du erstellst für die Selektion der Transaktion aus der Liste verbesert hast von oben kannst du hier noch
+            // schauen, dass du eine aus dem stackpanel selektieren kannst und das hier als beispiel benutzt dafür. Das hier ist der Button mit dem wir bezahlen und ich brauch die Selektion der Transaktion dort.
+            // Vielleicht hast du ne Idee für das evtl brauchts dafür ne Binding List / Observable Collection. Probier mal was aus
+         
+
+        }
+
+        public List<Transaction> GetTransactionList()
+        {
+            return this.tankstellenkasse.GetUnpaidTransactions();
         }
     }
 }

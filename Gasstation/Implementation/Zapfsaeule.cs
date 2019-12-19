@@ -31,6 +31,8 @@ namespace Gasstation.Implementation
 
         private FuelType currentFuelTransactionFuelType;
 
+        private Transaction openTransaction;
+
 
         public List<Zapfhahn> GetZapfhaene()
         {
@@ -64,7 +66,13 @@ namespace Gasstation.Implementation
             return lockStatus;
         }
 
-        public void StartTankingTimer(FuelTank currentFuelTank, Action<FuelType,int> callback)
+
+        /// <summary>
+        /// Starts the Tanking Process and calls upon a Callback Method to Update the GUI
+        /// </summary>
+        /// <param name="currentFuelTank"></param>
+        /// <param name="callback"></param>
+        public void StartTankingTimer(FuelTank currentFuelTank, Action<FuelType,int,Zapfsaeule> callback)
         {
             this.currentFuelTransactionAmountOfLiter = 0;
             this.currentFuelTransactionFuelType = currentFuelTank.GetFuelType();
@@ -73,15 +81,20 @@ namespace Gasstation.Implementation
             this.tankingTimer.Tick += (s, e) =>
             {
                 this.currentFuelTransactionAmountOfLiter += currentFuelTank.DrainFuel(1);
-                callback(currentFuelTank.GetFuelType(), this.currentFuelTransactionAmountOfLiter);
+                // WARNING -> DASS HIER IST EINE CALLBACK METHODE AUFS GUI DAS THIS BEDEUTET, DASS ES SICH UM DIESES OBJEKT HANDELT ALS EVENTABSENDER. DO NOT TOUCH WITHOUT ASKING ME ABOUT THIS
+                callback(currentFuelTank.GetFuelType(), this.currentFuelTransactionAmountOfLiter, this);
             };
             this.tankingTimer.Interval = TimeSpan.FromSeconds(1);
             this.tankingTimer.Start();
         }
+
+        /// <summary>
+        /// Stops the timer and the Tanking Process and returns a Transaction
+        /// </summary>
+        /// <returns></returns>
         public Transaction StopTankingTimer()
         {
             this.tankingTimer.Stop();
-            // Transaktion wird erstellt
             return new Transaction(this.currentFuelTransactionFuelType.GetCostPerLiterInCent(), this.currentFuelTransactionAmountOfLiter);
         }
 
@@ -89,7 +102,7 @@ namespace Gasstation.Implementation
         {
             return this.tankingState;
         }
-        
+
  
 
 

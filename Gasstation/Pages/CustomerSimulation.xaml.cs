@@ -25,15 +25,25 @@ namespace Gasstation.Pages
 
         private Tankstelle tankstelle;
 
-        private void DisplayTotalFuelValue(IFuelType fuelType, int currentFuelTransaction)
+        private void DisplayTotalFuelValue(IFuelType fuelType, int currentFuelTransaction, Zapfsaeule runningZapfsaeule)
         {
-            CostBox.Text = currentFuelTransaction * (decimal)fuelType.GetCostPerLiterInCent() / 100 + ".-";
+            if(runningZapfsaeule == selectedZapfsaeule)
+            {
+
+                // TODO: BENJAMIN
+                // Das hier updated nun sauber aber wenn wir die Zapfsaeule wechseln nicht instant sondern erst beim nächsten TimerInterval / Elapsed
+                // überleg dir obs besser wäre das direkt zu updaten beim change via Button oder ob wir einfach die Requenz vom TImer erhöhen sollen
+                // ACHTUNG TIMER FREQUENZ ERHÖHEN bedeutet schnelleres Tanken was wir entgenewirken müssen
+                CostBox.Text = currentFuelTransaction * (decimal)fuelType.GetCostPerLiterInCent() / 100 + ".-";
+            }
+            
         }
 
         private void RefreshPage()
         {
             // Singleton Initalisieren
             this.tankstelle = Tankstelle.Current();
+
 
             // Clear GUI
             ZapfsaeulenPanel.Children.Clear();
@@ -52,6 +62,20 @@ namespace Gasstation.Pages
                 // Set Function on Button
                 zapfsaeuleButton.Click += (s, e) => SelectZapfsauele(zapfsaeule);
                 ZapfsaeulenPanel.Children.Add(zapfsaeuleButton);
+            }
+
+            //TODO: BENJAMIN
+            // Das hier kümmert sich um die Anzeige der Transaktionen auf der Kasse.
+            // Das wird aber nur refreshed wenn wir ins menu zurückgehen. obviously. Versuch das hier sauber anzuzeigen
+            // würd mir n haufen stress abnehmen -> der foreach unten für die anzeige der Kasse
+
+            foreach(Transaction t in tankstelle.GetTransactionList())
+            {
+                // Anzeige der Transaktion
+                // hier kann dann acuh die funktion mit ne closure auf den click oder so gelegt werden um eine Selektion fürs pay zu machen?
+                TextBlock printTextBlock = new TextBlock();
+                printTextBlock.Text = t.GetTotalFuelAmount().ToString();
+                QuittungenPanel.Children.Add(printTextBlock);
             }
         }
 
@@ -87,7 +111,9 @@ namespace Gasstation.Pages
             IFuelType fuelType = this.selectedZapfhahn.GetFuelType();
             SelectedFuelLabel.Content = fuelType.GetFuelTypeName();
             CostPerLiterTextBlock.Text = $"{(decimal)fuelType.GetCostPerLiterInCent() / 100}";
-            DisplayTotalFuelValue(fuelType,1);
+            // TODO: BENJAMIN
+            // das hier sollte das zwar updatene von oben aber vielleicht hab ich hier was falsch überlegt.
+            DisplayTotalFuelValue(fuelType,1, selectedZapfsaeule);
         }
 
         private void BackToMenu_Click(object sender, RoutedEventArgs e)
@@ -122,6 +148,14 @@ namespace Gasstation.Pages
                 // Errorhandling GUI
                 Console.WriteLine("Keine Zapfsaeule gewaehlt");
             }
+        }
+        // TODO: BENJAMIN
+        // Brauch hier ASAP aufm GUI was zum selektieren der Noten zum bezahlen
+        // Prio 1 nach Bugfixes sonst kann ich nicht weitermachen.
+        private void PayBetrag_Click(object sender, RoutedEventArgs e)
+        {
+            // ka isch crap
+            //this.tankstelle.PayBill(this.selectedZapfsaeule);
         }
     }
 }

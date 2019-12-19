@@ -104,13 +104,15 @@ namespace Gasstation.Pages
 
         private void CreateZapfhahnButton_Click(object sender, RoutedEventArgs e)
         {
-            if (SelectFuelType.SelectedItem != null && currentlySelectedZapfsaeule != null)
+            if (SelectFuelType.SelectedItem != null && currentlySelectedZapfsaeule != null && 
+                !currentlySelectedZapfsaeule.Zapfhaehne.Exists(x => x.GetFuelTypeName() == ((FuelType)SelectFuelType.SelectedItem).GetFuelTypeName()))
             {
                 FuelType ft = (FuelType)SelectFuelType.SelectedItem;
                 currentlySelectedZapfsaeule.Zapfhaehne.Add(new Zapfhahn(ft.GetFuelTypeName()));
                 SelectZapfhahn.ItemsSource = null;
                 SelectZapfhahn.ItemsSource = currentlySelectedZapfsaeule.Zapfhaehne;
             }
+            SelectFuelType.SelectedItem = null;
         }
 
         private void DeleteZapfhahnButton_Click(object sender, RoutedEventArgs e)
@@ -173,7 +175,6 @@ namespace Gasstation.Pages
             {
                 FuelTankErrorBlock.Text = "";
             }
-
         }
 
         private void FillTankButton_Click(object sender, RoutedEventArgs e)

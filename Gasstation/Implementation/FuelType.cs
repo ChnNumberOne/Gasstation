@@ -39,6 +39,7 @@ namespace Gasstation.Implementation
 
         public FuelType(string name, int fuelCapacity)
         {
+            this.name = name;
             new FuelTank(this, fuelCapacity);
             GasstationState.AvailableFuelTypes.Add(this);
         }

@@ -228,7 +228,7 @@ namespace Gasstation.Pages
                 && int.TryParse(MaxTankCapacityBox.Text, out maxCapacity))
             {
                 new FuelType(FuelTypeNameBox.Text, maxCapacity);
-                //FuelTypeNameBox.Text = "";
+                FuelTypeNameBox.Text = "";
                 MaxTankCapacityBox.Text = "";
                 SelectFuelType.SelectedItem = null;
             }

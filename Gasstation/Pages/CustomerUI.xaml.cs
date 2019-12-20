@@ -88,16 +88,19 @@ namespace Gasstation.Pages
         {
             // ka isch crap
             //this.tankstelle.PayBill(this.selectedZapfsaeule);
-            KassenUI kassenUI = new KassenUI(selectedTransaction);
+            KassenUI kassenUI = new KassenUI(selectedTransaction, this);
             kassenUI.Show();
-            
+
+            PayBetrag.IsEnabled = false;
+            PayBetrag.Background = Brushes.LightGray;
         }
 
 
         // AN: THOMAS
         // Hier ist mal so ein basic refresh der die buttons erstellt. Kannst unten den button click even ändern wenn du willst
-        private void RefreshTransactions()
+        public void RefreshTransactions()
         {
+            QuittungenPanel.Children.Clear();
             foreach (Transaction transaction in tankstelle.GetTransactionList())
             {
                 Button button = new Button()
@@ -108,6 +111,7 @@ namespace Gasstation.Pages
                 button.Click += (s, e) => { TransactionButton_Click(s, e, transaction); };
                 QuittungenPanel.Children.Add(button);
             }
+            BetragBlock.Text = "";
         }
 
         // AN: THOMAS

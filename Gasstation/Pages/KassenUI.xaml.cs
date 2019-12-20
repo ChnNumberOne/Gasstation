@@ -23,9 +23,11 @@ namespace Gasstation.Pages
         private Transaction transaction;
         private static List<KassenUI> kassenUIs = new List<KassenUI>();
         private List<int> insertedMoney;
+        private CustomerUI CustomerUI;
 
-        public KassenUI(Transaction transaction)
+        public KassenUI(Transaction transaction, CustomerUI customerUI)
         {
+            this.CustomerUI = customerUI;
             insertedMoney = new List<int>();
             foreach (KassenUI kassenUI in kassenUIs)
             {
@@ -82,6 +84,7 @@ namespace Gasstation.Pages
 
         private void TakeRetourButton_Click(object sender, RoutedEventArgs e)
         {
+            CustomerUI.RefreshTransactions();
             this.Close();
         }
 

@@ -42,13 +42,13 @@
         </UniformGrid>
         
         <UniformGrid Columns="2" Background="DarkGray" Grid.Column="1" Grid.Row="1">
-            <Label FontSize="25" Content="Return:"/>
+            <Label FontSize="25" Content="Change:"/>
             <Label FontSize="25" Name="ReturnLabel"/>
         </UniformGrid>
 
         <Button Name="PayButton" Click="PayButton_Click" Grid.Row="2" IsEnabled="False" Background="LightGray" Margin="2">Pay!</Button>
         <DockPanel Background="DarkGray" Grid.Column="1" Grid.Row="2">
-            <Button x:Name="TakeRetourButton" Click="TakeRetourButton_Click" IsEnabled="False" Background="LightGray" Margin="2">Take return money</Button>
+            <Button x:Name="TakeRetourButton" Click="TakeRetourButton_Click" IsEnabled="False" Background="LightGray" Margin="2">Take change</Button>
         </DockPanel>
     </Grid>
 </Window>

@@ -70,12 +70,19 @@
     <Compile Include="Pages\CustomerUI.xaml.cs">
       <DependentUpon>CustomerUI.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Pages\KassenUI.xaml.cs">
+      <DependentUpon>KassenUI.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Testfolder\TankstellenKonfiguration.cs" />
     <Page Include="MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
     <Page Include="Pages\CustomerUI.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Pages\KassenUI.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

@@ -25,6 +25,8 @@ namespace Gasstation.Pages
 
         private Zapfsaeule selectedZapfsaeule;
 
+        private Transaction selectedTransaction;
+
         private Tankstelle tankstelle;
 
         public CustomerUI()
@@ -40,38 +42,35 @@ namespace Gasstation.Pages
 
             SelectedFuelLabel.Content = selectedZapfhahn.GetFuelType().GetFuelTypeName();
             CostPerLiterTextBlock.Text = $"{(decimal)selectedZapfhahn.GetFuelType().GetCostPerLiterInCent() / 100}.-";
+            CostBox.Text = selectedZapfsaeule.GetCurrentFuelTransaction().ToString() + ".-";
 
-            foreach (Transaction t in tankstelle.GetTransactionList())
-            {
-                // Anzeige der Transaktion
-                // hier kann dann acuh die funktion mit ne closure auf den click oder so gelegt werden um eine Selektion fürs pay zu machen?
-                TextBlock printTextBlock = new TextBlock();
-                printTextBlock.Text = t.GetTotalFuelAmount().ToString();
-                QuittungenPanel.Children.Add(printTextBlock);
-            }
+            RefreshTransactions();
         }
-
-        private void FuelToTakeOut_TextChanged(object sender, TextChangedEventArgs e)
-        {
-
-
-
-        }
-
 
         private void TakeFuel_Click(object sender, RoutedEventArgs e)
         {
             if (selectedZapfsaeule != null && selectedZapfhahn != null)
             {
                 Button tankingButton = (Button)sender;
-                tankingButton.Content = "Stop";
-                foreach (Button b in CustomerSimulation.AccessZapfhahnPanel.Children)
+                if (tankingButton.Content.ToString() != "Stop")
                 {
-                    b.IsEnabled = false;
-                    b.Background = Brushes.LightGray;
-                }
-                this.tankstelle.PumpGasFromZapfsauele(this.selectedZapfsaeule, this.selectedZapfhahn.GetFuelType(), DisplayTotalFuelValue);
 
+                    tankingButton.Content = "Stop";
+                    foreach (Button b in CustomerSimulation.AccessZapfhahnPanel.Children)
+                    {
+                        b.IsEnabled = false;
+                        b.Background = Brushes.LightGray;
+                    }
+                    this.tankstelle.PumpGasFromZapfsauele(this.selectedZapfsaeule, this.selectedZapfhahn.GetFuelType(), DisplayTotalFuelValue);
+                }
+                else
+                {
+                    tankingButton.Content = "Go pay";
+                    tankingButton.Background = Brushes.LightGray;
+                    tankingButton.IsEnabled = false;
+                    selectedZapfsaeule.StopTankingTimer();
+                    RefreshTransactions();
+                }
             }
             else
             {
@@ -86,8 +85,36 @@ namespace Gasstation.Pages
         {
             // ka isch crap
             //this.tankstelle.PayBill(this.selectedZapfsaeule);
+            KassenUI kassenUI = new KassenUI(selectedTransaction);
+            kassenUI.Show();
         }
 
+
+        // AN: THOMAS
+        // Hier ist mal so ein basic refresh der die buttons erstellt. Kannst unten den button click even ändern wenn du willst
+        private void RefreshTransactions()
+        {
+            foreach (Transaction transaction in tankstelle.GetTransactionList())
+            {
+                Button button = new Button()
+                {
+                    Content = transaction.GetCostInMoney().ToString("C2"),
+                    Margin = new Thickness(2)
+                };
+                button.Click += (s, e) => { TransactionButton_Click(s, e, transaction); };
+                QuittungenPanel.Children.Add(button);
+            }
+        }
+
+        // AN: THOMAS
+        //Hier ist der dynamic button click event
+        private void TransactionButton_Click(object sender, RoutedEventArgs e, Transaction transaction)
+        {
+            BetragBlock.Text = (transaction.GetTotalFuelAmount() * (float)transaction.GetCostPerLiterInCent() / 100).ToString("C2");
+            selectedTransaction = transaction;
+            PayBetrag.IsEnabled = true;
+            PayBetrag.ClearValue(BackgroundProperty);
+        }
 
         private void DisplayTotalFuelValue(IFuelType fuelType, int currentFuelTransaction, Zapfsaeule runningZapfsaeule)
         {

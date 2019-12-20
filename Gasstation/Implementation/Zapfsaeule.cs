@@ -95,6 +95,7 @@ namespace Gasstation.Implementation
         public Transaction StopTankingTimer()
         {
             this.tankingTimer.Stop();
+            this.tankingState = false;
             return new Transaction(this.currentFuelTransactionFuelType.GetCostPerLiterInCent(), this.currentFuelTransactionAmountOfLiter);
         }
 

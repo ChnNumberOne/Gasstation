@@ -26,6 +26,7 @@ namespace Gasstation.Implementation
         {
             this.costPerLiterInCent = costPerLiterInCent;
             this.amount = amount;
+            Tankstelle.Current().tankstellenkasse.AddTransaction(this);
         }
 
         private int costPerLiterInCent = 0;
@@ -35,6 +36,11 @@ namespace Gasstation.Implementation
         public int GetCostPerLiterInCent()
         {
             return this.costPerLiterInCent;
+        }
+
+        public float GetCostInMoney()
+        {
+            return (this.GetTotalFuelAmount() * (float)this.GetCostPerLiterInCent() / 100);
         }
 
         public int GetTotalFuelAmount()

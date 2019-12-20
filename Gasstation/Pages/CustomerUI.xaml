@@ -53,9 +53,11 @@
 
                 </StackPanel>
             </ScrollViewer>
-            <Label FontSize="20">Betrag:</Label>
-            <TextBlock Name="Betrag"></TextBlock>
-            <Button Name="PayBetrag" Click="PayBetrag_Click">Pay!</Button>
+            <UniformGrid Columns="2">
+                <Label FontSize="20">Betrag:</Label>
+                <TextBlock Name="BetragBlock" HorizontalAlignment="Right"></TextBlock>
+            </UniformGrid>
+            <Button Name="PayBetrag" Click="PayBetrag_Click" Background="LightGray" IsEnabled="False">Pay!</Button>
         </StackPanel>
     </Grid>
 </Page>

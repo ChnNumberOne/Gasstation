@@ -38,9 +38,16 @@ namespace Gasstation.Implementation
             return this.costPerLiterInCent;
         }
 
+        // Returns the cost in total money
         public float GetCostInMoney()
         {
-            return (this.GetTotalFuelAmount() * (float)this.GetCostPerLiterInCent() / 100);
+            return (this.amount * (float)this.costPerLiterInCent / 100);
+        }
+
+        // returns the cost in cents
+        public int GetCostInCent()
+        {
+            return this.amount * this.costPerLiterInCent;
         }
 
         public int GetTotalFuelAmount()

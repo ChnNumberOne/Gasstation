@@ -65,11 +65,14 @@ namespace Gasstation.Pages
                 }
                 else
                 {
-                    tankingButton.Content = "Go pay";
-                    tankingButton.Background = Brushes.LightGray;
-                    tankingButton.IsEnabled = false;
-                    selectedZapfsaeule.StopTankingTimer();
-                    RefreshTransactions();
+                    if (selectedZapfsaeule.GetCurrentFuelTransaction() > 0)
+                    {
+                        tankingButton.Content = "Go pay";
+                        tankingButton.Background = Brushes.LightGray;
+                        tankingButton.IsEnabled = false;
+                        selectedZapfsaeule.StopTankingTimer();
+                        RefreshTransactions();
+                    }
                 }
             }
             else
@@ -87,6 +90,7 @@ namespace Gasstation.Pages
             //this.tankstelle.PayBill(this.selectedZapfsaeule);
             KassenUI kassenUI = new KassenUI(selectedTransaction);
             kassenUI.Show();
+            
         }
 
 

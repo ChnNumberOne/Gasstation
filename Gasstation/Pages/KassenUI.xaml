@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Gasstation.Pages"
         mc:Ignorable="d"
-        Title="KassenUI" Height="350" Width="400">
+        Title="KassenUI" Height="350" Width="600">
 
     <Window.Resources>
         <ResourceDictionary>
@@ -16,11 +16,39 @@
     </Window.Resources>
 
     <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition></ColumnDefinition>
+            <ColumnDefinition></ColumnDefinition>
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition></RowDefinition>
+            <RowDefinition Height="auto"></RowDefinition>
+            <RowDefinition Height="auto"></RowDefinition>
+        </Grid.RowDefinitions>
         <StackPanel>
             <UniformGrid Columns="2">
-                <Label Content="Betrag:"/>
-                <Label Name="Betrag" HorizontalAlignment="Right"/>
+                <Label FontSize="27" Content="Betrag:"/>
+                <Label FontSize="27" Name="Betrag" HorizontalAlignment="Right"/>
             </UniformGrid>
+            <WrapPanel Name="MoneyPanel"/>
         </StackPanel>
+        <ScrollViewer Grid.Column="1" Background="DarkGray">
+            <WrapPanel Name="InsertedPanel"/>
+        </ScrollViewer>
+
+        <UniformGrid Columns="2" Grid.Row="1">
+            <Label FontSize="25" Content="Inserted:"/>
+            <Label FontSize="25" Name="InsertedAmount"/>
+        </UniformGrid>
+        
+        <UniformGrid Columns="2" Background="DarkGray" Grid.Column="1" Grid.Row="1">
+            <Label FontSize="25" Content="Return:"/>
+            <Label FontSize="25" Name="ReturnLabel"/>
+        </UniformGrid>
+
+        <Button Name="PayButton" Click="PayButton_Click" Grid.Row="2" IsEnabled="False" Background="LightGray" Margin="2">Pay!</Button>
+        <DockPanel Background="DarkGray" Grid.Column="1" Grid.Row="2">
+            <Button x:Name="TakeRetourButton" Click="TakeRetourButton_Click" IsEnabled="False" Background="LightGray" Margin="2">Take return money</Button>
+        </DockPanel>
     </Grid>
 </Window>

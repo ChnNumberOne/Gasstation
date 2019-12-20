@@ -12,12 +12,7 @@ namespace Gasstation.Pages
     public partial class CustomerSimulation : Page
     {
 
-        public CustomerSimulation()
-        {
-            
-            InitializeComponent();
-            RefreshPage();
-        }
+        public static WrapPanel AccessZapfhahnPanel;
 
         private Zapfhahn selectedZapfhahn;
 
@@ -25,6 +20,17 @@ namespace Gasstation.Pages
 
         private Tankstelle tankstelle;
 
+        public CustomerSimulation()
+        {
+            
+            InitializeComponent();
+            RefreshPage();
+            AccessZapfhahnPanel = ZapfhahnPanel;
+            CustomerUIFrame.Content = new DisplayWelcome("Chose your gas pump", "");
+
+        }
+
+        /*
         private void DisplayTotalFuelValue(IFuelType fuelType, int currentFuelTransaction, Zapfsaeule runningZapfsaeule)
         {
             if(runningZapfsaeule == selectedZapfsaeule)
@@ -34,10 +40,12 @@ namespace Gasstation.Pages
                 // Das hier updated nun sauber aber wenn wir die Zapfsaeule wechseln nicht instant sondern erst beim nächsten TimerInterval / Elapsed
                 // überleg dir obs besser wäre das direkt zu updaten beim change via Button oder ob wir einfach die Requenz vom TImer erhöhen sollen
                 // ACHTUNG TIMER FREQUENZ ERHÖHEN bedeutet schnelleres Tanken was wir entgenewirken müssen
+                // BENJAMIN:
+                // Wir möchtens Ja nur per Knopfdruck ändern, per TimerInterval wäre unsauber
                 CostBox.Text = currentFuelTransaction * (decimal)fuelType.GetCostPerLiterInCent() / 100 + ".-";
             }
             
-        }
+        }*/
 
         private void RefreshPage()
         {
@@ -68,15 +76,15 @@ namespace Gasstation.Pages
             // Das hier kümmert sich um die Anzeige der Transaktionen auf der Kasse.
             // Das wird aber nur refreshed wenn wir ins menu zurückgehen. obviously. Versuch das hier sauber anzuzeigen
             // würd mir n haufen stress abnehmen -> der foreach unten für die anzeige der Kasse
-
+            /*
             foreach(Transaction t in tankstelle.GetTransactionList())
             {
                 // Anzeige der Transaktion
                 // hier kann dann acuh die funktion mit ne closure auf den click oder so gelegt werden um eine Selektion fürs pay zu machen?
                 TextBlock printTextBlock = new TextBlock();
                 printTextBlock.Text = t.GetTotalFuelAmount().ToString();
-                QuittungenPanel.Children.Add(printTextBlock);
-            }
+                //QuittungenPanel.Children.Add(printTextBlock);
+            }*/
         }
 
         
@@ -85,7 +93,7 @@ namespace Gasstation.Pages
             // set selection and clear children
             this.selectedZapfsaeule = zapfsaeule;
             ZapfhahnPanel.Children.Clear();
-
+            CustomerUIFrame.Content = new DisplayWelcome("Chose your gas nozzle", "");
             // set new Zapfhaehne
             foreach (Zapfhahn zapfhahn in zapfsaeule.GetZapfhaene())
             {
@@ -108,27 +116,22 @@ namespace Gasstation.Pages
             this.selectedZapfhahn = zapfhahn;
 
             // get Information and Display
+            CustomerUI customerUI = new CustomerUI();
             IFuelType fuelType = this.selectedZapfhahn.GetFuelType();
-            SelectedFuelLabel.Content = fuelType.GetFuelTypeName();
-            CostPerLiterTextBlock.Text = $"{(decimal)fuelType.GetCostPerLiterInCent() / 100}.-";
+            CustomerUIFrame.Content = customerUI;
+            customerUI.SetZapfhahnValues(selectedZapfsaeule, zapfhahn);
+            //SelectedFuelLabel.Content = fuelType.GetFuelTypeName();
+            //CostPerLiterTextBlock.Text = $"{(decimal)fuelType.GetCostPerLiterInCent() / 100}.-";
             // TODO: BENJAMIN
             // das hier sollte das zwar updatene von oben aber vielleicht hab ich hier was falsch überlegt.
-            DisplayTotalFuelValue(fuelType,1, selectedZapfsaeule);
+            //DisplayTotalFuelValue(fuelType,1, selectedZapfsaeule);
         }
 
         private void BackToMenu_Click(object sender, RoutedEventArgs e)
         {
             MainWindow.SetContent(new WelcomePage());
         }
-
-        private void FuelToTakeOut_TextChanged(object sender, TextChangedEventArgs e)
-        {
-            
-
-        
-        }
-
-
+        /*
         private void TakeFuel_Click(object sender, RoutedEventArgs e)
         {
             if (selectedZapfsaeule != null && selectedZapfhahn != null)
@@ -156,6 +159,6 @@ namespace Gasstation.Pages
         {
             // ka isch crap
             //this.tankstelle.PayBill(this.selectedZapfsaeule);
-        }
+        }*/
     }
 }

@@ -20,9 +20,19 @@ namespace Gasstation.Pages
     /// </summary>
     public partial class DisplayWelcome : Page
     {
-        public DisplayWelcome()
+        public DisplayWelcome(string specialText = null, string specialDetails = null, string imagePath = null)
         {
             InitializeComponent();
+            if (specialText != null || specialDetails != null)
+            {
+                TextLabel.FontSize = 20;
+                TextLabel.Content = specialText;
+                DetailsBlock.Text = specialDetails;
+            }
+            if (imagePath != null)
+            {
+                DisplayIconImage.Source = new BitmapImage(new Uri(imagePath));
+            }
         }
     }
 }

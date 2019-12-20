@@ -18,10 +18,10 @@
 
     <Grid>
         <StackPanel HorizontalAlignment="Center">
-            <Image Source="../Icons/Tankstelle.png" Height="200" Margin="10" HorizontalAlignment="Center">
+            <Image Name="DisplayIconImage" Source="../Icons/Tankstelle.png" Height="200" Margin="10" HorizontalAlignment="Center">
             </Image>
-            <Label HorizontalAlignment="Center" FontSize="40" Padding="-5">Welcome!</Label>
-            <TextBlock FontSize="17" HorizontalAlignment="Center">Chose what you want to do next.</TextBlock>
+            <Label HorizontalAlignment="Center" FontSize="40" Padding="-5" Name="TextLabel">Welcome!</Label>
+            <TextBlock FontSize="17" HorizontalAlignment="Center" Name="DetailsBlock">Chose what you want to do next.</TextBlock>
         </StackPanel>
     </Grid>
 </Page>

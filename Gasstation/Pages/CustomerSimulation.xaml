@@ -40,22 +40,12 @@
             <Label FontSize="16">Zapfhähne</Label>
             <WrapPanel Name="ZapfhahnPanel"></WrapPanel>
         </StackPanel>
-        <Grid Grid.Column="1" Grid.Row="2">
-            <Grid.ColumnDefinitions>
+        <Frame NavigationUIVisibility="Hidden" Grid.Column="1" Grid.Row="2" Name="CustomerUIFrame">
+            <!--<Grid.ColumnDefinitions>
                 <ColumnDefinition></ColumnDefinition>
                 <ColumnDefinition></ColumnDefinition>
             </Grid.ColumnDefinitions>
             <StackPanel Margin="5">
-              <!--
-                <Label>Zapfhahn</Label>
-                <Label FontSize="20">Amount left in tank:</Label>
-                <TextBlock Name="FuelLeftAmnt"> </TextBlock>
-                <Label FontSize="20">Fuel to take out:</Label>
-                <TextBox Name="FuelToTakeOut" TextChanged="FuelToTakeOut_TextChanged"></TextBox>
-                <WrapPanel>
-                    <Label FontSize="20" Content="Cost:  "></Label>
-                    <TextBlock Name="CostBox"></TextBlock>
-                </WrapPanel>-->
               <UniformGrid Columns="2">
                 <Label FontSize="20" Content="Selected:"></Label>
                 <Label Name="SelectedFuelLabel" FontSize="20" Content=" " HorizontalAlignment="Right"></Label>
@@ -80,7 +70,7 @@
                 <Label FontSize="20">Betrag:</Label>
                 <TextBlock Name="Betrag"></TextBlock>
                 <Button Name="PayBetrag" Click="PayBetrag_Click">Pay!</Button>
-            </StackPanel>
-        </Grid>
+            </StackPanel>-->
+        </Frame>
     </Grid>
 </Page>

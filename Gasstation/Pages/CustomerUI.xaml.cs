@@ -84,6 +84,10 @@ namespace Gasstation.Pages
         // TODO: BENJAMIN
         // Brauch hier ASAP aufm GUI was zum selektieren der Noten zum bezahlen
         // Prio 1 nach Bugfixes sonst kann ich nicht weitermachen.
+        //
+        // AN THOMAS
+        // Musst auf paybetrag clicken, macht sozusagen die "Kasse" auf (nicht wirklich auf aber es erscheint ein neues Fenster)
+        // Dort sollte das eigentlich sein
         private void PayBetrag_Click(object sender, RoutedEventArgs e)
         {
             // ka isch crap
@@ -97,7 +101,7 @@ namespace Gasstation.Pages
 
 
         // AN: THOMAS
-        // Hier ist mal so ein basic refresh der die buttons erstellt. Kannst unten den button click even ändern wenn du willst
+        // Hier ist mal so ein basic refresh der die buttons erstellt.
         public void RefreshTransactions()
         {
             QuittungenPanel.Children.Clear();
@@ -115,7 +119,7 @@ namespace Gasstation.Pages
         }
 
         // AN: THOMAS
-        //Hier ist der dynamic button click event
+        //Hier ist der dynamic button click event von den oben genanten Transaktionen.
         private void TransactionButton_Click(object sender, RoutedEventArgs e, Transaction transaction)
         {
             BetragBlock.Text = (transaction.GetTotalFuelAmount() * (float)transaction.GetCostPerLiterInCent() / 100).ToString("C2");
@@ -133,8 +137,9 @@ namespace Gasstation.Pages
                 // Das hier updated nun sauber aber wenn wir die Zapfsaeule wechseln nicht instant sondern erst beim nächsten TimerInterval / Elapsed
                 // überleg dir obs besser wäre das direkt zu updaten beim change via Button oder ob wir einfach die Requenz vom TImer erhöhen sollen
                 // ACHTUNG TIMER FREQUENZ ERHÖHEN bedeutet schnelleres Tanken was wir entgenewirken müssen
-                // BENJAMIN:
+                // AN THOMAS:
                 // Wir möchtens Ja nur per Knopfdruck ändern, per TimerInterval wäre unsauber
+                // Verstehe jetzt grad nicht was das genau macht. Werds später anschauen müssen
                 CostBox.Text = currentFuelTransaction * (decimal)fuelType.GetCostPerLiterInCent() / 100 + ".-";
             }
 

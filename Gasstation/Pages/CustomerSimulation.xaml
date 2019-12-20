@@ -56,18 +56,19 @@
                     <Label FontSize="20" Content="Cost:  "></Label>
                     <TextBlock Name="CostBox"></TextBlock>
                 </WrapPanel>-->
-              <WrapPanel>
-                <Label FontSize="20" Content="Currently selected:  "></Label>
-                <Label Name="SelectedFuelLabel" FontSize="20" Content=" "></Label>
-              </WrapPanel>
-              <WrapPanel>
+              <UniformGrid Columns="2">
+                <Label FontSize="20" Content="Selected:"></Label>
+                <Label Name="SelectedFuelLabel" FontSize="20" Content=" " HorizontalAlignment="Right"></Label>
+              </UniformGrid>
+              <UniformGrid Columns="2">
                 <Label FontSize="20">Cost Per liter:</Label>
-                <TextBlock Name="CostPerLiterTextBlock" Text=" "></TextBlock>
-             
-                <Label FontSize="20" Content="Cost: "></Label>
-                    <TextBlock Name="CostBox"></TextBlock>
-              </WrapPanel>
-              <Button Name="TakeFuel" Margin="0 3" Click="TakeFuel_Click">Take Fuel</Button>
+                    <TextBlock Name="CostPerLiterTextBlock" Text=" " HorizontalAlignment="Right"></TextBlock>
+                </UniformGrid>
+                <UniformGrid Columns="2">
+                    <Label FontSize="20" Content="Cost: "></Label>
+                    <TextBlock Name="CostBox" HorizontalAlignment="Right"></TextBlock>
+                </UniformGrid>
+                <Button Name="TakeFuel" Margin="0 3" Click="TakeFuel_Click">Take Fuel</Button>
             </StackPanel>
             <StackPanel Grid.Column="2" Margin="5">
                 <Label>Kasse</Label>

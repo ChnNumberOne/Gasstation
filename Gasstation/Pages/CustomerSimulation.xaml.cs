@@ -110,7 +110,7 @@ namespace Gasstation.Pages
             // get Information and Display
             IFuelType fuelType = this.selectedZapfhahn.GetFuelType();
             SelectedFuelLabel.Content = fuelType.GetFuelTypeName();
-            CostPerLiterTextBlock.Text = $"{(decimal)fuelType.GetCostPerLiterInCent() / 100}";
+            CostPerLiterTextBlock.Text = $"{(decimal)fuelType.GetCostPerLiterInCent() / 100}.-";
             // TODO: BENJAMIN
             // das hier sollte das zwar updatene von oben aber vielleicht hab ich hier was falsch überlegt.
             DisplayTotalFuelValue(fuelType,1, selectedZapfsaeule);

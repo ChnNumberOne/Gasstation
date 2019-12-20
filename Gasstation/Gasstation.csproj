@@ -157,5 +157,12 @@
   <ItemGroup>
     <None Include="App.config" />
   </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\FuelTankIcon.png" />
+    <Resource Include="Images\Zapfsaeule.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\Zapfhahn.png" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

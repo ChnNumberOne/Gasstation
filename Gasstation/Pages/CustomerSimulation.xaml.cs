@@ -93,7 +93,7 @@ namespace Gasstation.Pages
             // set selection and clear children
             this.selectedZapfsaeule = zapfsaeule;
             ZapfhahnPanel.Children.Clear();
-            CustomerUIFrame.Content = new DisplayWelcome("Chose your gas nozzle", "");
+            CustomerUIFrame.Content = new DisplayWelcome("Chose your gas nozzle", "", new Uri("../Images/Zapfhahn.png", UriKind.Relative));
             // set new Zapfhaehne
             foreach (Zapfhahn zapfhahn in zapfsaeule.GetZapfhaene())
             {

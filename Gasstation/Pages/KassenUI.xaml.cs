@@ -77,9 +77,19 @@ namespace Gasstation.Pages
             UpdateInserted();
         }
 
-        private void UpdateInserted()
+        private void UpdateInserted(bool wasPayed = false)
         {
             InsertedAmount.Content = ((float)insertedMoney.Sum() / 100).ToString("C2");
+            if (transaction.GetCostInCent() <= insertedMoney.Sum() && !wasPayed)
+            {
+                PayButton.IsEnabled = true;
+                PayButton.ClearValue(BackgroundProperty);
+            }
+            else
+            {
+                PayButton.IsEnabled = false;
+                PayButton.Background = Brushes.LightGray;
+            }
         }
 
         private void TakeRetourButton_Click(object sender, RoutedEventArgs e)
@@ -101,7 +111,7 @@ namespace Gasstation.Pages
             MoneyPanel.Children.Clear();
             // Das ist wirklich nur so demonstrativer code. Das muss später geändert werden.
             Tankstelle.Current().tankstellenkasse.GetUnpaidTransactions().Remove(transaction);
-            UpdateInserted();
+            UpdateInserted(true);
         }
     }
 }

@@ -86,26 +86,26 @@ namespace Gasstation.Implementation
         }
 
         // Sprit Bezug
-        public void PumpGasFromZapfsauele(Zapfsaeule zapfsaeule, IFuelType fuelType, Action<FuelType,int,Zapfsaeule> callback)
+        public void PumpGasFromZapfsauele(Zapfsaeule zapfsaeule, IFuelType fuelType, Action<FuelType,int,Zapfsaeule> callback, bool isContinuation = false)
         {
 
-            if (zapfsaeule.isTanking())
+            if (zapfsaeule.isTanking() && !isContinuation)
             {   //2
                 // beenden vom Tankprozess
                 // Beendete Transaktion speichern
                 this.tankstellenkasse.AddTransaction(zapfsaeule.StopTankingTimer());
             }
-            else
-            {   //1
-                // wenn nicht gesperrt starten
-                if (!zapfsaeule.isLocked())
-                {
-                    zapfsaeule.Lock();
-                    FuelTank currentFuelTank = this.AvailableFuelTanks.Find(x => x.GetFuelType() == fuelType);
-                    zapfsaeule.StartTankingTimer(currentFuelTank, callback);
-
-                }
+            else if (isContinuation)
+            {
+                FuelTank currentFuelTank = this.AvailableFuelTanks.Find(x => x.GetFuelType() == fuelType);
+                zapfsaeule.StartTankingTimer(currentFuelTank, callback, true);
             }
+            else if (!zapfsaeule.isLocked())
+            {
+                zapfsaeule.Lock();
+                FuelTank currentFuelTank = this.AvailableFuelTanks.Find(x => x.GetFuelType() == fuelType);
+                zapfsaeule.StartTankingTimer(currentFuelTank, callback);
+            }            
         }
 
         // TODO: BENJAMIN

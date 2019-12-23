@@ -20,7 +20,7 @@
             this.fueltype = fuelType;
         }
 
-        internal IFuelType GetFuelType()
+        public IFuelType GetFuelType()
         {
             return fueltype;
         }

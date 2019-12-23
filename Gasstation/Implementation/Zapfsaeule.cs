@@ -45,6 +45,11 @@ namespace Gasstation.Implementation
             this.selectedZapfhahn = requestedZapfhahn;
         }
 
+        public Zapfhahn GetSelectedZapfhahn()
+        {
+            return this.selectedZapfhahn;
+        }
+
         public void Lock()
         {
             this.lockStatus = true;
@@ -72,20 +77,33 @@ namespace Gasstation.Implementation
         /// </summary>
         /// <param name="currentFuelTank"></param>
         /// <param name="callback"></param>
-        public void StartTankingTimer(FuelTank currentFuelTank, Action<FuelType,int,Zapfsaeule> callback)
+        public void StartTankingTimer(FuelTank currentFuelTank, Action<FuelType,int,Zapfsaeule> callback, bool isContinuation = false)
         {
-            this.currentFuelTransactionAmountOfLiter = 0;
-            this.currentFuelTransactionFuelType = currentFuelTank.GetFuelType();
-            this.tankingState = true;
-            this.tankingTimer = new DispatcherTimer();
-            this.tankingTimer.Tick += (s, e) =>
+            // checks if this is just a continuation of an already started timer
+            if (!isContinuation)
             {
-                this.currentFuelTransactionAmountOfLiter += currentFuelTank.DrainFuel(1);
-                // WARNING -> DASS HIER IST EINE CALLBACK METHODE AUFS GUI DAS THIS BEDEUTET, DASS ES SICH UM DIESES OBJEKT HANDELT ALS EVENTABSENDER. DO NOT TOUCH WITHOUT ASKING ME ABOUT THIS
-                callback(currentFuelTank.GetFuelType(), this.currentFuelTransactionAmountOfLiter, this);
-            };
-            this.tankingTimer.Interval = TimeSpan.FromSeconds(1);
-            this.tankingTimer.Start();
+                this.currentFuelTransactionAmountOfLiter = 0;
+                this.currentFuelTransactionFuelType = currentFuelTank.GetFuelType();
+                this.tankingState = true;
+                this.tankingTimer = new DispatcherTimer();
+                this.tankingTimer.Tick += (s, e) =>
+                {
+                    this.currentFuelTransactionAmountOfLiter += currentFuelTank.DrainFuel(1);
+                    // WARNING -> DASS HIER IST EINE CALLBACK METHODE AUFS GUI DAS THIS BEDEUTET, DASS ES SICH UM DIESES OBJEKT HANDELT ALS EVENTABSENDER. DO NOT TOUCH WITHOUT ASKING ME ABOUT THIS
+                    callback(currentFuelTank.GetFuelType(), this.currentFuelTransactionAmountOfLiter, this);
+                };
+                this.tankingTimer.Interval = TimeSpan.FromSeconds(1);
+                this.tankingTimer.Start();
+            }
+            else if (this.tankingTimer != null)
+            {
+                this.tankingTimer.Tick += (s, e) =>
+                {
+                    this.currentFuelTransactionAmountOfLiter += currentFuelTank.DrainFuel(1);
+                    callback(currentFuelTank.GetFuelType(), this.currentFuelTransactionAmountOfLiter, this);
+                };
+                this.tankingTimer.Interval = TimeSpan.FromSeconds(1);
+            }
         }
 
         /// <summary>

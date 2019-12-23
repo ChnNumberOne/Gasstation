@@ -93,20 +93,35 @@ namespace Gasstation.Pages
             // set selection and clear children
             this.selectedZapfsaeule = zapfsaeule;
             ZapfhahnPanel.Children.Clear();
-            CustomerUIFrame.Content = new DisplayWelcome("Chose your gas nozzle", "", new Uri("../Images/Zapfhahn.png", UriKind.Relative));
+
+            bool isLocked = true;
+            if (!zapfsaeule.isLocked())
+            {
+                isLocked = false;
+                CustomerUIFrame.Content = new DisplayWelcome("Chose your gas nozzle", "", new Uri("../Images/Zapfhahn.png", UriKind.Relative));
+            }
             // set new Zapfhaehne
             foreach (Zapfhahn zapfhahn in zapfsaeule.GetZapfhaene())
             {
                 Button zapfhahnButton = new Button()
                 {
-              
+
                     Content = zapfhahn.GetFuelType().GetFuelTypeName(),
                     MinWidth = 50,
-                    Margin = new Thickness(1)
+                    Margin = new Thickness(1),
+                    IsEnabled = !isLocked
                 };
+                if (isLocked)
+                {
+                    zapfhahnButton.Background = Brushes.LightGray;
+                }
                 // set Function to Button
-                zapfhahnButton.Click += (s, e) => SelectZapfhahn(zapfhahn);                
+                zapfhahnButton.Click += (s, e) => SelectZapfhahn(zapfhahn);
                 ZapfhahnPanel.Children.Add(zapfhahnButton);
+            }
+            if (isLocked && selectedZapfsaeule.GetSelectedZapfhahn() != null)
+            {
+                SelectZapfhahn(selectedZapfsaeule.GetSelectedZapfhahn());
             }
         }
 
@@ -114,10 +129,11 @@ namespace Gasstation.Pages
         {
             // set selection
             this.selectedZapfhahn = zapfhahn;
+            selectedZapfsaeule.Selectzapfhahn(zapfhahn);
 
             // get Information and Display
             CustomerUI customerUI = new CustomerUI();
-            IFuelType fuelType = this.selectedZapfhahn.GetFuelType();
+            //IFuelType fuelType = this.selectedZapfhahn.GetFuelType();
             CustomerUIFrame.Content = customerUI;
             customerUI.SetZapfhahnValues(selectedZapfsaeule, zapfhahn);
             //SelectedFuelLabel.Content = fuelType.GetFuelTypeName();

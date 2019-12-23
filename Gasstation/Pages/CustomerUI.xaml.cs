@@ -42,7 +42,16 @@ namespace Gasstation.Pages
 
             SelectedFuelLabel.Content = selectedZapfhahn.GetFuelType().GetFuelTypeName();
             CostPerLiterTextBlock.Text = $"{(decimal)selectedZapfhahn.GetFuelType().GetCostPerLiterInCent() / 100}.-";
-            CostBox.Text = selectedZapfsaeule.GetCurrentFuelTransaction().ToString() + ".-";
+            CostBox.Text = selectedZapfsaeule.GetCurrentFuelTransaction() * (decimal)selectedZapfhahn.GetFuelType().GetCostPerLiterInCent() / 100 + ".-";
+
+
+            // refresh count
+            this.tankstelle.PumpGasFromZapfsauele(this.selectedZapfsaeule, this.selectedZapfhahn.GetFuelType(), DisplayTotalFuelValue, true);
+
+            if (selectedZapfsaeule.isTanking())
+            {
+                TakeFuel.Content = "Stop";
+            }
 
             RefreshTransactions();
         }

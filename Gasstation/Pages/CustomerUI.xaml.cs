@@ -52,6 +52,12 @@ namespace Gasstation.Pages
             {
                 TakeFuel.Content = "Stop";
             }
+            else if (selectedZapfsaeule.isLocked())
+            {
+                TakeFuel.Content = "Go pay";
+                TakeFuel.Background = Brushes.LightGray;
+                TakeFuel.IsEnabled = false;
+            }
 
             RefreshTransactions();
         }

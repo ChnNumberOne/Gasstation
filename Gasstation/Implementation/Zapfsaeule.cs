@@ -77,33 +77,33 @@ namespace Gasstation.Implementation
         /// </summary>
         /// <param name="currentFuelTank"></param>
         /// <param name="callback"></param>
-        public void StartTankingTimer(FuelTank currentFuelTank, Action<FuelType,int,Zapfsaeule> callback, bool isContinuation = false)
+        public void StartTankingTimer(FuelTank currentFuelTank)
         {
             // checks if this is just a continuation of an already started timer
-            if (!isContinuation)
+         
+            this.currentFuelTransactionAmountOfLiter = 0;
+            this.currentFuelTransactionFuelType = currentFuelTank.GetFuelType();
+            this.tankingState = true;
+            this.tankingTimer = new DispatcherTimer();
+            this.tankingTimer.Tick += (s, e) =>
             {
-                this.currentFuelTransactionAmountOfLiter = 0;
-                this.currentFuelTransactionFuelType = currentFuelTank.GetFuelType();
-                this.tankingState = true;
-                this.tankingTimer = new DispatcherTimer();
-                this.tankingTimer.Tick += (s, e) =>
-                {
-                    this.currentFuelTransactionAmountOfLiter += currentFuelTank.DrainFuel(1);
-                    // WARNING -> DASS HIER IST EINE CALLBACK METHODE AUFS GUI DAS THIS BEDEUTET, DASS ES SICH UM DIESES OBJEKT HANDELT ALS EVENTABSENDER. DO NOT TOUCH WITHOUT ASKING ME ABOUT THIS
-                    callback(currentFuelTank.GetFuelType(), this.currentFuelTransactionAmountOfLiter, this);
-                };
-                this.tankingTimer.Interval = TimeSpan.FromSeconds(1);
-                this.tankingTimer.Start();
-            }
-            else if (this.tankingTimer != null)
-            {
-                this.tankingTimer.Tick += (s, e) =>
-                {
-                    this.currentFuelTransactionAmountOfLiter += currentFuelTank.DrainFuel(1);
-                    callback(currentFuelTank.GetFuelType(), this.currentFuelTransactionAmountOfLiter, this);
-                };
-                this.tankingTimer.Interval = TimeSpan.FromSeconds(1);
-            }
+                this.currentFuelTransactionAmountOfLiter += currentFuelTank.DrainFuel(1);   
+            };
+            this.tankingTimer.Interval = TimeSpan.FromSeconds(1);
+            this.tankingTimer.Start();
+          
+
+            // Das Addiert weitere Funktionen auf den Timer 4 mal hin und herwechseln = 5 Mal Drain Pro Sekunde ( IS BIG NONONO) TImer ist im Objekt
+
+            //else if (this.tankingTimer != null)
+            //{
+            //    this.tankingTimer.Tick += (s, e) =>
+            //    {
+            //        this.currentFuelTransactionAmountOfLiter += currentFuelTank.DrainFuel(1);
+            //        callback(currentFuelTank.GetFuelType(), this.currentFuelTransactionAmountOfLiter, this);
+            //    };
+            //    this.tankingTimer.Interval = TimeSpan.FromSeconds(1);
+            //}
         }
 
         /// <summary>
@@ -139,7 +139,7 @@ namespace Gasstation.Implementation
 
 
 
-        public int GetCurrentFuelTransaction()
+        public int GetCurrentTransactionFuelAmount()
         {
             return this.currentFuelTransactionAmountOfLiter;
         }

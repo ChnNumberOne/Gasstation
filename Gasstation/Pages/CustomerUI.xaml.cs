@@ -13,6 +13,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using System.Windows.Threading;
 
 namespace Gasstation.Pages
 {
@@ -21,32 +22,49 @@ namespace Gasstation.Pages
     /// </summary>
     public partial class CustomerUI : Page
     {
-        private Zapfhahn selectedZapfhahn;
-
         private Zapfsaeule selectedZapfsaeule;
+
+        private IFuelType selectedFuelType;      // für Berechnung Anzeige
+
+        private Zapfhahn selectedZapfhahn;
 
         private Transaction selectedTransaction;
 
         private Tankstelle tankstelle;
 
+        private DispatcherTimer guiRefreshTimer;
+
         public CustomerUI()
         {
             InitializeComponent();
             this.tankstelle = Tankstelle.Current();
+
+            // TImer zum Anzeigen des Standes
+            this.guiRefreshTimer = new DispatcherTimer();
+            guiRefreshTimer.Tick += (s, e) =>
+            {
+                RefreshCurrentZapfsaeule();
+            };
+            this.guiRefreshTimer.Interval = TimeSpan.FromMilliseconds(100);
+            this.guiRefreshTimer.Start();
         }
 
         public void SetZapfhahnValues(Zapfsaeule selectedZapfsaeule, Zapfhahn selectedZapfhahn)
         {
             this.selectedZapfsaeule = selectedZapfsaeule;
             this.selectedZapfhahn = selectedZapfhahn;
-
+            this.selectedFuelType = selectedZapfhahn.GetFuelType();
+            // Transaction vo de Zapfsüle wo im GUI slektiert isch
             SelectedFuelLabel.Content = selectedZapfhahn.GetFuelType().GetFuelTypeName();
             CostPerLiterTextBlock.Text = $"{(decimal)selectedZapfhahn.GetFuelType().GetCostPerLiterInCent() / 100}.-";
-            CostBox.Text = selectedZapfsaeule.GetCurrentFuelTransaction() * (decimal)selectedZapfhahn.GetFuelType().GetCostPerLiterInCent() / 100 + ".-";
+            CostBox.Text = selectedZapfsaeule.GetCurrentTransactionFuelAmount() * (decimal)selectedZapfhahn.GetFuelType().GetCostPerLiterInCent() / 100 + ".-";
 
+           
 
             // refresh count
-            this.tankstelle.PumpGasFromZapfsauele(this.selectedZapfsaeule, this.selectedZapfhahn.GetFuelType(), DisplayTotalFuelValue, true);
+            // BIG NONO
+            // this.tankstelle.PumpGasFromZapfsauele(this.selectedZapfsaeule, this.selectedZapfhahn.GetFuelType(), DisplayTotalFuelValue, true);
+            // wait a minute
 
             if (selectedZapfsaeule.isTanking())
             {
@@ -76,11 +94,11 @@ namespace Gasstation.Pages
                         b.IsEnabled = false;
                         b.Background = Brushes.LightGray;
                     }
-                    this.tankstelle.PumpGasFromZapfsauele(this.selectedZapfsaeule, this.selectedZapfhahn.GetFuelType(), DisplayTotalFuelValue);
+                    this.tankstelle.PumpGasFromZapfsauele(this.selectedZapfsaeule, this.selectedZapfhahn.GetFuelType());
                 }
                 else
                 {
-                    if (selectedZapfsaeule.GetCurrentFuelTransaction() > 0)
+                    if (selectedZapfsaeule.GetCurrentTransactionFuelAmount() > 0)
                     {
                         tankingButton.Content = "Go pay";
                         tankingButton.Background = Brushes.LightGray;
@@ -96,10 +114,7 @@ namespace Gasstation.Pages
                 Console.WriteLine("Keine Zapfsaeule gewaehlt");
             }
         }
-        // TODO: BENJAMIN
-        // Brauch hier ASAP aufm GUI was zum selektieren der Noten zum bezahlen
-        // Prio 1 nach Bugfixes sonst kann ich nicht weitermachen.
-        //
+
         // AN THOMAS
         // Musst auf paybetrag clicken, macht sozusagen die "Kasse" auf (nicht wirklich auf aber es erscheint ein neues Fenster)
         // Dort sollte das eigentlich sein
@@ -112,6 +127,7 @@ namespace Gasstation.Pages
 
             PayBetrag.IsEnabled = false;
             PayBetrag.Background = Brushes.LightGray;
+
         }
 
 
@@ -143,21 +159,20 @@ namespace Gasstation.Pages
             PayBetrag.ClearValue(BackgroundProperty);
         }
 
-        private void DisplayTotalFuelValue(IFuelType fuelType, int currentFuelTransaction, Zapfsaeule runningZapfsaeule)
+        //private void DisplayTotalFuelValue(IFuelType fuelType, int currentFuelTransaction, Zapfsaeule runningZapfsaeule)
+        //{
+        //    if (runningZapfsaeule == selectedZapfsaeule)
+        //    {
+        //        CostBox.Text = currentFuelTransaction * (decimal)fuelType.GetCostPerLiterInCent() / 100 + ".-";
+        //    }
+
+        //}
+
+        private void RefreshCurrentZapfsaeule()
         {
-            if (runningZapfsaeule == selectedZapfsaeule)
-            {
-
-                // TODO: BENJAMIN
-                // Das hier updated nun sauber aber wenn wir die Zapfsaeule wechseln nicht instant sondern erst beim nächsten TimerInterval / Elapsed
-                // überleg dir obs besser wäre das direkt zu updaten beim change via Button oder ob wir einfach die Requenz vom TImer erhöhen sollen
-                // ACHTUNG TIMER FREQUENZ ERHÖHEN bedeutet schnelleres Tanken was wir entgenewirken müssen
-                // AN THOMAS:
-                // Wir möchtens Ja nur per Knopfdruck ändern, per TimerInterval wäre unsauber
-                // Verstehe jetzt grad nicht was das genau macht. Werds später anschauen müssen
-                CostBox.Text = currentFuelTransaction * (decimal)fuelType.GetCostPerLiterInCent() / 100 + ".-";
-            }
-
+            int fuelAmountToDisplay = this.selectedZapfsaeule.GetCurrentTransactionFuelAmount();
+            decimal result = fuelAmountToDisplay * (decimal)selectedFuelType.GetCostPerLiterInCent() / 100;
+            CostBox.Text = result.ToString();
         }
     }
 }

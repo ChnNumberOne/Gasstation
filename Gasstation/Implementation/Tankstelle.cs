@@ -99,6 +99,7 @@ namespace Gasstation.Implementation
             {
                 FuelTank currentFuelTank = this.AvailableFuelTanks.Find(x => x.GetFuelType() == fuelType);
                 zapfsaeule.StartTankingTimer(currentFuelTank);
+                zapfsaeule.Lock();
             }
           
         }

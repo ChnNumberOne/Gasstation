@@ -59,6 +59,9 @@ namespace Gasstation.Pages
         
         private void SelectZapfsauele(Zapfsaeule zapfsaeule)
         {
+
+            // überprüfen ob der Zapfhhan bereits läuft oder nicht. Wenn ja Schnellanzeige
+
             // set selection and clear children
             this.selectedZapfsaeule = zapfsaeule;
             ZapfhahnPanel.Children.Clear();

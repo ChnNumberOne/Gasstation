@@ -95,6 +95,7 @@ namespace Gasstation.Pages
         // Bitte hier beim pay das ganze von der kasse auch integrieren. Jetzt grad ist nur ein bisschen makeshift code eingebaut.
         private void PayButton_Click(object sender, RoutedEventArgs e)
         {
+            (new Receipt(transaction, insertedMoney.Sum())).Show();
             InsertedPanel.Children.Clear();
             ReturnLabel.Content = ((float)(insertedMoney.Sum() - transaction.GetCostInCent()) / 100).ToString("C2");
             PayButton.IsEnabled = false;
@@ -107,8 +108,8 @@ namespace Gasstation.Pages
             tankstelle.PayTransaction(transaction, insertedMoney);
                 //tankstellenkasse.GetUnpaidTransactions().Remove(transaction);
 
-
             UpdateInserted(true);
+            
         }
     }
 }

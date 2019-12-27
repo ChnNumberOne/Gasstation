@@ -1,0 +1,42 @@
+﻿<Window x:Class="Gasstation.Pages.Receipt"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:Gasstation.Pages"
+        mc:Ignorable="d"
+        Title="Receipt" Height="300" Width="300" ResizeMode="NoResize">
+
+    <Window.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="../Styles/MainStyle.xaml"></ResourceDictionary>
+            </ResourceDictionary.MergedDictionaries>
+        </ResourceDictionary>
+    </Window.Resources>
+
+    <Grid>
+        <StackPanel Margin="2">
+            <TextBlock TextDecorations="Underline" Text="Receipt:" FontSize="30"/>
+            
+            <TextBlock Name="DateTimeBlock"/>
+                <Separator/>
+            <TextBlock Name="FuelTypeBlock" FontSize="26"/>
+            <UniformGrid Columns="2">
+                <TextBlock Text="Liters:"/>
+                <TextBlock Name="AmntOfLitersBlock" Text="" HorizontalAlignment="Right"/>
+            </UniformGrid>
+            <UniformGrid Columns="2" Rows="2">
+                <TextBlock Text="Total cost:" FontWeight="Bold"/>
+                <TextBlock Name="CostBlock" Text="" HorizontalAlignment="Right" FontWeight="Bold"/>
+                <TextBlock Text="Paid:"/>
+                <TextBlock Name="PaidBlock" HorizontalAlignment="Right"/>
+            </UniformGrid>
+            <Separator/>
+            <UniformGrid Columns="2">
+                <TextBlock Text="Change:"/>
+                <TextBlock Name="ChangeBlock" HorizontalAlignment="Right"/>
+            </UniformGrid>
+        </StackPanel>
+    </Grid>
+</Window>

@@ -50,5 +50,14 @@ namespace Gasstation.Implementation
             this.paymentDateTime = DateTime.Now;
         }
       
+        public DateTime GetDateTime()
+        {
+            return this.paymentDateTime;
+        }
+
+        public FuelType GetFuelType()
+        {
+            return this.fuelType;
+        }
     }
 }

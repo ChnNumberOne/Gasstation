@@ -95,7 +95,8 @@ namespace Gasstation.Pages
                         tankingButton.Content = "Go pay";
                         tankingButton.Background = Brushes.LightGray;
                         tankingButton.IsEnabled = false;
-                        selectedZapfsaeule.StopTankingTimer();
+
+                        this.tankstelle.PumpGasFromZapfsauele(this.selectedZapfsaeule, this.selectedZapfhahn.GetFuelType());
                         RefreshTransactions();
                     }
                 }

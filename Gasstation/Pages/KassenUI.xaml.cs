@@ -21,23 +21,16 @@ namespace Gasstation.Pages
     public partial class KassenUI : Window
     {
         private Transaction transaction;
-        private static List<KassenUI> kassenUIs = new List<KassenUI>();
         private List<int> insertedMoney;
         private CustomerUI CustomerUI;
+        private Tankstelle tankstelle;
 
         public KassenUI(Transaction transaction, CustomerUI customerUI)
         {
+            this.tankstelle = Tankstelle.Current();
             this.CustomerUI = customerUI;
             insertedMoney = new List<int>();
-            foreach (KassenUI kassenUI in kassenUIs)
-            {
-                kassenUI.Close();
-                //kassenUIs.Remove(kassenUI);
-            }
-            kassenUIs.Clear();
-            kassenUIs.Add(this);
-            int no;
-            no = kassenUIs.Count;
+    
             InitializeComponent();
             this.transaction = transaction;
             Betrag.Content = transaction.GetCostInMoney().ToString("C2");
@@ -109,8 +102,12 @@ namespace Gasstation.Pages
             TakeRetourButton.IsEnabled = true;
             TakeRetourButton.ClearValue(BackgroundProperty);
             MoneyPanel.Children.Clear();
-            // Das ist wirklich nur so demonstrativer code. Das muss später geändert werden.
-            Tankstelle.Current().tankstellenkasse.GetUnpaidTransactions().Remove(transaction);
+            // teil der Businesslogik
+
+            tankstelle.PayTransaction(transaction, insertedMoney);
+                //tankstellenkasse.GetUnpaidTransactions().Remove(transaction);
+
+
             UpdateInserted(true);
         }
     }

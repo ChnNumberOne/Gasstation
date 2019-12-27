@@ -33,7 +33,7 @@ namespace Gasstation.Implementation
 
         public List<Container> Cointypes = new List<Container>();
 
-        public Tankstellenkasse tankstellenkasse;
+        private Tankstellenkasse tankstellenkasse;
 
 
       
@@ -74,6 +74,7 @@ namespace Gasstation.Implementation
             this.Cointypes.Add(new Container(100, 0, 1000, 100, 900, 100));
             this.Cointypes.Add(new Container(200, 0, 1000, 100, 900, 100));
             this.Cointypes.Add(new Container(500, 0, 1000, 100, 900, 100));
+            this.Cointypes.Add(new Container(1000, 0, 1000, 100, 900, 100));
             this.tankstellenkasse = new Tankstellenkasse(this.Cointypes, 10000);
         }
 
@@ -104,13 +105,14 @@ namespace Gasstation.Implementation
           
         }
 
-        // TODO: BENJAMIN
-        public void PayBill()
+        /// <summary>
+        /// Takes an open Transaction and a List of Coins and Bills and Pays it via "Kassenautomat"
+        /// </summary>
+        /// <param name="billToPay"></param>
+        /// <param name="insertedMoney"></param>
+        public void PayTransaction(Transaction billToPay, IList<int> insertedMoney)
         {
-            // Das hier brauche ich Dringend wenn du das GUI was du erstellst für die Selektion der Transaktion aus der Liste verbesert hast von oben kannst du hier noch
-            // schauen, dass du eine aus dem stackpanel selektieren kannst und das hier als beispiel benutzt dafür. Das hier ist der Button mit dem wir bezahlen und ich brauch die Selektion der Transaktion dort.
-            // Vielleicht hast du ne Idee für das evtl brauchts dafür ne Binding List / Observable Collection. Probier mal was aus
-         
+            tankstellenkasse.PayTransaction(billToPay, insertedMoney);
 
         }
 

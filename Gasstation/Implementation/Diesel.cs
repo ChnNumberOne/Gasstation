@@ -11,7 +11,7 @@ namespace Gasstation.Implementation
 
         public Diesel()
         {
-            this.costPerLiterInCent = 145;
+            this.costPerLiterInCent = 140;
             this.name = "Diesel";
         }
      

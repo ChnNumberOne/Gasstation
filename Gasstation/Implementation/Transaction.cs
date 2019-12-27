@@ -8,30 +8,20 @@ namespace Gasstation.Implementation
 {
     public class Transaction
     {
-
-        // ID?
-
-        // Datum
-
-        // Saeule
-
-        // Typ => name      // nicht den FuelType verwende, da dieser einen wechselndne Zustand hat
-
-        // Preis Pro Liter
-
-        // Menge
-
-
-        public Transaction(int costPerLiterInCent, int amount)
+        public Transaction(int costPerLiterInCent, int amount, FuelType fueltype)
         {
             this.costPerLiterInCent = costPerLiterInCent;
             this.amount = amount;
-            Tankstelle.Current().tankstellenkasse.AddTransaction(this);
+            this.fuelType = fueltype;
         }
 
         private int costPerLiterInCent = 0;
 
         private int amount = 0;
+
+        private FuelType fuelType;
+
+        private DateTime paymentDateTime;
 
         public int GetCostPerLiterInCent()
         {
@@ -54,7 +44,11 @@ namespace Gasstation.Implementation
         {
             return this.amount;
         }
-            
 
+        public void SetDateTimeStampNow()
+        {
+            this.paymentDateTime = DateTime.Now;
+        }
+      
     }
 }

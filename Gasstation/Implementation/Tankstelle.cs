@@ -110,10 +110,9 @@ namespace Gasstation.Implementation
         /// </summary>
         /// <param name="billToPay"></param>
         /// <param name="insertedMoney"></param>
-        public void PayTransaction(Transaction billToPay, IList<int> insertedMoney)
+        public List<int> PayTransaction(Transaction billToPay, IList<int> insertedMoney)
         {
-            tankstellenkasse.PayTransaction(billToPay, insertedMoney);
-
+            return tankstellenkasse.PayTransaction(billToPay, insertedMoney);
         }
 
         public List<Transaction> GetTransactionList()

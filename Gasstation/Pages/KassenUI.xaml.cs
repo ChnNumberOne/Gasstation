@@ -24,14 +24,12 @@ namespace Gasstation.Pages
         private List<int> insertedMoney;
         private CustomerUI CustomerUI;
         private Tankstelle tankstelle;
-        private Kassenautomat kassenautomat;
 
         public KassenUI(Transaction transaction, CustomerUI customerUI)
         {
             this.tankstelle = Tankstelle.Current();
             this.CustomerUI = customerUI;
             insertedMoney = new List<int>();
-            this.kassenautomat = new Kassenautomat(new List<Container>(), 42069);
 
             InitializeComponent();
             this.transaction = transaction;
@@ -108,13 +106,12 @@ namespace Gasstation.Pages
             MoneyPanel.Children.Clear();
             // teil der Businesslogik
 
-            tankstelle.PayTransaction(transaction, insertedMoney);
+            List<int> changeList = tankstelle.PayTransaction(transaction, insertedMoney);
                 //tankstellenkasse.GetUnpaidTransactions().Remove(transaction);
 
             UpdateInserted(true);
             CustomerUI.RefreshTransactions();
-            List<int> changeList = kassenautomat.GetChange(insertedMoney.Sum() - transaction.GetCostInCent());
-            if (kassenautomat != null && changeList != null)
+            if (changeList != null)
             {
                 foreach (int coin in changeList)
                 {

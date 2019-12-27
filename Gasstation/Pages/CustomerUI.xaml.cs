@@ -164,7 +164,7 @@ namespace Gasstation.Pages
         {
             int fuelAmountToDisplay = this.selectedZapfsaeule.GetCurrentTransactionFuelAmount();
             decimal result = fuelAmountToDisplay * (decimal)selectedFuelType.GetCostPerLiterInCent() / 100;
-            CostBox.Text = result.ToString();
+            CostBox.Text = result.ToString() + ".-";
         }
     }
 }

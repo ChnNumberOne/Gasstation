@@ -10,6 +10,7 @@ namespace Gasstation.Implementation
     {
         public Transaction(int costPerLiterInCent, int amount, FuelType fueltype)
         {
+            SetDateTimeStampNow();
             this.costPerLiterInCent = costPerLiterInCent;
             this.amount = amount;
             this.fuelType = fueltype;

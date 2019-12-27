@@ -24,13 +24,15 @@ namespace Gasstation.Pages
         private List<int> insertedMoney;
         private CustomerUI CustomerUI;
         private Tankstelle tankstelle;
+        private Kassenautomat kassenautomat;
 
         public KassenUI(Transaction transaction, CustomerUI customerUI)
         {
             this.tankstelle = Tankstelle.Current();
             this.CustomerUI = customerUI;
             insertedMoney = new List<int>();
-    
+            this.kassenautomat = new Kassenautomat(new List<Container>(), 42069);
+
             InitializeComponent();
             this.transaction = transaction;
             Betrag.Content = transaction.GetCostInMoney().ToString("C2");
@@ -45,6 +47,7 @@ namespace Gasstation.Pages
                     Foreground = Brushes.Black,
                     Margin = new Thickness(3)
                 };
+                
                 button.Click += (s, e) => { OnMoneyButton_Click(s, e, i); };
                 MoneyPanel.Children.Add(button);
             }
@@ -109,7 +112,23 @@ namespace Gasstation.Pages
                 //tankstellenkasse.GetUnpaidTransactions().Remove(transaction);
 
             UpdateInserted(true);
-            
+            CustomerUI.RefreshTransactions();
+            List<int> changeList = kassenautomat.GetChange(insertedMoney.Sum() - transaction.GetCostInCent());
+            if (kassenautomat != null && changeList != null)
+            {
+                foreach (int coin in changeList)
+                {
+                    Button button = new Button()
+                    {
+                        Content = ((float)coin / 100).ToString("C2"),
+                        FontSize = 20,
+                        Background = Brushes.Orange,
+                        Foreground = Brushes.Black,
+                        Margin = new Thickness(3)
+                    };
+                    InsertedPanel.Children.Add(button);
+                }
+            }
         }
     }
 }

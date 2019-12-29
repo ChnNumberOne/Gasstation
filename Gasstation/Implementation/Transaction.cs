@@ -8,13 +8,16 @@ namespace Gasstation.Implementation
 {
     public class Transaction
     {
-        public Transaction(int costPerLiterInCent, int amount, FuelType fueltype)
+        public Transaction(int costPerLiterInCent, int amount, FuelType fueltype, Zapfsaeule createdOnZapfsaeule)
         {
             SetDateTimeStampNow();
             this.costPerLiterInCent = costPerLiterInCent;
             this.amount = amount;
             this.fuelType = fueltype;
+            this.createdOnZapfsaeule = createdOnZapfsaeule;
         }
+
+        private Zapfsaeule createdOnZapfsaeule;
 
         private int costPerLiterInCent = 0;
 
@@ -59,6 +62,11 @@ namespace Gasstation.Implementation
         public FuelType GetFuelType()
         {
             return this.fuelType;
+        }
+
+        public Zapfsaeule GetCreatedOnZapfsaeule()
+        {
+            return this.createdOnZapfsaeule;
         }
     }
 }

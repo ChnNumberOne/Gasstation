@@ -91,9 +91,7 @@ namespace Gasstation.Implementation
         {
 
             if (zapfsaeule.isTanking())
-            {   //2
-                // beenden vom Tankprozess
-                // Beendete Transaktion speichern
+            {  
                 this.tankstellenkasse.AddTransaction(zapfsaeule.StopTankingTimer());
             }
             else 
@@ -112,7 +110,9 @@ namespace Gasstation.Implementation
         /// <param name="insertedMoney"></param>
         public List<int> PayTransaction(Transaction billToPay, IList<int> insertedMoney)
         {
-            return tankstellenkasse.PayTransaction(billToPay, insertedMoney);
+            List<int> output = tankstellenkasse.PayTransaction(billToPay, insertedMoney);
+            billToPay.GetCreatedOnZapfsaeule().Unlock();
+            return output;
         }
 
         public List<Transaction> GetTransactionList()

@@ -37,7 +37,7 @@ namespace Gasstation
         private List<Container> cointypes;
 
 
-        private int valueInput;
+        protected int valueInput;
 
 
         private int maximumTotalValue;

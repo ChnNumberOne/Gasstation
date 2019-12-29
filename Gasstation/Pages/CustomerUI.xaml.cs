@@ -72,11 +72,13 @@ namespace Gasstation.Pages
             RefreshTransactions();
         }
 
+        private Button tankingButton;
+
         private void TakeFuel_Click(object sender, RoutedEventArgs e)
         {
             if (selectedZapfsaeule != null && selectedZapfhahn != null)
             {
-                Button tankingButton = (Button)sender;
+                this.tankingButton = (Button)sender;
                 if (tankingButton.Content.ToString() != "Stop")
                 {
 
@@ -108,9 +110,6 @@ namespace Gasstation.Pages
             }
         }
 
-        // AN THOMAS
-        // Musst auf paybetrag clicken, macht sozusagen die "Kasse" auf (nicht wirklich auf aber es erscheint ein neues Fenster)
-        // Dort sollte das eigentlich sein
         private void PayBetrag_Click(object sender, RoutedEventArgs e)
         {
             // ka isch crap
@@ -123,9 +122,6 @@ namespace Gasstation.Pages
 
         }
 
-
-        // AN: THOMAS
-        // Hier ist mal so ein basic refresh der die buttons erstellt.
         public void RefreshTransactions()
         {
             QuittungenPanel.Children.Clear();
@@ -142,8 +138,6 @@ namespace Gasstation.Pages
             BetragBlock.Text = "";
         }
 
-        // AN: THOMAS
-        //Hier ist der dynamic button click event von den oben genanten Transaktionen.
         private void TransactionButton_Click(object sender, RoutedEventArgs e, Transaction transaction)
         {
             BetragBlock.Text = (transaction.GetTotalFuelAmount() * (float)transaction.GetCostPerLiterInCent() / 100).ToString("C2");
@@ -152,20 +146,34 @@ namespace Gasstation.Pages
             PayBetrag.ClearValue(BackgroundProperty);
         }
 
-        //private void DisplayTotalFuelValue(IFuelType fuelType, int currentFuelTransaction, Zapfsaeule runningZapfsaeule)
-        //{
-        //    if (runningZapfsaeule == selectedZapfsaeule)
-        //    {
-        //        CostBox.Text = currentFuelTransaction * (decimal)fuelType.GetCostPerLiterInCent() / 100 + ".-";
-        //    }
-
-        //}
-
         private void RefreshCurrentZapfsaeule()
         {
             int fuelAmountToDisplay = this.selectedZapfsaeule.GetCurrentTransactionFuelAmount();
             decimal result = fuelAmountToDisplay * (decimal)selectedFuelType.GetCostPerLiterInCent() / 100;
             CostBox.Text = result.ToString() + ".-";
         }
+
+        public void ResetCustomerUI()
+        {
+     
+            // HACK ( PLEASE REWORK )
+
+            // TODO BENJI: Schau Bitte, dass die GUI Elemente hier richtig zurückgesetzt werden. DIes hat folgende tücken wie ich bemerkt habe:
+            // 1. Wenn es nicht richtig gemacht wird, sind die buttons nicht mehr mouseover responsiv
+            // 2. Es gibt eine Problematik, wenn du während des Zahlvorgangs im Hintergrund die Zapfsaeule wechselst mit der art und weise wie das GUI dargestellt ist.
+            // Da sind richtig harte Bugs drinn und wir können uns drauf verlassen, dass er die findet. Es wird nichts richtig geupdatet so.
+            // Das ganze Window im Hintergrund zu sperren nützt nichts, da theoretisch man nachdem man auf stop drückt auf eine andere säule gehen kann und da bezahlen kann.
+            // Da musst du dir was schlaues überlegen
+            // Der Hack hier unten war für mich, damit ich mein Backend noch machen konnte und sehen konnte ob sonst alles geht.
+            tankingButton.Content = "Start";
+            tankingButton.IsEnabled = true;
+            foreach (Button b in CustomerSimulation.AccessZapfhahnPanel.Children)
+            {
+                b.IsEnabled = true;
+               
+                b.Background = (SolidColorBrush)(new BrushConverter().ConvertFrom("#373737"));
+            }
+        }
+    
     }
 }

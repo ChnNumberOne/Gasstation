@@ -22,13 +22,13 @@ namespace Gasstation.Pages
     {
         private Transaction transaction;
         private List<int> insertedMoney;
-        private CustomerUI CustomerUI;
+        private CustomerUI customerUI;
         private Tankstelle tankstelle;
 
         public KassenUI(Transaction transaction, CustomerUI customerUI)
         {
             this.tankstelle = Tankstelle.Current();
-            this.CustomerUI = customerUI;
+            this.customerUI = customerUI;
             insertedMoney = new List<int>();
 
             InitializeComponent();
@@ -88,7 +88,7 @@ namespace Gasstation.Pages
 
         private void TakeRetourButton_Click(object sender, RoutedEventArgs e)
         {
-            CustomerUI.RefreshTransactions();
+            customerUI.RefreshTransactions();
             this.Close();
         }
 
@@ -96,6 +96,9 @@ namespace Gasstation.Pages
         // Bitte hier beim pay das ganze von der kasse auch integrieren. Jetzt grad ist nur ein bisschen makeshift code eingebaut.
         private void PayButton_Click(object sender, RoutedEventArgs e)
         {
+
+
+            // Wenn die Kasse aufgemacht wird muss der Betrag in der Liste von CUstomer UI Gesperrt werden
             (new Receipt(transaction, insertedMoney.Sum())).Show();
             InsertedPanel.Children.Clear();
             ReturnLabel.Content = ((float)(insertedMoney.Sum() - transaction.GetCostInCent()) / 100).ToString("C2");
@@ -107,10 +110,11 @@ namespace Gasstation.Pages
             // teil der Businesslogik
 
             List<int> changeList = tankstelle.PayTransaction(transaction, insertedMoney);
-                //tankstellenkasse.GetUnpaidTransactions().Remove(transaction);
+            customerUI.ResetCustomerUI();
+            
 
             UpdateInserted(true);
-            CustomerUI.RefreshTransactions();
+            customerUI.RefreshTransactions();
             if (changeList != null)
             {
                 foreach (int coin in changeList)
@@ -126,6 +130,11 @@ namespace Gasstation.Pages
                     InsertedPanel.Children.Add(button);
                 }
             }
+
+
         }
+
+
+
     }
 }

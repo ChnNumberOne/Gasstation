@@ -54,7 +54,7 @@ namespace Gasstation.Implementation
                 this.paidTransactions.Add(transaction);
                 this.unpaidTransactions.Remove(transaction);
             }
-            // returns Null if there isnt any change
+            this.valueInput = 0;
             return changeCoins;
         }
 

@@ -57,7 +57,7 @@ namespace Gasstation.Pages
         }
 
         
-        private void SelectZapfsauele(Zapfsaeule zapfsaeule)
+        public void SelectZapfsauele(Zapfsaeule zapfsaeule)
         {
 
             // überprüfen ob der Zapfhhan bereits läuft oder nicht. Wenn ja Schnellanzeige
@@ -97,14 +97,14 @@ namespace Gasstation.Pages
             }
         }
 
-        private void SelectZapfhahn(Zapfhahn zapfhahn)
+        public void SelectZapfhahn(Zapfhahn zapfhahn)
         {
             // set selection
             this.selectedZapfhahn = zapfhahn;
             selectedZapfsaeule.Selectzapfhahn(zapfhahn);
             CustomerUI customerUI = new CustomerUI();
             CustomerUIFrame.Content = customerUI;
-            customerUI.SetZapfhahnValues(selectedZapfsaeule, zapfhahn);
+            customerUI.SetZapfhahnValues(selectedZapfsaeule, zapfhahn, this);
 
         }
 

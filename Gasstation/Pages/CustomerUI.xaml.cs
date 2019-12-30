@@ -34,6 +34,8 @@ namespace Gasstation.Pages
 
         private DispatcherTimer guiRefreshTimer;
 
+        private CustomerSimulation customerSimulation;
+
         public CustomerUI()
         {
             InitializeComponent();
@@ -49,8 +51,9 @@ namespace Gasstation.Pages
             this.guiRefreshTimer.Start();
         }
 
-        public void SetZapfhahnValues(Zapfsaeule selectedZapfsaeule, Zapfhahn selectedZapfhahn)
+        public void SetZapfhahnValues(Zapfsaeule selectedZapfsaeule, Zapfhahn selectedZapfhahn, CustomerSimulation customerSimulation)
         {
+            this.customerSimulation = customerSimulation;
             this.selectedZapfsaeule = selectedZapfsaeule;
             this.selectedZapfhahn = selectedZapfhahn;
             this.selectedFuelType = selectedZapfhahn.GetFuelType();
@@ -68,7 +71,12 @@ namespace Gasstation.Pages
                 TakeFuel.Background = Brushes.LightGray;
                 TakeFuel.IsEnabled = false;
             }
-
+            else if (selectedZapfsaeule.isLocked() == false)
+            {
+                TakeFuel.Content = "Start Tanking";
+                TakeFuel.ClearValue(BackgroundProperty);
+                TakeFuel.IsEnabled = true;
+            }
             RefreshTransactions();
         }
 
@@ -127,13 +135,16 @@ namespace Gasstation.Pages
             QuittungenPanel.Children.Clear();
             foreach (Transaction transaction in tankstelle.GetTransactionList())
             {
-                Button button = new Button()
+                if (transaction.GetCreatedOnZapfsaeule() == selectedZapfsaeule)
                 {
-                    Content = transaction.GetCostInMoney().ToString("C2"),
-                    Margin = new Thickness(2)
-                };
-                button.Click += (s, e) => { TransactionButton_Click(s, e, transaction); };
-                QuittungenPanel.Children.Add(button);
+                    Button button = new Button()
+                    {
+                        Content = transaction.GetCostInMoney().ToString("C2"),
+                        Margin = new Thickness(2)
+                    };
+                    button.Click += (s, e) => { TransactionButton_Click(s, e, transaction); };
+                    QuittungenPanel.Children.Add(button);
+                }
             }
             BetragBlock.Text = "";
         }
@@ -155,7 +166,7 @@ namespace Gasstation.Pages
 
         public void ResetCustomerUI()
         {
-     
+
             // HACK ( PLEASE REWORK )
 
             // TODO BENJI: Schau Bitte, dass die GUI Elemente hier richtig zurückgesetzt werden. DIes hat folgende tücken wie ich bemerkt habe:
@@ -165,14 +176,16 @@ namespace Gasstation.Pages
             // Das ganze Window im Hintergrund zu sperren nützt nichts, da theoretisch man nachdem man auf stop drückt auf eine andere säule gehen kann und da bezahlen kann.
             // Da musst du dir was schlaues überlegen
             // Der Hack hier unten war für mich, damit ich mein Backend noch machen konnte und sehen konnte ob sonst alles geht.
-            tankingButton.Content = "Start";
-            tankingButton.IsEnabled = true;
-            foreach (Button b in CustomerSimulation.AccessZapfhahnPanel.Children)
+            customerSimulation.SelectZapfsauele(selectedZapfsaeule);
+            customerSimulation.SelectZapfhahn(selectedZapfhahn);
+
+            //SetZapfhahnValues(this.selectedZapfsaeule, this.selectedZapfhahn, this.customerSimulation);
+            /*foreach (Button b in CustomerSimulation.AccessZapfhahnPanel.Children)
             {
                 b.IsEnabled = true;
                
                 b.Background = (SolidColorBrush)(new BrushConverter().ConvertFrom("#373737"));
-            }
+            }*/
         }
     
     }

@@ -97,44 +97,46 @@ namespace Gasstation.Pages
         private void PayButton_Click(object sender, RoutedEventArgs e)
         {
 
+            if (tankstelle.GetTransactionList().Contains(transaction))
+            {
+                // Wenn die Kasse aufgemacht wird muss der Betrag in der Liste von CUstomer UI Gesperrt werden
+                (new Receipt(transaction, insertedMoney.Sum())).Show();
+                InsertedPanel.Children.Clear();
+                ReturnLabel.Content = ((float)(insertedMoney.Sum() - transaction.GetCostInCent()) / 100).ToString("C2");
+                PayButton.IsEnabled = false;
+                PayButton.Background = Brushes.LightGray;
+                TakeRetourButton.IsEnabled = true;
+                TakeRetourButton.ClearValue(BackgroundProperty);
+                MoneyPanel.Children.Clear();
+                // teil der Businesslogik
 
-            // Wenn die Kasse aufgemacht wird muss der Betrag in der Liste von CUstomer UI Gesperrt werden
-            (new Receipt(transaction, insertedMoney.Sum())).Show();
-            InsertedPanel.Children.Clear();
-            ReturnLabel.Content = ((float)(insertedMoney.Sum() - transaction.GetCostInCent()) / 100).ToString("C2");
-            PayButton.IsEnabled = false;
-            PayButton.Background = Brushes.LightGray;
-            TakeRetourButton.IsEnabled = true;
-            TakeRetourButton.ClearValue(BackgroundProperty);
-            MoneyPanel.Children.Clear();
-            // teil der Businesslogik
-
-            List<int> changeList = tankstelle.PayTransaction(transaction, insertedMoney);
-            customerUI.ResetCustomerUI();
+                List<int> changeList = tankstelle.PayTransaction(transaction, insertedMoney);
+                customerUI.ResetCustomerUI();
             
 
-            UpdateInserted(true);
-            customerUI.RefreshTransactions();
-            if (changeList != null)
-            {
-                foreach (int coin in changeList)
+                UpdateInserted(true);
+                customerUI.CostBox.Text = "0.-";
+                if (changeList != null)
                 {
-                    Button button = new Button()
+                    foreach (int coin in changeList)
                     {
-                        Content = ((float)coin / 100).ToString("C2"),
-                        FontSize = 20,
-                        Background = Brushes.Orange,
-                        Foreground = Brushes.Black,
-                        Margin = new Thickness(3)
-                    };
-                    InsertedPanel.Children.Add(button);
+                        Button button = new Button()
+                        {
+                            Content = ((float)coin / 100).ToString("C2"),
+                            FontSize = 20,
+                            Background = Brushes.Orange,
+                            Foreground = Brushes.Black,
+                            Margin = new Thickness(3)
+                        };
+                        InsertedPanel.Children.Add(button);
+                    }
                 }
             }
-
-
+            else
+            {
+                this.Close();
+                MessageBox.Show("Transaction has already been paid.");
+            }
         }
-
-
-
     }
 }

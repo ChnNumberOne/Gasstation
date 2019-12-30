@@ -58,6 +58,7 @@ namespace Gasstation.Implementation
         public void Unlock()
         {
             this.lockStatus = false;
+            currentFuelTransactionAmountOfLiter = 0;
         }
 
         public void GetFuelOfType(FuelType fueltype)

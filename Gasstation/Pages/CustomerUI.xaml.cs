@@ -166,26 +166,8 @@ namespace Gasstation.Pages
 
         public void ResetCustomerUI()
         {
-
-            // HACK ( PLEASE REWORK )
-
-            // TODO BENJI: Schau Bitte, dass die GUI Elemente hier richtig zurückgesetzt werden. DIes hat folgende tücken wie ich bemerkt habe:
-            // 1. Wenn es nicht richtig gemacht wird, sind die buttons nicht mehr mouseover responsiv
-            // 2. Es gibt eine Problematik, wenn du während des Zahlvorgangs im Hintergrund die Zapfsaeule wechselst mit der art und weise wie das GUI dargestellt ist.
-            // Da sind richtig harte Bugs drinn und wir können uns drauf verlassen, dass er die findet. Es wird nichts richtig geupdatet so.
-            // Das ganze Window im Hintergrund zu sperren nützt nichts, da theoretisch man nachdem man auf stop drückt auf eine andere säule gehen kann und da bezahlen kann.
-            // Da musst du dir was schlaues überlegen
-            // Der Hack hier unten war für mich, damit ich mein Backend noch machen konnte und sehen konnte ob sonst alles geht.
             customerSimulation.SelectZapfsauele(selectedZapfsaeule);
             customerSimulation.SelectZapfhahn(selectedZapfhahn);
-
-            //SetZapfhahnValues(this.selectedZapfsaeule, this.selectedZapfhahn, this.customerSimulation);
-            /*foreach (Button b in CustomerSimulation.AccessZapfhahnPanel.Children)
-            {
-                b.IsEnabled = true;
-               
-                b.Background = (SolidColorBrush)(new BrushConverter().ConvertFrom("#373737"));
-            }*/
         }
     
     }

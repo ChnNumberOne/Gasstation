@@ -64,6 +64,8 @@
     <Compile Include="Implementation\Kassenautomat.cs" />
     <Compile Include="Implementation\Tankstellenkasse.cs" />
     <Compile Include="Implementation\Transaction.cs" />
+    <Compile Include="Implementation\DataRepository.cs" />
+    <Compile Include="Interfaces\IDataRepository.cs" />
     <Compile Include="Interfaces\IFuelType.cs" />
     <Compile Include="Implementation\Tankstelle.cs" />
     <Compile Include="Implementation\Zapfhahn.cs" />

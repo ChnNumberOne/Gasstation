@@ -1,23 +1,27 @@
-﻿using System;
+﻿using Gasstation.Interfaces;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Gasstation.Implementation
 {
     public class Tankstellenkasse : Kassenautomat
     {
+        private readonly IDataRepository dataRepository;
 
-     
-        private List<Transaction> unpaidTransactions = new List<Transaction>();
-        private List<Transaction> paidTransactions = new List<Transaction>();
+        private readonly List<Transaction> paidTransactions = new List<Transaction>();
 
-        public Tankstellenkasse(List<Container> cointypes, int maximumTotalValue)
+        private List<Transaction> unpaidTransactions = new List<Transaction>(); // nein
+                        
+        public Tankstellenkasse(
+            IDataRepository dataRepository,
+            List<Container> cointypes, 
+            int maximumTotalValue)
             : base(cointypes, maximumTotalValue)
         {
-
+            this.dataRepository = dataRepository;
+            this.paidTransactions = LoadPreviousTransaction(dataRepository);
         }
+
 
         /// <summary>
         /// Adds a Transaction to the Unpaid Transactions List
@@ -38,23 +42,26 @@ namespace Gasstation.Implementation
         public List<int> PayTransaction(Transaction transaction, IList<int> insertedMoney)
         {
             // Payment process
-            foreach(int value in insertedMoney)
+            foreach (int value in insertedMoney)
             {
                 this.InsertCoin(value);
             }
 
             List<int> changeCoins = null;
-            if ( transaction.GetCostInCent() <= this.GetValueInput())
+            if (transaction.GetCostInCent() <= this.GetValueInput())
             {
                 int changeValue = this.GetValueInput() - transaction.GetCostInCent();
                 changeCoins = this.GetChange(changeValue);
                 transaction.SetDateTimeStampNow();
-                
+
 
                 this.paidTransactions.Add(transaction);
                 this.unpaidTransactions.Remove(transaction);
             }
             this.valueInput = 0;
+
+            SaveTransaction();
+
             return changeCoins;
         }
 
@@ -67,10 +74,14 @@ namespace Gasstation.Implementation
             return this.unpaidTransactions;
         }
 
-     
+        private void SaveTransaction()
+        {
+            this.dataRepository.StoredTransactions = this.paidTransactions;
+        }
 
-
-
-
+        private static List<Transaction> LoadPreviousTransaction(IDataRepository dataRepository)
+        {
+            return dataRepository.StoredTransactions.ToList();
+        }
     }
 }

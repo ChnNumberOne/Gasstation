@@ -1,20 +1,12 @@
-﻿using System;
+﻿using Gasstation.Interfaces;
+using Gasstation.Properties;
 using System.Collections.Generic;
-using System.Collections.ObjectModel;
 using System.Linq;
 
 namespace Gasstation.Implementation
 {
     public class Tankstelle
     {
-
-        // ODERMATT WIRD TESTEN:
-        // GRUNDFUNKTIONEN
-        // ZWEITE SEITE:
-        // KLASSENDIAGRAMM SEQUENZDIAGRAMM PROGRAMM STIMMEN ÜBEREIN
-        // FEHLERKONTROLLE UMSETZEN
-        // DATENPERSISTENZ UND EXCEPTIONHANDLING MÜSSEN UMGESETZT WERDEN
-        // DOKUMENTATION MUSS SO VERFASST SEIN, DASS ODERMATT DRAUSKOMMT
 
 
         // Singleton
@@ -25,16 +17,18 @@ namespace Gasstation.Implementation
             return currentInstance ?? (currentInstance = new Tankstelle());
         }
 
-        public List<Zapfsaeule> AvailableZapfsaeulen = new List<Zapfsaeule>();
+        public List<Zapfsaeule> AvailableZapfsaeulen = new List<Zapfsaeule>(); // nei
 
-        public List<FuelTank> AvailableFuelTanks = new List<FuelTank>();
+        public List<FuelTank> AvailableFuelTanks = new List<FuelTank>(); // ja
 
-        public List<FuelType> AvailableFuelTypes = new List<FuelType>();
+        public List<FuelType> AvailableFuelTypes = new List<FuelType>(); // nei
 
-        public List<Container> Cointypes = new List<Container>();
+        public List<Container> Cointypes = new List<Container>(); // nei ( tox anschauen)
 
-        private Tankstellenkasse tankstellenkasse;
+        private Tankstellenkasse tankstellenkasse; // das ( das hed viel shit dinne)
 
+       
+          
 
       
 
@@ -75,7 +69,12 @@ namespace Gasstation.Implementation
             this.Cointypes.Add(new Container(200, 0, 1000, 100, 900, 100));
             this.Cointypes.Add(new Container(500, 0, 1000, 100, 900, 100));
             this.Cointypes.Add(new Container(1000, 0, 1000, 100, 900, 100));
-            this.tankstellenkasse = new Tankstellenkasse(this.Cointypes, 10000);
+
+
+
+
+            IDataRepository dataRepository = new DataRepository();
+            this.tankstellenkasse = new Tankstellenkasse(dataRepository, this.Cointypes, 10000);
         }
 
       

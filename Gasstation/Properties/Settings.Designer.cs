@@ -25,13 +25,23 @@ namespace Gasstation.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("")]
-        public string TestA {
+        public global::System.Collections.Generic.List<Gasstation.Implementation.Transaction> PaidTransactions {
             get {
-                return ((string)(this["TestA"]));
+                return ((global::System.Collections.Generic.List<Gasstation.Implementation.Transaction>)(this["PaidTransactions"]));
             }
             set {
-                this["TestA"] = value;
+                this["PaidTransactions"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        public global::System.Collections.Generic.List<Gasstation.Implementation.FuelTank> FuelTanks {
+            get {
+                return ((global::System.Collections.Generic.List<Gasstation.Implementation.FuelTank>)(this["FuelTanks"]));
+            }
+            set {
+                this["FuelTanks"] = value;
             }
         }
     }

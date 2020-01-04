@@ -41,13 +41,11 @@ namespace Gasstation.Pages
             ZapfhahnPanel.Children.Clear();
             
             // Load Again
-            int i = 0;
             foreach (Zapfsaeule zapfsaeule in tankstelle.GetAllZapfsauelen())
             {
-                i++;
                 Button zapfsaeuleButton = new Button()
                 {
-                    Content = i.ToString(),
+                    Content = zapfsaeule.GetName(),
                     Margin = new Thickness(0, 1, 0, 1)
                 };
                 // Set Function on Button

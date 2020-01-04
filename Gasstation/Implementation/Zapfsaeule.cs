@@ -10,12 +10,7 @@ namespace Gasstation.Implementation
 {
     public class Zapfsaeule
     {
-
-        public Zapfsaeule(List<Zapfhahn> zapfhaehne)
-        {
-            this.zapfhaehne = zapfhaehne;
-
-        }
+        private readonly string name;
 
         private bool lockStatus = false;
 
@@ -31,8 +26,16 @@ namespace Gasstation.Implementation
 
         private FuelType currentFuelTransactionFuelType;
 
-        private Transaction openTransaction;
+        public Zapfsaeule(string name, List<Zapfhahn> zapfhaehne)
+        {
+            this.zapfhaehne = zapfhaehne;
+            this.name = name;
+        }
 
+        public string GetName()
+        {
+            return name;
+        }
 
         public List<Zapfhahn> GetZapfhaene()
         {
@@ -99,7 +102,12 @@ namespace Gasstation.Implementation
         {
             this.tankingTimer.Stop();
             this.tankingState = false;
-            return new Transaction(this.currentFuelTransactionFuelType.GetCostPerLiterInCent(), this.currentFuelTransactionAmountOfLiter, this.currentFuelTransactionFuelType, this);
+            return new Transaction(
+                this.currentFuelTransactionFuelType.GetCostPerLiterInCent(), 
+                this.currentFuelTransactionAmountOfLiter, 
+                this.currentFuelTransactionFuelType, 
+                this.name, 
+                () => this.Unlock());
         }
 
         public bool isTanking()

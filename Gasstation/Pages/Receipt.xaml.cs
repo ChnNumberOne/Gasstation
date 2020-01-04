@@ -24,7 +24,7 @@ namespace Gasstation.Pages
         {
             InitializeComponent();
             DateTimeBlock.Text = transaction.GetDateTime().ToString("MM/dd/yyyy HH:mm");
-            FuelTypeBlock.Text = transaction.GetFuelType().GetFuelTypeName();
+            FuelTypeBlock.Text = transaction.GetFuelTypeName();
             AmntOfLitersBlock.Text = transaction.GetTotalFuelAmount().ToString() + "L";
             CostBlock.Text = transaction.GetCostInMoney().ToString("C2");
             PaidBlock.Text = ((float)PaidInCent / 100).ToString("C2");

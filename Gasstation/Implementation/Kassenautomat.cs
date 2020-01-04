@@ -69,6 +69,11 @@ namespace Gasstation
 
         }
 
+        public void ResetAutomat()
+        {
+            this.valueInput = 0;
+        }
+
         /// <summary>
         /// Gibt den Gesamten Wert des Automateninhalts in Rappen aus
         /// </summary>

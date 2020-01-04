@@ -34,19 +34,19 @@ namespace Gasstation.Pages
             InitializeComponent();
             this.transaction = transaction;
             Betrag.Content = transaction.GetCostInMoney().ToString("C2");
-            int[] nums = { 10, 20, 50, 100, 200, 500, 1000, 2000, 5000, 10000 };
-            foreach (int i in nums)
+            IReadOnlyList<int> coinValues = this.tankstelle.GetAvailableCoins();
+            foreach (int coinValue in coinValues)
             {
                 Button button = new Button()
                 {
-                    Content = ((float)i / 100).ToString("C2"),
+                    Content = ((decimal)coinValue / 100).ToString("C2"),
                     FontSize = 20,
                     Background = Brushes.LightGreen,
                     Foreground = Brushes.Black,
                     Margin = new Thickness(3)
                 };
                 
-                button.Click += (s, e) => { OnMoneyButton_Click(s, e, i); };
+                button.Click += (s, e) => { OnMoneyButton_Click(s, e, coinValue); };
                 MoneyPanel.Children.Add(button);
             }
         }

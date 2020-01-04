@@ -4,8 +4,10 @@ using System.Linq;
 
 namespace Gasstation.Implementation
 {
-    public class Tankstellenkasse : Kassenautomat
+    public class Tankstellenkasse
     {
+        private readonly Kassenautomat legacyAutomat;
+
         private readonly IDataRepository dataRepository;
 
         private readonly List<Transaction> paidTransactions = new List<Transaction>();
@@ -16,8 +18,9 @@ namespace Gasstation.Implementation
             IDataRepository dataRepository,
             List<Container> cointypes, 
             int maximumTotalValue)
-            : base(cointypes, maximumTotalValue)
         {
+            legacyAutomat = new Kassenautomat(cointypes, maximumTotalValue);
+
             this.dataRepository = dataRepository;
             this.paidTransactions = LoadPreviousTransaction(dataRepository);
         }
@@ -44,22 +47,24 @@ namespace Gasstation.Implementation
             // Payment process
             foreach (int value in insertedMoney)
             {
-                this.InsertCoin(value);
+                this.legacyAutomat.InsertCoin(value);
             }
 
             List<int> changeCoins = null;
-            if (transaction.GetCostInCent() <= this.GetValueInput())
+            if (transaction.GetCostInCent() <= this.legacyAutomat.GetValueInput())
             {
-                int changeValue = this.GetValueInput() - transaction.GetCostInCent();
-                changeCoins = this.GetChange(changeValue);
+                int changeValue = this.legacyAutomat.GetValueInput() - transaction.GetCostInCent();
+                changeCoins = this.legacyAutomat.GetChange(changeValue);
                 transaction.SetDateTimeStampNow();
 
 
                 this.paidTransactions.Add(transaction);
                 this.unpaidTransactions.Remove(transaction);
             }
-            this.valueInput = 0;
 
+            this.legacyAutomat.ResetAutomat();
+
+            transaction.Complete();
             SaveTransaction();
 
             return changeCoins;

@@ -135,7 +135,7 @@ namespace Gasstation.Pages
             QuittungenPanel.Children.Clear();
             foreach (Transaction transaction in tankstelle.GetTransactionList())
             {
-                if (transaction.GetCreatedOnZapfsaeule() == selectedZapfsaeule)
+                if (transaction.GetZapfsauleName() == selectedZapfsaeule.GetName())
                 {
                     Button button = new Button()
                     {

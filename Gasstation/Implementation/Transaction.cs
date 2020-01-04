@@ -6,6 +6,8 @@ namespace Gasstation.Implementation
     [Serializable]
     public class Transaction
     {
+        private readonly Action onTransactionComplete;
+
         /// <summary>
         /// Used for serialization and deserialization
         /// </summary>
@@ -13,17 +15,15 @@ namespace Gasstation.Implementation
         {
         }
 
-        public Transaction(int costPerLiterInCent, int amount, FuelType fueltype, Zapfsaeule createdOnZapfsaeule)
+        public Transaction(int costPerLiterInCent, int amount, FuelType fueltype, string zapfsaulenName, Action onTransactionComplete)
         {
             SetDateTimeStampNow();
             this.CostPerLiterInCent = costPerLiterInCent;
             this.Amount = amount;
-            this.fuelType = fueltype;
-            this.createdOnZapfsaeule = createdOnZapfsaeule;
+            this.onTransactionComplete = onTransactionComplete;
+            this.FuelTypeName = fueltype.GetFuelTypeName();
+            this.ZapfsauleName = zapfsaulenName;
         }
-
-        private Zapfsaeule createdOnZapfsaeule;
-        private FuelType fuelType;
 
         [XmlAttribute]
         public int CostPerLiterInCent { get; set; }
@@ -33,6 +33,12 @@ namespace Gasstation.Implementation
 
         [XmlAttribute]
         public DateTime PaymentDateTime { get; set; }
+
+        [XmlAttribute]
+        public string FuelTypeName { get; set; }
+
+        [XmlAttribute]
+        public string ZapfsauleName { get;  set; }
 
         public int GetCostPerLiterInCent()
         {
@@ -66,15 +72,24 @@ namespace Gasstation.Implementation
             return this.PaymentDateTime;
         }
 
-        // TODO TOX: Replace with FueltypeName
-        public FuelType GetFuelType()
+        public string GetFuelTypeName()
         {
-            return this.fuelType;
+            return this.FuelTypeName;
         }
 
-        public Zapfsaeule GetCreatedOnZapfsaeule()
+        public string GetZapfsauleName()
         {
-            return this.createdOnZapfsaeule;
+            return this.ZapfsauleName;
+        }
+
+        public void Complete()
+        {
+            if (this.onTransactionComplete == null)
+            {
+                throw new InvalidOperationException("Transaction already completed");
+            }
+
+            this.onTransactionComplete.Invoke();
         }
     }
 }

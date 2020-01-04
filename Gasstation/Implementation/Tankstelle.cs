@@ -23,7 +23,7 @@ namespace Gasstation.Implementation
 
         public List<FuelType> AvailableFuelTypes = new List<FuelType>(); // nei
 
-        public List<Container> Cointypes = new List<Container>(); // nei ( tox anschauen)
+        private List<Container> cointype = new List<Container>(); // nei ( tox anschauen)
 
         private Tankstellenkasse tankstellenkasse; // das ( das hed viel shit dinne)
 
@@ -53,42 +53,43 @@ namespace Gasstation.Implementation
             IEnumerable<Zapfsaeule> zapfsauelen =
                 Enumerable
                 .Range(0, 5)
-                .Select(x =>
+                .Select(zapfsaulenNummer =>
                 {
                     IEnumerable<Zapfhahn> zapfhaehneFuerSaeule = this.AvailableFuelTypes.Select(fuelType => new Zapfhahn(fuelType));
-                    return new Zapfsaeule(zapfhaehneFuerSaeule.ToList());
+                    return new Zapfsaeule(zapfsaulenNummer.ToString(), zapfhaehneFuerSaeule.ToList());
                 });
             AvailableZapfsaeulen.AddRange(zapfsauelen);
 
 
             // Erstellen einer Tankstellenkasse
-            this.Cointypes.Add(new Container(10, 0, 1000, 100, 900, 100));
-            this.Cointypes.Add(new Container(20, 0, 1000, 100, 900, 100));
-            this.Cointypes.Add(new Container(50, 0, 1000, 100, 900, 100));
-            this.Cointypes.Add(new Container(100, 0, 1000, 100, 900, 100));
-            this.Cointypes.Add(new Container(200, 0, 1000, 100, 900, 100));
-            this.Cointypes.Add(new Container(500, 0, 1000, 100, 900, 100));
-            this.Cointypes.Add(new Container(1000, 0, 1000, 100, 900, 100));
+            this.cointype.Add(new Container(10, 0, 1000, 100, 900, 100));
+            this.cointype.Add(new Container(20, 0, 1000, 100, 900, 100));
+            this.cointype.Add(new Container(50, 0, 1000, 100, 900, 100));
+            this.cointype.Add(new Container(100, 0, 1000, 100, 900, 100));
+            this.cointype.Add(new Container(200, 0, 1000, 100, 900, 100));
+            this.cointype.Add(new Container(500, 0, 1000, 100, 900, 100));
+            this.cointype.Add(new Container(1000, 0, 1000, 100, 900, 100));
+            this.cointype.Add(new Container(2000, 0, 1000, 100, 900, 100));
+            this.cointype.Add(new Container(5000, 0, 1000, 100, 900, 100));
+            this.cointype.Add(new Container(10000, 0, 1000, 100, 900, 100));
 
 
 
 
             IDataRepository dataRepository = new DataRepository();
-            this.tankstellenkasse = new Tankstellenkasse(dataRepository, this.Cointypes, 10000);
+            this.tankstellenkasse = new Tankstellenkasse(dataRepository, this.cointype, 10000);
         }
 
       
         // Zapfhaehne readonly zurückgeben
         public IList<Zapfsaeule> GetAllZapfsauelen()
         {
-
             return this.AvailableZapfsaeulen;
         }
 
         // Sprit Bezug
         public void PumpGasFromZapfsauele(Zapfsaeule zapfsaeule, IFuelType fuelType)
         {
-
             if (zapfsaeule.isTanking())
             {  
                 this.tankstellenkasse.AddTransaction(zapfsaeule.StopTankingTimer());
@@ -98,8 +99,7 @@ namespace Gasstation.Implementation
                 FuelTank currentFuelTank = this.AvailableFuelTanks.Find(x => x.GetFuelType() == fuelType);
                 zapfsaeule.StartTankingTimer(currentFuelTank);
                 zapfsaeule.Lock();
-            }
-          
+            }          
         }
 
         /// <summary>
@@ -110,13 +110,17 @@ namespace Gasstation.Implementation
         public List<int> PayTransaction(Transaction billToPay, IList<int> insertedMoney)
         {
             List<int> output = tankstellenkasse.PayTransaction(billToPay, insertedMoney);
-            billToPay.GetCreatedOnZapfsaeule().Unlock();
             return output;
         }
 
         public List<Transaction> GetTransactionList()
         {
             return this.tankstellenkasse.GetUnpaidTransactions();
+        }
+
+        public IReadOnlyList<int> GetAvailableCoins()
+        {
+            return this.cointype.Select(x => x.GetValue()).ToList().AsReadOnly();
         }
     }
 }

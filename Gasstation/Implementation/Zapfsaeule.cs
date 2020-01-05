@@ -80,7 +80,7 @@ namespace Gasstation.Implementation
         /// </summary>
         /// <param name="currentFuelTank"></param>
         /// <param name="callback"></param>
-        public void StartTankingTimer(FuelTank currentFuelTank)
+        public void StartTankingTimer(FuelTank currentFuelTank, Action SaveFuelTanks)
         {
             this.currentFuelTransactionAmountOfLiter = 0;
             this.currentFuelTransactionFuelType = currentFuelTank.GetFuelType();
@@ -88,7 +88,8 @@ namespace Gasstation.Implementation
             this.tankingTimer = new DispatcherTimer();
             this.tankingTimer.Tick += (s, e) =>
             {
-                this.currentFuelTransactionAmountOfLiter += currentFuelTank.DrainFuel(1);   
+                this.currentFuelTransactionAmountOfLiter += currentFuelTank.DrainFuel(1);
+                SaveFuelTanks();
             };
             this.tankingTimer.Interval = TimeSpan.FromSeconds(1);
             this.tankingTimer.Start();
@@ -119,6 +120,8 @@ namespace Gasstation.Implementation
         {
             return this.currentFuelTransactionAmountOfLiter;
         }
+
+      
 
     }
 }

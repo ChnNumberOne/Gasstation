@@ -6,5 +6,7 @@ namespace Gasstation.Interfaces
     public interface IDataRepository
     {
         IReadOnlyList<Transaction> StoredTransactions { get; set; }
+
+        IReadOnlyList<FuelTank> StoredFuelTanks { get; set; }
     }
 }

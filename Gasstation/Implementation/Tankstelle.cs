@@ -1,7 +1,11 @@
 ﻿using Gasstation.Interfaces;
 using Gasstation.Properties;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
+using System.Runtime.Serialization;
+using System.Runtime.Serialization.Formatters.Binary;
+using System.Xml.Serialization;
 
 namespace Gasstation.Implementation
 {
@@ -27,29 +31,39 @@ namespace Gasstation.Implementation
 
         private Tankstellenkasse tankstellenkasse; // das ( das hed viel shit dinne)
 
-       
-          
+        private IDataRepository dataRepository = new DataRepository();
 
-      
+
+        private static List<FuelTank> LoadPreviousFuelTanks(IDataRepository dataRepository)
+        {
+            return dataRepository.StoredFuelTanks.ToList();
+        }
 
         // Konstruktor mit Basiswerten Initialisierung
         private Tankstelle()
         {
-            // Erstellen der FuelTypes und zuweisen auf State
-            this.AvailableFuelTypes = new List<FuelType>
+            // Schnittstelle für Settings zum Config laden
+
+            this.AvailableFuelTanks = LoadPreviousFuelTanks(this.dataRepository);
+            if(this.AvailableFuelTanks.Any() == false)
             {
-                new Benzin(),
-                new Diesel(),
-                new Bleifrei(),
-            };
+                this.AvailableFuelTypes = new List<FuelType>
+                {
+                    new FuelType("Benzin", 120),
+                    new FuelType("Disel", 130),
+                    new FuelType("Biodiesel", 100),
+                };
+                foreach (FuelType ft in this.AvailableFuelTypes)
+                {
+                    this.AvailableFuelTanks.Add(new FuelTank(ft, 1000));
+                }
+            }
+            else
+            {
+                this.AvailableFuelTypes = this.AvailableFuelTanks.Select(x => x.GetFuelType()).Distinct().ToList();
+            }
+        
 
-            // Für jeden Fueltype einen FuelTank erstellen 
-            IEnumerable<FuelTank> fuelTanks = this.AvailableFuelTypes.Select(fuelType => new FuelTank(fuelType, 1000));
-            this.AvailableFuelTanks.AddRange(fuelTanks);
-
-            // Liste von Zapfsaeulen erstellen
-            // für jede Zapfsaeule   ->
-            // für jeden FuelType einen Zapfhahn erstellen
             IEnumerable<Zapfsaeule> zapfsauelen =
                 Enumerable
                 .Range(0, 5)
@@ -76,8 +90,7 @@ namespace Gasstation.Implementation
 
 
 
-            IDataRepository dataRepository = new DataRepository();
-            this.tankstellenkasse = new Tankstellenkasse(dataRepository, this.cointype, 10000);
+            this.tankstellenkasse = new Tankstellenkasse(this.dataRepository, this.cointype, 10000);
         }
 
       
@@ -97,7 +110,7 @@ namespace Gasstation.Implementation
             else 
             {
                 FuelTank currentFuelTank = this.AvailableFuelTanks.Find(x => x.GetFuelType() == fuelType);
-                zapfsaeule.StartTankingTimer(currentFuelTank);
+                zapfsaeule.StartTankingTimer(currentFuelTank, this.SaveFuelTanks);
                 zapfsaeule.Lock();
             }          
         }
@@ -121,6 +134,11 @@ namespace Gasstation.Implementation
         public IReadOnlyList<int> GetAvailableCoins()
         {
             return this.cointype.Select(x => x.GetValue()).ToList().AsReadOnly();
+        }
+
+        private void SaveFuelTanks()
+        {
+            this.dataRepository.StoredFuelTanks = this.AvailableFuelTanks;
         }
     }
 }

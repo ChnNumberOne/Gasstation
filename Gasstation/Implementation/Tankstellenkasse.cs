@@ -12,7 +12,7 @@ namespace Gasstation.Implementation
 
         private readonly List<Transaction> paidTransactions = new List<Transaction>();
 
-        private List<Transaction> unpaidTransactions = new List<Transaction>(); // nein
+        private List<Transaction> unpaidTransactions = new List<Transaction>();
                         
         public Tankstellenkasse(
             IDataRepository dataRepository,
@@ -66,6 +66,7 @@ namespace Gasstation.Implementation
 
             transaction.Complete();
             SaveTransaction();
+            
 
             return changeCoins;
         }

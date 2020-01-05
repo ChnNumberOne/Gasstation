@@ -55,11 +55,8 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
-    <Compile Include="Implementation\Benzin.cs" />
-    <Compile Include="Implementation\Bleifrei.cs" />
     <Compile Include="Implementation\Config.cs" />
     <Compile Include="Implementation\Container.cs" />
-    <Compile Include="Implementation\Diesel.cs" />
     <Compile Include="Implementation\FuelType.cs" />
     <Compile Include="Implementation\Kassenautomat.cs" />
     <Compile Include="Implementation\Tankstellenkasse.cs" />

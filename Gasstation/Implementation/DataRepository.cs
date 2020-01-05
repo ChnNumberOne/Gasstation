@@ -1,5 +1,6 @@
 ﻿using Gasstation.Interfaces;
 using Gasstation.Properties;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -23,5 +24,22 @@ namespace Gasstation.Implementation
                 settings.Save();
             }
         }
+
+        public IReadOnlyList<FuelTank> StoredFuelTanks
+        {
+            get
+            {
+                List<FuelTank> fuelTanks = settings.FuelTanks ?? new List<FuelTank>();
+              
+                return fuelTanks;
+            }
+            set
+            {
+                settings.FuelTanks = value.ToList();
+                settings.Save();
+            }
+        }
+          
+
     }
 }

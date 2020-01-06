@@ -80,6 +80,12 @@ namespace Gasstation.Implementation
             return this.unpaidTransactions;
         }
 
+        // returns the paid transactions list
+        public List<Transaction> GetPaidTransactions()
+        {
+            return this.paidTransactions;
+        }
+
         private void SaveTransaction()
         {
             this.dataRepository.StoredTransactions = this.paidTransactions;

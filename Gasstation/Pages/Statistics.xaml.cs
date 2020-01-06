@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Gasstation.Implementation;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -20,9 +21,21 @@ namespace Gasstation.Pages
     /// </summary>
     public partial class Statistics : Page
     {
+        private Tankstelle tankstelle;
         public Statistics()
         {
             InitializeComponent();
+            RefreshAllStats();
+        }
+
+        private void RefreshAllStats()
+        {
+            this.tankstelle = Tankstelle.Current();
+            TotalLastYearLabel.Content = tankstelle.GetYearStats().ToString("C2");
+            TotalLastMonthLabel.Content = tankstelle.GetMonthStats().ToString("C2");
+            TotalLastWeekLabel.Content = tankstelle.GetWeekStats().ToString("C2");
+            TotalTodayLabel.Content = tankstelle.GetTodaysMoneyStats().ToString("C2");
+            TotalLitersTodayLabel.Content = tankstelle.GetTodaysLiterStats().ToString() + "L";
         }
     }
 }

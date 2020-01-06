@@ -20,6 +20,8 @@ namespace Gasstation.Pages
     /// </summary>
     public partial class WelcomePage : Page
     {
+        private bool isOnWelcome = true;
+
         public WelcomePage()
         {
             InitializeComponent();
@@ -33,12 +35,21 @@ namespace Gasstation.Pages
 
         private void CheckStatsButton_Click(object sender, RoutedEventArgs e)
         {
-
+            if (isOnWelcome)
+            {
+                QuickDisplayFrame.Content = new Statistics();
+                isOnWelcome = false;
+            }
+            else
+            {
+                QuickDisplayFrame.Content = new DisplayWelcome();
+                isOnWelcome = true;
+            }
         }
 
         private void AlterButton_Click(object sender, RoutedEventArgs e)
         {
-
+            
         }
     }
 }

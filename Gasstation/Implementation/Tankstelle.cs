@@ -192,13 +192,13 @@ namespace Gasstation.Implementation
         }
 
         // calculates total profit from yesterday
-        public float GetYesterdayMoneyStats()
+        public float GetTodaysMoneyStats()
         {
             float totalMoney = 0;
 
             foreach (Transaction transaction in this.tankstellenkasse.GetPaidTransactions())
             {
-                if (transaction.GetDateTime() == DateTime.Now)
+                if (transaction.GetDateTime().ToShortDateString() == DateTime.Now.ToShortDateString())
                 {
                     totalMoney += transaction.GetCostInMoney();
                 }
@@ -207,15 +207,15 @@ namespace Gasstation.Implementation
         }
 
         // calculates total liters from yesterday
-        public float GetYesterdayLiterStats()
+        public int GetTodaysLiterStats()
         {
-            float totalLiters = 0;
+            int totalLiters = 0;
 
             foreach (Transaction transaction in this.tankstellenkasse.GetPaidTransactions())
             {
-                if (transaction.GetDateTime() == DateTime.Now)
+                if (transaction.GetDateTime().ToShortDateString() == DateTime.Now.ToShortDateString())
                 {
-                    //totalLiters += transaction.lite;
+                    totalLiters += transaction.GetTotalFuelAmount();
                 }
             }
             return totalLiters;

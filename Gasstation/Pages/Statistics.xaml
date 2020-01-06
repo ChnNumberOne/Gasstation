@@ -17,6 +17,27 @@
     </Page.Resources>
     
     <Grid>
-        
+        <StackPanel>
+            <UniformGrid Columns="2">
+                <Label Content="Total last year:"/>
+                <Label Name="TotalLastYearLabel" HorizontalAlignment="Right"/>
+            </UniformGrid>
+            <UniformGrid Columns="2">
+                <Label Content="Total last month:"/>
+                <Label Name="TotalLastMonthLabel" HorizontalAlignment="Right"/>
+            </UniformGrid>
+            <UniformGrid Columns="2">
+                <Label Content="Total last week:"/>
+                <Label Name="TotalLastWeekLabel" HorizontalAlignment="Right"/>
+            </UniformGrid>
+            <UniformGrid Columns="2">
+                <Label Content="Total today:"/>
+                <Label Name="TotalTodayLabel" HorizontalAlignment="Right"/>
+            </UniformGrid>
+            <UniformGrid Columns="2">
+                <Label Content="Total liters today:"/>
+                <Label Name="TotalLitersTodayLabel" HorizontalAlignment="Right"/>
+            </UniformGrid>
+        </StackPanel>
     </Grid>
 </Page>

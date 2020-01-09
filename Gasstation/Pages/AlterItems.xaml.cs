@@ -22,16 +22,12 @@ namespace Gasstation.Pages
     public partial class AlterItems : Page
     {
         private Tankstelle tankstelle;
+        private FuelTank selectedFuelTank;
 
         public AlterItems()
         {
             InitializeComponent();
             RefreshPage();
-        }
-
-        private void BackToMenu_Click(object sender, RoutedEventArgs e)
-        {
-            MainWindow.SetContent(new WelcomePage());
         }
 
         private void RefreshPage()
@@ -48,7 +44,7 @@ namespace Gasstation.Pages
             {
                 Button fuelTankButton = new Button()
                 {
-                    Content = fuelTank.GetFuelType().GetFuelTypeName() + "Tank",
+                    Content = fuelTank.GetFuelType().GetFuelTypeName() + " Tank",
                     Margin = new Thickness(0, 1, 0, 1)
                 };
                 // Set Function on Button
@@ -59,7 +55,46 @@ namespace Gasstation.Pages
 
         private void SelectFuelTank(FuelTank fuelTank)
         {
+            // setting values of the selected fueltank
+            SelectedFuelTankLabel.Content = fuelTank.GetFuelType().GetFuelTypeName() + " Tank";
+            FuelTankFilling.Content = fuelTank.GetCurrentFuelAmount().ToString() + "/" + fuelTank.GetMaxCapacity().ToString() + "L";
+            FuelTankPercentage.Content = fuelTank.GetFillPercentage().ToString("n2") + "%";
+            selectedFuelTank = fuelTank;
+        }
 
+        private void FuelTankBox_TextChanged(object sender, TextChangedEventArgs e)
+        {
+            int ignoreInt;
+            if (!int.TryParse(FuelTankBox.Text, out ignoreInt) && !string.IsNullOrEmpty(FuelTankBox.Text) || FuelTankBox.Text.Contains('-'))
+            {
+                FuelTankBox.Foreground = Brushes.Red;
+            }
+            else
+            {
+                FuelTankBox.Foreground = Brushes.Black;
+            }
+        }
+
+        private void FillTankButton_Click(object sender, RoutedEventArgs e)
+        {
+            int amountOfFuel;
+            if (!string.IsNullOrEmpty(FuelTankBox.Text) && int.TryParse(FuelTankBox.Text, out amountOfFuel) && !FuelTankBox.Text.Contains('-') && selectedFuelTank != null)
+            {
+                selectedFuelTank.AddFuelToTank(amountOfFuel);
+                SelectFuelTank(selectedFuelTank);
+                FuelTankBox.Text = "";
+            }
+        }
+
+        private void EmptyFuel_Click(object sender, RoutedEventArgs e)
+        {
+            int amountOfFuel;
+            if (!string.IsNullOrEmpty(FuelTankBox.Text) && int.TryParse(FuelTankBox.Text, out amountOfFuel) && !FuelTankBox.Text.Contains('-') && selectedFuelTank != null)
+            {
+                selectedFuelTank.DrainFuel(amountOfFuel);
+                SelectFuelTank(selectedFuelTank);
+                FuelTankBox.Text = "";
+            }
         }
     }
 }

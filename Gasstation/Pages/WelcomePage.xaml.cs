@@ -20,7 +20,8 @@ namespace Gasstation.Pages
     /// </summary>
     public partial class WelcomePage : Page
     {
-        private bool isOnWelcome = true;
+        private bool isOnStats = false;
+        private bool isOnAlterItems = false;
 
         public WelcomePage()
         {
@@ -35,21 +36,34 @@ namespace Gasstation.Pages
 
         private void CheckStatsButton_Click(object sender, RoutedEventArgs e)
         {
-            if (isOnWelcome)
+            if ((!isOnStats && !isOnAlterItems) || isOnAlterItems)
             {
                 QuickDisplayFrame.Content = new Statistics();
-                isOnWelcome = false;
+                isOnStats = true;
+                isOnAlterItems = false;
             }
             else
             {
                 QuickDisplayFrame.Content = new DisplayWelcome();
-                isOnWelcome = true;
+                isOnStats = false;
+                isOnAlterItems = false;
             }
         }
 
         private void AlterButton_Click(object sender, RoutedEventArgs e)
         {
-            MainWindow.SetContent(new AlterItems());
+            if ((!isOnStats && !isOnAlterItems) || isOnStats)
+            {
+                QuickDisplayFrame.Content = new AlterItems();
+                isOnStats = false;
+                isOnAlterItems = true;
+            }
+            else
+            {
+                QuickDisplayFrame.Content = new DisplayWelcome();
+                isOnStats = false;
+                isOnAlterItems = false;
+            }
         }
     }
 }

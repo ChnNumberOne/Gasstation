@@ -25,7 +25,6 @@
             <ColumnDefinition Width="200"></ColumnDefinition>
             <ColumnDefinition Width="*"></ColumnDefinition>
         </Grid.ColumnDefinitions>
-        <Button Name="BackToMenu" Click="BackToMenu_Click" Grid.ColumnSpan="2">Back to menu</Button>
 
         <StackPanel Grid.Row="1" Grid.RowSpan="2" Background="LightGray">
             <Label FontSize="20">Fuel tanks</Label>
@@ -33,13 +32,30 @@
                 <StackPanel Name="FuelTankPanel"/>
             </ScrollViewer>
         </StackPanel>
-        <StackPanel Grid.Column="1" Grid.Row="1">
+        <StackPanel Grid.Column="1" Grid.Row="1" Margin="4">
             <UniformGrid Columns="2">
                 <Label Content="Selected fuel tank:"/>
                 <Label Name="SelectedFuelTankLabel"/>
             </UniformGrid>
             <Separator/>
-            
+            <UniformGrid Columns="2">
+                <StackPanel>
+                    <UniformGrid Columns="2" Rows="2">
+                        <Label Content="Filling:" FontSize="24"/>
+                        <Label Name="FuelTankFilling" FontSize="24"/>
+                        <Label Content="Percentage:" FontSize="24"/>
+                        <Label Name="FuelTankPercentage" FontSize="24"/>
+                    </UniformGrid>
+                </StackPanel>
+                <StackPanel>
+                    <Label FontSize="16" Content="Amount of liters:"/>
+                    <TextBox Name="FuelTankBox" TextChanged="FuelTankBox_TextChanged"/>
+                    <UniformGrid Columns="2" Margin="0 4">
+                        <Button Margin="0 0 1 0" Name="FillTankButton" Content="Fill tank" Click="FillTankButton_Click"/>
+                        <Button Margin="1 0 0 0" Name="EmptyFuel" Content="Dump fuel" Click="EmptyFuel_Click"/>
+                    </UniformGrid>
+                </StackPanel>
+            </UniformGrid>
         </StackPanel>
     </Grid>
 </Page>

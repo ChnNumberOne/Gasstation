@@ -102,7 +102,16 @@ namespace Gasstation.Implementation
             return (float) this.CurrentFuelAmount / (float) this.FuelCapacity * 100;
         }
 
-  
+
+        public int GetCurrentFuelAmount()
+        {
+            return this.CurrentFuelAmount;
+        }
+
+        public int GetMaxCapacity()
+        {
+            return this.FuelCapacity;
+        }
 
     }
 }

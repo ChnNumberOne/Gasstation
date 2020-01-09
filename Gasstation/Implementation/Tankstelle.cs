@@ -151,10 +151,16 @@ namespace Gasstation.Implementation
             this.dataRepository.StoredFuelTanks = this.AvailableFuelTanks;
         }
 
-        // get all fueltypes
+        // gets all fueltypes
         public List<FuelType> GetAvailableFuelTypes()
         {
             return this.AvailableFuelTypes;
+        }
+
+        // gets all fueltanks
+        public List<FuelTank> GetAvailableFuelTanks()
+        {
+            return AvailableFuelTanks;
         }
 
         // statistic calculations

@@ -29,7 +29,7 @@
         <Button Name="BackToMenu" Click="BackToMenu_Click" Grid.ColumnSpan="2">Back to menu</Button>
 
         <StackPanel Grid.Row="1" Grid.RowSpan="2" Background="LightGray">
-            <Label FontSize="20">Zapfsäulen</Label>
+            <Label FontSize="20">Gas pump</Label>
             <ScrollViewer>
                 <StackPanel Name="ZapfsaeulenPanel">
                     
@@ -37,40 +37,10 @@
             </ScrollViewer>
         </StackPanel>
         <StackPanel Grid.Column="1" Grid.Row="1" Background="Gray">
-            <Label FontSize="16">Zapfhähne</Label>
+            <Label FontSize="16">Gas nozzles</Label>
             <WrapPanel Name="ZapfhahnPanel"></WrapPanel>
         </StackPanel>
         <Frame NavigationUIVisibility="Hidden" Grid.Column="1" Grid.Row="2" Name="CustomerUIFrame">
-            <!--<Grid.ColumnDefinitions>
-                <ColumnDefinition></ColumnDefinition>
-                <ColumnDefinition></ColumnDefinition>
-            </Grid.ColumnDefinitions>
-            <StackPanel Margin="5">
-              <UniformGrid Columns="2">
-                <Label FontSize="20" Content="Selected:"></Label>
-                <Label Name="SelectedFuelLabel" FontSize="20" Content=" " HorizontalAlignment="Right"></Label>
-              </UniformGrid>
-              <UniformGrid Columns="2">
-                <Label FontSize="20">Cost Per liter:</Label>
-                    <TextBlock Name="CostPerLiterTextBlock" Text=" " HorizontalAlignment="Right"></TextBlock>
-                </UniformGrid>
-                <UniformGrid Columns="2">
-                    <Label FontSize="20" Content="Cost: "></Label>
-                    <TextBlock Name="CostBox" HorizontalAlignment="Right"></TextBlock>
-                </UniformGrid>
-                <Button Name="TakeFuel" Margin="0 3" Click="TakeFuel_Click">Take Fuel</Button>
-            </StackPanel>
-            <StackPanel Grid.Column="2" Margin="5">
-                <Label>Kasse</Label>
-                <ScrollViewer>
-                    <StackPanel Name="QuittungenPanel" Height="180" Background="Gray">
-                        
-                    </StackPanel>
-                </ScrollViewer>
-                <Label FontSize="20">Betrag:</Label>
-                <TextBlock Name="Betrag"></TextBlock>
-                <Button Name="PayBetrag" Click="PayBetrag_Click">Pay!</Button>
-            </StackPanel>-->
         </Frame>
     </Grid>
 </Page>

@@ -146,7 +146,7 @@ namespace Gasstation.Implementation
             return this.cointype.Select(x => x.GetValue()).ToList().AsReadOnly();
         }
 
-        private void SaveFuelTanks()
+        public void SaveFuelTanks()
         {
             this.dataRepository.StoredFuelTanks = this.AvailableFuelTanks;
         }

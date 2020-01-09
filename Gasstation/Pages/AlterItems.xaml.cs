@@ -81,6 +81,7 @@ namespace Gasstation.Pages
             if (!string.IsNullOrEmpty(FuelTankBox.Text) && int.TryParse(FuelTankBox.Text, out amountOfFuel) && !FuelTankBox.Text.Contains('-') && selectedFuelTank != null)
             {
                 selectedFuelTank.AddFuelToTank(amountOfFuel);
+                tankstelle.SaveFuelTanks();
                 SelectFuelTank(selectedFuelTank);
                 FuelTankBox.Text = "";
             }
@@ -92,6 +93,7 @@ namespace Gasstation.Pages
             if (!string.IsNullOrEmpty(FuelTankBox.Text) && int.TryParse(FuelTankBox.Text, out amountOfFuel) && !FuelTankBox.Text.Contains('-') && selectedFuelTank != null)
             {
                 selectedFuelTank.DrainFuel(amountOfFuel);
+                tankstelle.SaveFuelTanks();
                 SelectFuelTank(selectedFuelTank);
                 FuelTankBox.Text = "";
             }

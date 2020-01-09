@@ -33,19 +33,19 @@
             <Button x:Name="CustomerViewButton" Margin="5" Height="50" Click="CustomerViewButton_Click">
                 Customer View
             </Button>
-            <TextBlock>Simulate a customer</TextBlock>
+            <TextBlock>Customer interface</TextBlock>
         </StackPanel>
         <StackPanel Grid.Row="1" Grid.Column="1">
             <Button x:Name="CheckStatsButton" Margin="5" Height="50" Click="CheckStatsButton_Click">
                 Check Stats
             </Button>
-            <TextBlock x:Name="CheckStatsLabel">Check values of existing items</TextBlock>
+            <TextBlock x:Name="CheckStatsLabel">Check statistics</TextBlock>
         </StackPanel>
         <StackPanel Grid.Row="1" Grid.Column="2">
             <Button Name="AlterButton" Margin="5" Height="50" Click="AlterButton_Click">
-                Alter Items
+                Manage Fuel Tanks
             </Button>
-            <TextBlock>Change or add items</TextBlock>
+            <TextBlock>Manage fuel from fueltanks</TextBlock>
         </StackPanel>
     </Grid>
 </Page>

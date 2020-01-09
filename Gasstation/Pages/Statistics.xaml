@@ -34,10 +34,9 @@
                 <Label Content="Total today:"/>
                 <Label Name="TotalTodayLabel" HorizontalAlignment="Right"/>
             </UniformGrid>
-            <UniformGrid Columns="2">
-                <Label Content="Total liters today:"/>
-                <Label Name="TotalLitersTodayLabel" HorizontalAlignment="Right"/>
-            </UniformGrid>
+            <Label Content="Total liters today:"/>
+            <Separator/>
+            <WrapPanel Name="FuelTypePanel"/>
         </StackPanel>
     </Grid>
 </Page>

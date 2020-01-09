@@ -151,6 +151,12 @@ namespace Gasstation.Implementation
             this.dataRepository.StoredFuelTanks = this.AvailableFuelTanks;
         }
 
+        // get all fueltypes
+        public List<FuelType> GetAvailableFuelTypes()
+        {
+            return this.AvailableFuelTypes;
+        }
+
         // statistic calculations
 
         // calculates total profit from last year
@@ -216,14 +222,14 @@ namespace Gasstation.Implementation
         }
 
         // calculates total liters from yesterday
-        public int GetTodaysLiterStats()
+        public int GetTodaysLiterStats(FuelType fuelType)
         {
             int totalLiters = 0;
 
             // gets fuel amount of paid transactions
             foreach (Transaction transaction in this.tankstellenkasse.GetPaidTransactions())
             {
-                if (transaction.GetDateTime().ToShortDateString() == DateTime.Now.ToShortDateString())
+                if (transaction.GetDateTime().ToShortDateString() == DateTime.Now.ToShortDateString() && transaction.GetFuelTypeName() == fuelType.GetFuelTypeName())
                 {
                     totalLiters += transaction.GetTotalFuelAmount();
                 }
@@ -232,7 +238,7 @@ namespace Gasstation.Implementation
             // gets fuel amount of unpaid transactions
             foreach (Transaction transaction in this.tankstellenkasse.GetUnpaidTransactions())
             {
-                if (transaction.GetDateTime().ToShortDateString() == DateTime.Now.ToShortDateString())
+                if (transaction.GetDateTime().ToShortDateString() == DateTime.Now.ToShortDateString() && transaction.GetFuelTypeName() == fuelType.GetFuelTypeName())
                 {
                     totalLiters += transaction.GetTotalFuelAmount();
                 }

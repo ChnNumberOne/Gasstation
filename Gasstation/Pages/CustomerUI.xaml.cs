@@ -137,7 +137,7 @@ namespace Gasstation.Pages
             {
                 Button button = new Button()
                 {
-                    Content = "Säule " + transaction.GetZapfsauleName() + ": " + transaction.GetCostInMoney().ToString("C2"),
+                    Content = "Säule " + transaction.GetZapfsauleName() + ": " + transaction.GetTotalFuelAmount().ToString() + "L, " + transaction.GetCostInMoney().ToString("C2"),
                     Margin = new Thickness(2)
                 };
                 button.Click += (s, e) => { TransactionButton_Click(s, e, transaction); };

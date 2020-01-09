@@ -35,7 +35,16 @@ namespace Gasstation.Pages
             TotalLastMonthLabel.Content = tankstelle.GetMonthStats().ToString("C2");
             TotalLastWeekLabel.Content = tankstelle.GetWeekStats().ToString("C2");
             TotalTodayLabel.Content = tankstelle.GetTodaysMoneyStats().ToString("C2");
-            TotalLitersTodayLabel.Content = tankstelle.GetTodaysLiterStats().ToString() + "L";
+            //TotalLitersTodayLabel.Content = tankstelle.GetTodaysLiterStats().ToString() + "L";
+
+            foreach (FuelType fuelType in tankstelle.GetAvailableFuelTypes())
+            {
+                TextBlock textBlock = new TextBlock()
+                {
+                    Text = fuelType.GetFuelTypeName() + ": " + tankstelle.GetTodaysLiterStats(fuelType) + "L\t"
+                };
+                FuelTypePanel.Children.Add(textBlock);
+            }
         }
     }
 }

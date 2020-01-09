@@ -107,8 +107,7 @@ namespace Gasstation.Implementation
                 this.currentFuelTransactionFuelType.GetCostPerLiterInCent(), 
                 this.currentFuelTransactionAmountOfLiter, 
                 this.currentFuelTransactionFuelType, 
-                this.name, 
-                () => this.Unlock());
+                this.name);
         }
 
         public bool isTanking()

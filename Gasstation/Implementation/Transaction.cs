@@ -6,7 +6,6 @@ namespace Gasstation.Implementation
     [Serializable]
     public class Transaction
     {
-        private readonly Action onTransactionComplete;
 
         /// <summary>
         /// Used for serialization and deserialization
@@ -15,12 +14,11 @@ namespace Gasstation.Implementation
         {
         }
 
-        public Transaction(int costPerLiterInCent, int amount, FuelType fueltype, string zapfsaulenName, Action onTransactionComplete)
+        public Transaction(int costPerLiterInCent, int amount, FuelType fueltype, string zapfsaulenName)
         {
             SetDateTimeStampNow();
             this.CostPerLiterInCent = costPerLiterInCent;
             this.Amount = amount;
-            this.onTransactionComplete = onTransactionComplete;
             this.FuelTypeName = fueltype.GetFuelTypeName();
             this.ZapfsauleName = zapfsaulenName;
             this.IsPaid = false;
@@ -98,12 +96,14 @@ namespace Gasstation.Implementation
 
         public void Complete()
         {
-            if (this.onTransactionComplete == null)
+            Tankstelle tankstelle = Tankstelle.Current();
+            foreach (Zapfsaeule zapfsaeule in tankstelle.GetAllZapfsauelen())
             {
-                throw new InvalidOperationException("Transaction already completed");
+                if (zapfsaeule.GetName() == this.ZapfsauleName)
+                {
+                    zapfsaeule.Unlock();
+                }
             }
-
-            this.onTransactionComplete.Invoke();
         }
     }
 }

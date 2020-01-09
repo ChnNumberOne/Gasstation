@@ -25,12 +25,12 @@ namespace Gasstation.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        public global::System.Collections.Generic.List<Gasstation.Implementation.Transaction> PaidTransactions {
+        public global::System.Collections.Generic.List<Gasstation.Implementation.Transaction> Transactions {
             get {
-                return ((global::System.Collections.Generic.List<Gasstation.Implementation.Transaction>)(this["PaidTransactions"]));
+                return ((global::System.Collections.Generic.List<Gasstation.Implementation.Transaction>)(this["Transactions"]));
             }
             set {
-                this["PaidTransactions"] = value;
+                this["Transactions"] = value;
             }
         }
         

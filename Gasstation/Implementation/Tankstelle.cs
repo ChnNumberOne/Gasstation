@@ -51,7 +51,7 @@ namespace Gasstation.Implementation
                 this.AvailableFuelTypes = new List<FuelType>
                 {
                     new FuelType("Benzin", 120),
-                    new FuelType("Disel", 130),
+                    new FuelType("Diesel", 130),
                     new FuelType("Biodiesel", 100),
                 };
                 foreach (FuelType ft in this.AvailableFuelTypes)
@@ -63,17 +63,6 @@ namespace Gasstation.Implementation
             {
                 this.AvailableFuelTypes = this.AvailableFuelTanks.Select(x => x.GetFuelType()).Distinct().ToList();
             }
-        
-
-            IEnumerable<Zapfsaeule> zapfsauelen =
-                Enumerable
-                .Range(0, 5)
-                .Select(zapfsaulenNummer =>
-                {
-                    IEnumerable<Zapfhahn> zapfhaehneFuerSaeule = this.AvailableFuelTypes.Select(fuelType => new Zapfhahn(fuelType));
-                    return new Zapfsaeule(zapfsaulenNummer.ToString(), zapfhaehneFuerSaeule.ToList());
-                });
-            AvailableZapfsaeulen.AddRange(zapfsauelen);
 
 
             // Erstellen einer Tankstellenkasse
@@ -92,6 +81,26 @@ namespace Gasstation.Implementation
 
 
             this.tankstellenkasse = new Tankstellenkasse(this.dataRepository, this.cointype, 10000);
+
+
+            IEnumerable<Zapfsaeule> zapfsauelen =
+                Enumerable
+                .Range(1, 5)
+                .Select(zapfsaeulenNummer =>
+                {
+                    IEnumerable<Zapfhahn> zapfhaehneFuerSaeule = this.AvailableFuelTypes.Select(fuelType => new Zapfhahn(fuelType));
+                    Zapfsaeule zapfsaeule = new Zapfsaeule(zapfsaeulenNummer.ToString(), zapfhaehneFuerSaeule.ToList());
+                    foreach (Transaction unpaidTransaction in this.tankstellenkasse.GetUnpaidTransactions())
+                    {
+                        if (unpaidTransaction.GetZapfsauleName() == zapfsaeulenNummer.ToString())
+                        {
+                            zapfsaeule.Lock();
+                            zapfsaeule.Selectzapfhahn(zapfsaeule.GetZapfhaene().Find(x => x.GetFuelType().GetFuelTypeName() == unpaidTransaction.GetFuelTypeName()));
+                        }
+                    }
+                    return zapfsaeule;
+                });
+            AvailableZapfsaeulen.AddRange(zapfsauelen);
         }
 
       
@@ -183,7 +192,7 @@ namespace Gasstation.Implementation
 
             foreach (Transaction transaction in this.tankstellenkasse.GetPaidTransactions())
             {
-                if (transaction.GetDateTime() >= lastWeek && transaction.GetDateTime() < DateTime.Now)
+                if (transaction.GetDateTime() >= lastWeek && transaction.GetDateTime() < DateTime.Now.AddDays(-1))
                 {
                     totalMoney += transaction.GetCostInMoney();
                 }
@@ -211,6 +220,7 @@ namespace Gasstation.Implementation
         {
             int totalLiters = 0;
 
+            // gets fuel amount of paid transactions
             foreach (Transaction transaction in this.tankstellenkasse.GetPaidTransactions())
             {
                 if (transaction.GetDateTime().ToShortDateString() == DateTime.Now.ToShortDateString())
@@ -218,6 +228,16 @@ namespace Gasstation.Implementation
                     totalLiters += transaction.GetTotalFuelAmount();
                 }
             }
+
+            // gets fuel amount of unpaid transactions
+            foreach (Transaction transaction in this.tankstellenkasse.GetUnpaidTransactions())
+            {
+                if (transaction.GetDateTime().ToShortDateString() == DateTime.Now.ToShortDateString())
+                {
+                    totalLiters += transaction.GetTotalFuelAmount();
+                }
+            }
+
             return totalLiters;
         }
     }

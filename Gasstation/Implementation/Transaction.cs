@@ -23,6 +23,7 @@ namespace Gasstation.Implementation
             this.onTransactionComplete = onTransactionComplete;
             this.FuelTypeName = fueltype.GetFuelTypeName();
             this.ZapfsauleName = zapfsaulenName;
+            this.IsPaid = false;
         }
 
         [XmlAttribute]
@@ -32,13 +33,16 @@ namespace Gasstation.Implementation
         public int Amount { get; set; }
 
         [XmlAttribute]
-        public DateTime PaymentDateTime { get; set; }
+        public DateTime TransactionDateTime { get; set; }
 
         [XmlAttribute]
         public string FuelTypeName { get; set; }
 
         [XmlAttribute]
         public string ZapfsauleName { get;  set; }
+
+        [XmlAttribute]
+        public bool IsPaid { get; set; }
 
         public int GetCostPerLiterInCent()
         {
@@ -64,12 +68,12 @@ namespace Gasstation.Implementation
 
         public void SetDateTimeStampNow()
         {
-            this.PaymentDateTime = DateTime.Now;
+            this.TransactionDateTime = DateTime.Now;
         }
       
         public DateTime GetDateTime()
         {
-            return this.PaymentDateTime;
+            return this.TransactionDateTime;
         }
 
         public string GetFuelTypeName()
@@ -80,6 +84,16 @@ namespace Gasstation.Implementation
         public string GetZapfsauleName()
         {
             return this.ZapfsauleName;
+        }
+
+        public bool WasPaid()
+        {
+            return this.IsPaid;
+        }
+
+        public void SetAsPaid()
+        {
+            this.IsPaid = true;
         }
 
         public void Complete()

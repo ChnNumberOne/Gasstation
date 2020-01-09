@@ -14,13 +14,13 @@ namespace Gasstation.Implementation
         {
             get
             {
-                List<Transaction> data = settings.PaidTransactions ?? new List<Transaction>();
+                List<Transaction> data = settings.Transactions ?? new List<Transaction>();
                 return data.AsReadOnly();
             }
 
             set
             {
-                settings.PaidTransactions = value.ToList();
+                settings.Transactions = value.ToList();
                 settings.Save();
             }
         }

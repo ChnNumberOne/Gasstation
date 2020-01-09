@@ -135,16 +135,13 @@ namespace Gasstation.Pages
             QuittungenPanel.Children.Clear();
             foreach (Transaction transaction in tankstelle.GetTransactionList())
             {
-                if (transaction.GetZapfsauleName() == selectedZapfsaeule.GetName())
+                Button button = new Button()
                 {
-                    Button button = new Button()
-                    {
-                        Content = transaction.GetCostInMoney().ToString("C2"),
-                        Margin = new Thickness(2)
-                    };
-                    button.Click += (s, e) => { TransactionButton_Click(s, e, transaction); };
-                    QuittungenPanel.Children.Add(button);
-                }
+                    Content = "Säule " + transaction.GetZapfsauleName() + ": " + transaction.GetCostInMoney().ToString("C2"),
+                    Margin = new Thickness(2)
+                };
+                button.Click += (s, e) => { TransactionButton_Click(s, e, transaction); };
+                QuittungenPanel.Children.Add(button);
             }
             BetragBlock.Text = "";
         }

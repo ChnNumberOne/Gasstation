@@ -22,7 +22,12 @@ namespace Gasstation.Implementation
             legacyAutomat = new Kassenautomat(cointypes, maximumTotalValue);
 
             this.dataRepository = dataRepository;
-            this.paidTransactions = LoadPreviousTransaction(dataRepository);
+            //this.paidTransactions = LoadPreviousTransaction(dataRepository);
+            HandleTransactions(LoadPreviousTransaction(dataRepository));
+            /*
+            this.paidTransactions.Clear();
+            this.unpaidTransactions.Clear();
+            SaveTransaction();*/
         }
 
 
@@ -33,6 +38,7 @@ namespace Gasstation.Implementation
         public void AddTransaction(Transaction transaction)
         {
             this.unpaidTransactions.Add(transaction);
+            SaveTransaction();
         }
 
         /// <summary>
@@ -51,13 +57,15 @@ namespace Gasstation.Implementation
             }
 
             List<int> changeCoins = null;
+
+
             if (transaction.GetCostInCent() <= this.legacyAutomat.GetValueInput())
             {
                 int changeValue = this.legacyAutomat.GetValueInput() - transaction.GetCostInCent();
                 changeCoins = this.legacyAutomat.GetChange(changeValue);
                 transaction.SetDateTimeStampNow();
 
-
+                transaction.SetAsPaid();
                 this.paidTransactions.Add(transaction);
                 this.unpaidTransactions.Remove(transaction);
             }
@@ -88,12 +96,30 @@ namespace Gasstation.Implementation
 
         private void SaveTransaction()
         {
-            this.dataRepository.StoredTransactions = this.paidTransactions;
+            List<Transaction> allTransactions = new List<Transaction>(this.paidTransactions);
+            allTransactions.AddRange(this.unpaidTransactions);
+            this.dataRepository.StoredTransactions = allTransactions;
         }
 
         private static List<Transaction> LoadPreviousTransaction(IDataRepository dataRepository)
         {
             return dataRepository.StoredTransactions.ToList();
+        }
+
+        // seperates unpaid transactions from paid transactions
+        private void HandleTransactions(List<Transaction> transactions)
+        {
+            foreach (Transaction transaction in transactions)
+            {
+                if (transaction.WasPaid())
+                {
+                    paidTransactions.Add(transaction);
+                }
+                else
+                {
+                    unpaidTransactions.Add(transaction);
+                }
+            }
         }
     }
 }

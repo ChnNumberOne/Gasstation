@@ -44,5 +44,19 @@ namespace Gasstation.Properties {
                 this["FuelTanks"] = value;
             }
         }
+
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        public global::System.Collections.Generic.List<Gasstation.Implementation.Container> Containers
+        {
+            get
+            {
+                return ((global::System.Collections.Generic.List<Gasstation.Implementation.Container>)(this["Containers"]));
+            }
+            set
+            {
+                this["Containers"] = value;
+            }
+        }
     }
 }

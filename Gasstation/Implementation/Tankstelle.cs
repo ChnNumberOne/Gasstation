@@ -282,14 +282,14 @@ namespace Gasstation.Implementation
         /// <summary>
         /// Saves the containers from cointype
         /// </summary>
-        private void SaveTransaction()
+        /*private void SaveTransaction()
         {
-            this.dataRepository.StoredTransactions = cointype;
+            this.dataRepository. = cointype;
         }
 
         private static List<Transaction> LoadPreviousTransaction(IDataRepository dataRepository)
         {
             return dataRepository.StoredTransactions.ToList();
-        }
+        }*/
     }
 }

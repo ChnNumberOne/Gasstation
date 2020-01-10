@@ -27,19 +27,24 @@ namespace Gasstation.Implementation
         private enum Currency
         {
             CHF, EUR, USD
-        };      
+        };
 
+        [XmlAttribute]
         private int value;
 
-        private int maximumFill;     
+        [XmlAttribute]
+        private int maximumFill;
 
+        [XmlAttribute]
         private int minimumFill;
 
         [XmlAttribute]
         private int currentFill;
 
+        [XmlAttribute]
         private int topWarnLevel;
 
+        [XmlAttribute]
         private int bottomWarnLevel;
 
         public Container()

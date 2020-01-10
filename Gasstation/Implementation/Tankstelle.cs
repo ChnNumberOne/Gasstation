@@ -66,22 +66,27 @@ namespace Gasstation.Implementation
 
 
             // Erstellen einer Tankstellenkasse
-            this.cointype.Add(new Container(10, 0, 1000, 100, 900, 100));
-            this.cointype.Add(new Container(20, 0, 1000, 100, 900, 100));
-            this.cointype.Add(new Container(50, 0, 1000, 100, 900, 100));
-            this.cointype.Add(new Container(100, 0, 1000, 100, 900, 100));
-            this.cointype.Add(new Container(200, 0, 1000, 100, 900, 100));
-            this.cointype.Add(new Container(500, 0, 1000, 100, 900, 100));
-            this.cointype.Add(new Container(1000, 0, 1000, 100, 900, 100));
-            this.cointype.Add(new Container(2000, 0, 1000, 100, 900, 100));
-            this.cointype.Add(new Container(5000, 0, 1000, 100, 900, 100));
-            this.cointype.Add(new Container(10000, 0, 1000, 100, 900, 100));
-
-
-
+            List<Container> containers = LoadPreviousContainers(this.dataRepository);
+            if (!containers.Any())
+            {
+                this.cointype.Add(new Container(10, 0, 1000, 100, 900, 100));
+                this.cointype.Add(new Container(20, 0, 1000, 100, 900, 100));
+                this.cointype.Add(new Container(50, 0, 1000, 100, 900, 100));
+                this.cointype.Add(new Container(100, 0, 1000, 100, 900, 100));
+                this.cointype.Add(new Container(200, 0, 1000, 100, 900, 100));
+                this.cointype.Add(new Container(500, 0, 1000, 100, 900, 100));
+                this.cointype.Add(new Container(1000, 0, 1000, 100, 900, 100));
+                this.cointype.Add(new Container(2000, 0, 1000, 100, 900, 100));
+                this.cointype.Add(new Container(5000, 0, 1000, 100, 900, 100));
+                this.cointype.Add(new Container(10000, 0, 1000, 100, 900, 100));
+            }
+            
+            else
+            {
+                this.cointype = containers;
+            }
 
             this.tankstellenkasse = new Tankstellenkasse(this.dataRepository, this.cointype, 10000);
-
 
             IEnumerable<Zapfsaeule> zapfsauelen =
                 Enumerable
@@ -133,6 +138,7 @@ namespace Gasstation.Implementation
         public List<int> PayTransaction(Transaction billToPay, IList<int> insertedMoney)
         {
             List<int> output = tankstellenkasse.PayTransaction(billToPay, insertedMoney);
+            SaveContainers();
             return output;
         }
 
@@ -280,16 +286,21 @@ namespace Gasstation.Implementation
         }
 
         /// <summary>
-        /// Saves the containers from cointype
+        /// Saves the containers from cointype into a file
         /// </summary>
-        /*private void SaveTransaction()
+        private void SaveContainers()
         {
-            this.dataRepository. = cointype;
+            this.dataRepository.StoredContainers = cointype;
         }
 
-        private static List<Transaction> LoadPreviousTransaction(IDataRepository dataRepository)
+        /// <summary>
+        /// Loads list of containers from file
+        /// </summary>
+        /// <param name="dataRepository"></param>
+        /// <returns></returns>
+        private List<Container> LoadPreviousContainers(IDataRepository dataRepository)
         {
-            return dataRepository.StoredTransactions.ToList();
-        }*/
+            return dataRepository.StoredContainers.ToList();
+        }
     }
 }

@@ -278,5 +278,18 @@ namespace Gasstation.Implementation
         {
             return AvailableFuelTanks.Find(x => x.GetFuelType().GetFuelTypeName() == fuelType);
         }
+
+        /// <summary>
+        /// Saves the containers from cointype
+        /// </summary>
+        private void SaveTransaction()
+        {
+            this.dataRepository.StoredTransactions = cointype;
+        }
+
+        private static List<Transaction> LoadPreviousTransaction(IDataRepository dataRepository)
+        {
+            return dataRepository.StoredTransactions.ToList();
+        }
     }
 }

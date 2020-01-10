@@ -39,7 +39,20 @@ namespace Gasstation.Implementation
                 settings.Save();
             }
         }
-          
+        /*
+        public IReadOnlyList<Container> StoredContainers
+        {
+            get
+            {
+                List<Container> containers = settings.Containers ?? new List<Container>();
 
+                return containers;
+            }
+            set
+            {
+                settings.FuelTanks = value.ToList();
+                settings.Save();
+            }
+        }*/
     }
 }

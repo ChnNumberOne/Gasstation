@@ -17,9 +17,11 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Xml.Serialization;
 
 namespace Gasstation
 {
+    [Serializable]
     public class Container
     {
         private enum Currency
@@ -33,12 +35,17 @@ namespace Gasstation
 
         private int minimumFill;
 
+        [XmlAttribute]
         private int currentFill;
 
         private int topWarnLevel;
 
         private int bottomWarnLevel;
 
+        public Container()
+        {
+
+        }
 
         public Container(int value, int minimumFill, int maximumFill, int bottomWarnLevel, int topWarnLevel, int currentFill)
         {

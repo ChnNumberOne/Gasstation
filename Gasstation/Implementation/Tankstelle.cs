@@ -64,11 +64,10 @@ namespace Gasstation.Implementation
                 this.AvailableFuelTypes = this.AvailableFuelTanks.Select(x => x.GetFuelType()).Distinct().ToList();
             }
 
-
             // Erstellen einer Tankstellenkasse
-           /* List<Container> containers = LoadPreviousContainers(this.dataRepository);
+            List<Container> containers = LoadPreviousContainers(this.dataRepository);
             if (!containers.Any())
-            {*/
+            {
                 this.cointype.Add(new Container(10, 0, 1000, 100, 900, 100));
                 this.cointype.Add(new Container(20, 0, 1000, 100, 900, 100));
                 this.cointype.Add(new Container(50, 0, 1000, 100, 900, 100));
@@ -79,11 +78,13 @@ namespace Gasstation.Implementation
                 this.cointype.Add(new Container(2000, 0, 1000, 100, 900, 100));
                 this.cointype.Add(new Container(5000, 0, 1000, 100, 900, 100));
                 this.cointype.Add(new Container(10000, 0, 1000, 100, 900, 100));
-         /*   }
+
+                SaveContainers();
+            }
             else
             {
                 this.cointype = containers;
-            }*/
+            }
 
             this.tankstellenkasse = new Tankstellenkasse(this.dataRepository, this.cointype, 10000);
 

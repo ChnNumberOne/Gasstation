@@ -30,22 +30,22 @@ namespace Gasstation.Implementation
         };
 
         [XmlAttribute]
-        private int value;
+        public int Value { get; set; }
 
         [XmlAttribute]
-        private int maximumFill;
+        public int MaximumFill { get; set; }
 
         [XmlAttribute]
-        private int minimumFill;
+        public int MinimumFill { get; set; }
 
         [XmlAttribute]
-        private int currentFill;
+        public int CurrentFill { get; set; }
 
         [XmlAttribute]
-        private int topWarnLevel;
+        public int TopWarnLevel { get; set; }
 
         [XmlAttribute]
-        private int bottomWarnLevel;
+        public int BottomWarnLevel { get; set; }
 
         public Container()
         {
@@ -54,12 +54,12 @@ namespace Gasstation.Implementation
 
         public Container(int value, int minimumFill, int maximumFill, int bottomWarnLevel, int topWarnLevel, int currentFill)
         {
-            this.value = value;
-            this.minimumFill = minimumFill;
-            this.maximumFill = maximumFill;
-            this.bottomWarnLevel = bottomWarnLevel;
-            this.topWarnLevel = topWarnLevel;
-            this.currentFill = currentFill;
+            this.Value = value;
+            this.MinimumFill = minimumFill;
+            this.MaximumFill = maximumFill;
+            this.BottomWarnLevel = bottomWarnLevel;
+            this.TopWarnLevel = topWarnLevel;
+            this.CurrentFill = currentFill;
         }
 
 
@@ -68,7 +68,7 @@ namespace Gasstation.Implementation
         /// </summary>
         public void RemoveCoin()
         {
-            this.currentFill -= 1;
+            this.CurrentFill -= 1;
         }
 
         /// <summary>
@@ -76,7 +76,7 @@ namespace Gasstation.Implementation
         /// </summary>
         public void AddCoin()
         {
-            this.currentFill += 1;
+            this.CurrentFill += 1;
         }
 
         /// <summary>
@@ -85,7 +85,7 @@ namespace Gasstation.Implementation
         /// <returns></returns>
         public int GetPercentCoin()
         {
-            float percentCoin = (float) currentFill / (float) maximumFill * (float)100;
+            float percentCoin = (float) CurrentFill / (float) MaximumFill * (float)100;
             return (int) percentCoin;
         }
 
@@ -96,7 +96,7 @@ namespace Gasstation.Implementation
         public int GetCoinAmount()
         {
 
-            return currentFill;
+            return CurrentFill;
         }
 
         /// <summary>
@@ -105,7 +105,7 @@ namespace Gasstation.Implementation
         /// <returns></returns>
         public int GetMaxmimumFill()
         {
-            return this.maximumFill;
+            return this.MaximumFill;
         }
 
         /// <summary>
@@ -114,7 +114,7 @@ namespace Gasstation.Implementation
         /// <returns></returns>
         public int GetValue()
         {
-            return this.value;
+            return this.Value;
         }
 
         /// <summary>
@@ -123,7 +123,7 @@ namespace Gasstation.Implementation
         /// <param name="currentFill"></param>
         public void SetCurrentFill(int currentFill)
         {
-            this.currentFill = currentFill;
+            this.CurrentFill = currentFill;
         }
 
         /// <summary>
@@ -132,7 +132,7 @@ namespace Gasstation.Implementation
         /// <returns></returns>
         public int GetCurrentFill()
         {
-            return this.currentFill;
+            return this.CurrentFill;
         }
 
         /// <summary>
@@ -141,7 +141,7 @@ namespace Gasstation.Implementation
         /// <returns></returns>
         public int GetTopWarnLevel()
         {
-            return this.topWarnLevel;
+            return this.TopWarnLevel;
         }
 
         /// <summary>
@@ -150,7 +150,7 @@ namespace Gasstation.Implementation
         /// <returns></returns>
         public int GetBottomWarnLevel()
         {
-            return this.bottomWarnLevel;
+            return this.BottomWarnLevel;
         }
     }
 }

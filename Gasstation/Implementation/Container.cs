@@ -19,7 +19,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Xml.Serialization;
 
-namespace Gasstation
+namespace Gasstation.Implementation
 {
     [Serializable]
     public class Container

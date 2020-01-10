@@ -44,7 +44,7 @@ namespace Gasstation.Implementation
         {
             get
             {
-                List<Container> containers = settings.Containers ?? new List<Container>();
+                List<Container> containers = settings. ?? new List<Container>();
 
                 return containers;
             }

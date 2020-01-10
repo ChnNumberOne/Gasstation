@@ -87,20 +87,19 @@ namespace Gasstation.Pages
             if (selectedZapfsaeule != null && selectedZapfhahn != null)
             {
                 this.tankingButton = (Button)sender;
-                if (tankingButton.Content.ToString() != "Stop")
+                if (tankstelle.FindFuelTank(selectedZapfhahn.GetFuelType().GetFuelTypeName()).GetCurrentFuelAmount() > 0 || selectedZapfsaeule.isTanking())
                 {
-
-                    tankingButton.Content = "Stop";
-                    foreach (Button b in CustomerSimulation.AccessZapfhahnPanel.Children)
+                    if (tankingButton.Content.ToString() != "Stop")
                     {
-                        b.IsEnabled = false;
-                        b.Background = Brushes.LightGray;
+                        tankingButton.Content = "Stop";
+                        foreach (Button b in CustomerSimulation.AccessZapfhahnPanel.Children)
+                        {
+                            b.IsEnabled = false;
+                            b.Background = Brushes.LightGray;
+                        }
+                        this.tankstelle.PumpGasFromZapfsauele(this.selectedZapfsaeule, this.selectedZapfhahn.GetFuelType());
                     }
-                    this.tankstelle.PumpGasFromZapfsauele(this.selectedZapfsaeule, this.selectedZapfhahn.GetFuelType());
-                }
-                else
-                {
-                    if (selectedZapfsaeule.GetCurrentTransactionFuelAmount() > 0)
+                    else
                     {
                         tankingButton.Content = "Go pay";
                         tankingButton.Background = Brushes.LightGray;
@@ -109,6 +108,12 @@ namespace Gasstation.Pages
                         this.tankstelle.PumpGasFromZapfsauele(this.selectedZapfsaeule, this.selectedZapfhahn.GetFuelType());
                         RefreshTransactions();
                     }
+                }
+                else
+                {
+                    this.tankingButton.Content = "Fueltank empty";
+                    this.tankingButton.IsEnabled = false;
+                    this.tankingButton.Background = Brushes.IndianRed;
                 }
             }
             else
@@ -120,8 +125,6 @@ namespace Gasstation.Pages
 
         private void PayBetrag_Click(object sender, RoutedEventArgs e)
         {
-            // ka isch crap
-            //this.tankstelle.PayBill(this.selectedZapfsaeule);
             KassenUI kassenUI = new KassenUI(selectedTransaction, this);
             kassenUI.Show();
 

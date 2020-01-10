@@ -165,7 +165,10 @@ namespace Gasstation.Implementation
 
         // statistic calculations
 
-        // calculates total profit from last year
+        /// <summary>
+        /// calculates total profit from last year
+        /// </summary>
+        /// <returns></returns>        
         public float GetYearStats()
         {
             float totalMoney = 0;
@@ -180,7 +183,10 @@ namespace Gasstation.Implementation
             return totalMoney;
         }
 
-        // calculates total profit from last month
+        /// <summary>
+        /// calculates total profit from last month
+        /// </summary>
+        /// <returns></returns>
         public float GetMonthStats()
         {
             float totalMoney = 0;
@@ -196,7 +202,10 @@ namespace Gasstation.Implementation
             return totalMoney;
         }
 
-        // calculates total profit from last week
+        /// <summary>
+        /// calculates total profit from last week
+        /// </summary>
+        /// <returns></returns>
         public float GetWeekStats()
         {
             float totalMoney = 0;
@@ -212,7 +221,10 @@ namespace Gasstation.Implementation
             return totalMoney;
         }
 
-        // calculates total profit from yesterday
+        /// <summary>
+        /// calculates total profit from yesterday
+        /// </summary>
+        /// <returns></returns>
         public float GetTodaysMoneyStats()
         {
             float totalMoney = 0;
@@ -227,7 +239,11 @@ namespace Gasstation.Implementation
             return totalMoney;
         }
 
-        // calculates total liters from yesterday
+        /// <summary>
+        /// calculates yesterdays total liters from a certain fueltype
+        /// </summary>
+        /// <param name="fuelType"></param>
+        /// <returns></returns>
         public int GetTodaysLiterStats(FuelType fuelType)
         {
             int totalLiters = 0;
@@ -251,6 +267,16 @@ namespace Gasstation.Implementation
             }
 
             return totalLiters;
+        }
+
+        /// <summary>
+        /// returns the fueltank according to the appropriate fueltype
+        /// </summary>
+        /// <param name="fuelType"></param>
+        /// <returns></returns>
+        public FuelTank FindFuelTank(string fuelType)
+        {
+            return AvailableFuelTanks.Find(x => x.GetFuelType().GetFuelTypeName() == fuelType);
         }
     }
 }

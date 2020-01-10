@@ -112,6 +112,5 @@ namespace Gasstation.Implementation
         {
             return this.FuelCapacity;
         }
-
     }
 }

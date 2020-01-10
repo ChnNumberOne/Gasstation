@@ -60,12 +60,13 @@ namespace Gasstation.Pages
             // Transaction vo de Zapfsüle wo im GUI slektiert isch
             SelectedFuelLabel.Content = selectedZapfhahn.GetFuelType().GetFuelTypeName();
             CostPerLiterTextBlock.Text = $"{(decimal)selectedZapfhahn.GetFuelType().GetCostPerLiterInCent() / 100}.-";
-            CostBox.Text = selectedZapfsaeule.GetCurrentTransactionFuelAmount() * (decimal)selectedZapfhahn.GetFuelType().GetCostPerLiterInCent() / 100 + ".-";
-            if (selectedZapfsaeule.isTanking())
+            CostBox.Text = this.selectedZapfsaeule.GetCurrentTransactionFuelAmount() * (decimal)this.selectedZapfhahn.GetFuelType().GetCostPerLiterInCent() / 100 + ".-";
+            LiterBox.Text = this.selectedZapfsaeule.GetCurrentTransactionFuelAmount() + " L";
+            if (this.selectedZapfsaeule.isTanking())
             {
                 TakeFuel.Content = "Stop";
             }
-            else if (selectedZapfsaeule.isLocked())
+            else if (this.selectedZapfsaeule.isLocked())
             {
                 TakeFuel.Content = "Go pay";
                 TakeFuel.Background = Brushes.LightGray;
@@ -162,6 +163,7 @@ namespace Gasstation.Pages
             int fuelAmountToDisplay = this.selectedZapfsaeule.GetCurrentTransactionFuelAmount();
             decimal result = fuelAmountToDisplay * (decimal)selectedFuelType.GetCostPerLiterInCent() / 100;
             CostBox.Text = result.ToString() + ".-";
+            LiterBox.Text = this.selectedZapfsaeule.GetCurrentTransactionFuelAmount() + " L";
         }
 
         public void ResetCustomerUI()

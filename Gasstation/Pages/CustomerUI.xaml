@@ -40,9 +40,11 @@
                 <Label FontSize="20">Cost Per liter:</Label>
                 <TextBlock Name="CostPerLiterTextBlock" Text=" " HorizontalAlignment="Right"></TextBlock>
             </UniformGrid>
-            <UniformGrid Columns="2">
+            <UniformGrid Columns="2" Rows="2">
                 <Label FontSize="20" Content="Cost: "></Label>
                 <TextBlock Name="CostBox" HorizontalAlignment="Right"></TextBlock>
+                <Label FontSize="20" Content="Liters: "></Label>
+                <TextBlock Name="LiterBox" HorizontalAlignment="Right"></TextBlock>
             </UniformGrid>
             <Button Name="TakeFuel" Margin="0 3" Click="TakeFuel_Click">Start Tanking</Button>
         </StackPanel>

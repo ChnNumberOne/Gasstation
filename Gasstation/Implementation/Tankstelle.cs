@@ -1,52 +1,91 @@
-﻿using Gasstation.Interfaces;
-using Gasstation.Properties;
+﻿//
+//      author:             Thomas Fischer  t.fischer@siemens.com
+//      date:               11/1/2020   
+//      projectname:        tankstelle / Gasstation
+//      version:            1.0
+//      description:        a framework for a Gasstation application. 
+//                          Based on a GUI on WPF Pages
+//                          Warning this is an explorative code and may have instabilities dead code or wrong design decisions
+//                          
+//
+//      class:              Tankstelle
+//      classDescription:   Main Application, leads the communication process between the Gasstation and the Frontedn GUI Application
+//                          Contains all Major Runtime Information like, Which FuelTanks are available or which fueltypes.
+//                          Allows Tanking from it or paying on it
+
+
+
+using Gasstation.Interfaces;
 using System;
 using System.Collections.Generic;
-using System.IO;
 using System.Linq;
-using System.Runtime.Serialization;
-using System.Runtime.Serialization.Formatters.Binary;
-using System.Xml.Serialization;
 
 namespace Gasstation.Implementation
 {
-    public class Tankstelle
+    public class Tankstelle : ITankstelle
     {
-
-
-        // Singleton
+        /// <summary>
+        /// current Instance of the Singleton
+        /// </summary>
         private static Tankstelle currentInstance;
 
+        /// <summary>
+        /// returns / creates the Singleton
+        /// </summary>
+        /// <returns></returns>
         public static Tankstelle Current()
         {
             return currentInstance ?? (currentInstance = new Tankstelle());
         }
 
-        public List<Zapfsaeule> AvailableZapfsaeulen = new List<Zapfsaeule>(); // nei
+        /// <summary>
+        /// List of all Zapfsaeulen Objects that are stored and available
+        /// </summary>
+        public List<Zapfsaeule> AvailableZapfsaeulen = new List<Zapfsaeule>();
 
-        public List<FuelTank> AvailableFuelTanks = new List<FuelTank>(); // ja
+        /// <summary>
+        /// List of all FuelTank Objects that are stored and available
+        /// </summary>
+        public List<FuelTank> AvailableFuelTanks = new List<FuelTank>();
 
-        public List<FuelType> AvailableFuelTypes = new List<FuelType>(); // nei
+        /// <summary>
+        /// All currently Available FuelTypes on a Zapfsaeule or on a Tank in this Station
+        /// </summary>
+        public List<FuelType> AvailableFuelTypes = new List<FuelType>();
 
-        private List<Container> cointype = new List<Container>(); // nei ( tox anschauen)
+        /// <summary>
+        /// All Cointypes that exist in the Tankstellenkasse
+        /// </summary>
+        private List<Container> cointype = new List<Container>();
 
-        private Tankstellenkasse tankstellenkasse; // das ( das hed viel shit dinne)
+        /// <summary>
+        /// The Kasse which is in Charge of Paying Transactions and the Paying Process
+        /// </summary>
+        private Tankstellenkasse tankstellenkasse;
 
+        /// <summary>
+        /// a Refrence to the DataRepository which allows Saving into the application settings file
+        /// </summary>
         private IDataRepository dataRepository = new DataRepository();
 
-
+       /// <summary>
+       /// Gets the List of FuelTanks stored in the application settings via the data repository
+       /// </summary>
+       /// <param name="dataRepository"> the datarepository reference which holds the settings informations</param>
+       /// <returns></returns>
         private static List<FuelTank> LoadPreviousFuelTanks(IDataRepository dataRepository)
         {
             return dataRepository.StoredFuelTanks.ToList();
         }
 
-        // Konstruktor mit Basiswerten Initialisierung
+        /// <summary>
+        /// Standard constructor called when the programm is initialized / started. called when there is no instance when the singleton.current() function is called
+        /// </summary>
         private Tankstelle()
         {
-            // Schnittstelle für Settings zum Config laden
 
             this.AvailableFuelTanks = LoadPreviousFuelTanks(this.dataRepository);
-            if(this.AvailableFuelTanks.Any() == false)
+            if (this.AvailableFuelTanks.Any() == false)
             {
                 this.AvailableFuelTypes = new List<FuelType>
                 {
@@ -108,33 +147,42 @@ namespace Gasstation.Implementation
             AvailableZapfsaeulen.AddRange(zapfsauelen);
         }
 
-      
-        // Zapfhaehne readonly zurückgeben
+
+        /// <summary>
+        /// Getter for the List of Zapfsaeulen currently Available
+        /// </summary>
+        /// <returns>the list of all available zapfsaeulen</returns>
         public IList<Zapfsaeule> GetAllZapfsauelen()
         {
             return this.AvailableZapfsaeulen;
         }
 
-        // Sprit Bezug
+        /// <summary>
+        /// Switch for:
+        /// Pumps Gas from a selected Zapfsäule. If the Zapfsaeule is already Tanking the Process is stopped
+        /// If The Zapfsaeule isnt tanking yet the Zapfsaeule is locked and the Tanking process is started
+        /// </summary>
+        /// <param name="zapfsaeule">the selected zapfsaeule to tank from</param>
+        /// <param name="fuelType">the selected fueltype to take from the zapfsaeule</param>
         public void PumpGasFromZapfsauele(Zapfsaeule zapfsaeule, IFuelType fuelType)
         {
             if (zapfsaeule.isTanking())
-            {  
+            {
                 this.tankstellenkasse.AddTransaction(zapfsaeule.StopTankingTimer());
             }
-            else 
+            else
             {
                 FuelTank currentFuelTank = this.AvailableFuelTanks.Find(x => x.GetFuelType() == fuelType);
                 zapfsaeule.StartTankingTimer(currentFuelTank, this.SaveFuelTanks);
                 zapfsaeule.Lock();
-            }          
+            }
         }
-
+       
         /// <summary>
         /// Takes an open Transaction and a List of Coins and Bills and Pays it via "Kassenautomat"
         /// </summary>
-        /// <param name="billToPay"></param>
-        /// <param name="insertedMoney"></param>
+        /// <param name="billToPay">the Transaction that holds the information to make the payment</param>
+        /// <param name="insertedMoney">a list of integer representig the coins inserted</param>
         public List<int> PayTransaction(Transaction billToPay, IList<int> insertedMoney)
         {
             List<int> output = tankstellenkasse.PayTransaction(billToPay, insertedMoney);
@@ -142,33 +190,51 @@ namespace Gasstation.Implementation
             return output;
         }
 
+        /// <summary>
+        /// Gets the TransactionList of UnapidTransactions from the application settings
+        /// </summary>
+        /// <returns>a list of int values representig the change from the kassenautomat</returns>
         public List<Transaction> GetTransactionList()
         {
             return this.tankstellenkasse.GetUnpaidTransactions();
         }
 
+        /// <summary>
+        /// gets all available cointype sizes as an integer list
+        /// </summary>
+        /// <returns>a list of int values representing the value of coins available</returns>
         public IReadOnlyList<int> GetAvailableCoins()
         {
             return this.cointype.Select(x => x.GetValue()).ToList().AsReadOnly();
         }
 
+        /// <summary>
+        /// saves the list of available fuel tanks in the application setting
+        /// </summary>
         public void SaveFuelTanks()
         {
             this.dataRepository.StoredFuelTanks = this.AvailableFuelTanks;
         }
 
-        // gets all fueltypes
+        /// <summary>
+        /// gets all the available fueltypes of the gasstation
+        /// </summary>
+        /// <returns>the list of all avialable fuel types</returns>
         public List<FuelType> GetAvailableFuelTypes()
         {
             return this.AvailableFuelTypes;
         }
 
-        // gets all fueltanks
+        /// <summary>
+        /// gets the list of all available fueltanks of the tankstelle
+        /// </summary>
+        /// <returns>the list of fueltanks</returns>
         public List<FuelTank> GetAvailableFuelTanks()
         {
             return AvailableFuelTanks;
         }
 
+        // TODO: Benjamin - bitte returns und Param Tags jeweils ausfüllen sonst okay(beispiele siehe oben)
         // statistic calculations
 
         /// <summary>
@@ -178,7 +244,7 @@ namespace Gasstation.Implementation
         public float GetYearStats()
         {
             float totalMoney = 0;
-            
+
             foreach (Transaction transaction in this.tankstellenkasse.GetPaidTransactions())
             {
                 if (transaction.GetDateTime().Year == DateTime.Now.AddYears(-1).Year)
@@ -302,5 +368,7 @@ namespace Gasstation.Implementation
         {
             return dataRepository.StoredContainers.ToList();
         }
+
+
     }
 }

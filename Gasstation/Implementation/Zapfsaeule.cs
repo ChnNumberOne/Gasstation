@@ -1,9 +1,20 @@
-﻿using System;
+﻿//
+//      author:             Thomas Fischer  t.fischer@siemens.com
+//      date:               11/1/2020   
+//      projectname:        tankstelle / Gasstation
+//      version:            1.0
+//      description:        a framework for a Gasstation application. 
+//                          Based on a GUI on WPF Pages
+//                          Warning this is an explorative code and may have instabilities dead code or wrong design decisions
+//                          
+//
+//      class:              
+//      classDescription:   
+
+
+
+using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Timers;
 using System.Windows.Threading;
 
 namespace Gasstation.Implementation

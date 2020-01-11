@@ -55,7 +55,6 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
-    <Compile Include="Implementation\Config.cs" />
     <Compile Include="Implementation\Container.cs" />
     <Compile Include="Implementation\FuelType.cs" />
     <Compile Include="Implementation\Kassenautomat.cs" />
@@ -66,6 +65,7 @@
     <Compile Include="Interfaces\IFuelType.cs" />
     <Compile Include="Implementation\Tankstelle.cs" />
     <Compile Include="Implementation\Zapfhahn.cs" />
+    <Compile Include="Interfaces\ITankstelle.cs" />
     <Compile Include="Pages\AlterItems.xaml.cs">
       <DependentUpon>AlterItems.xaml</DependentUpon>
     </Compile>

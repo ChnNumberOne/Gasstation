@@ -1,4 +1,6 @@
 ﻿//
+//                          LEGACY CODE
+//
 //      author:             Thomas Fischer  t.fischer@siemens.com
 //      date:               27/10/2019      
 //      projectname:        kassenautomat
@@ -18,8 +20,6 @@ using Gasstation.Implementation;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Gasstation
 {

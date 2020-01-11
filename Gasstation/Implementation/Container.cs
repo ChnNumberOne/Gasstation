@@ -1,8 +1,8 @@
 ﻿//
 //      author:             Thomas Fischer  t.fischer@siemens.com
-//      date:               27/10/2019      
+//      date:               11/1/2020   
 //      projectname:        kassenautomat
-//      version:            1.0
+//      version:            1.1 
 //      description:        ein Programm das als Schnittstelle für einen Kassenautomat fungieren sollte
 //                          ein und Ausgabe von Münzbeträgen und korrektes zuweisen von Münzen
 //                          reguliert Münzbeträge für Selbsterhalt
@@ -10,13 +10,12 @@
 //      klasse:             Container
 //      klasenbeschreibung: Stellt einen Münzbehälter der Maschine dar
 //                          können beliebig viele der Maschine zugewiesen werden
+//      Changes:            Minor Changes for Implementation in new Tankstellenproject
+//                          Added Serializable TagsXML Attributes and Properties for Application
+//                          Settings to save
 
 
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Xml.Serialization;
 
 namespace Gasstation.Implementation

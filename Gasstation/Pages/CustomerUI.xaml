@@ -22,16 +22,6 @@
             <ColumnDefinition></ColumnDefinition>
         </Grid.ColumnDefinitions>
         <StackPanel Margin="5">
-            <!--
-                <Label>Zapfhahn</Label>
-                <Label FontSize="20">Amount left in tank:</Label>
-                <TextBlock Name="FuelLeftAmnt"> </TextBlock>
-                <Label FontSize="20">Fuel to take out:</Label>
-                <TextBox Name="FuelToTakeOut" TextChanged="FuelToTakeOut_TextChanged"></TextBox>
-                <WrapPanel>
-                    <Label FontSize="20" Content="Cost:  "></Label>
-                    <TextBlock Name="CostBox"></TextBlock>
-                </WrapPanel>-->
             <UniformGrid Columns="2">
                 <Label FontSize="20" Content="Selected:"></Label>
                 <Label Name="SelectedFuelLabel" FontSize="20" Content=" " HorizontalAlignment="Right"></Label>
@@ -51,9 +41,7 @@
         <StackPanel Grid.Column="2" Margin="5">
             <Label>Kasse</Label>
             <ScrollViewer>
-                <StackPanel Name="QuittungenPanel" Height="180" Background="Gray">
-
-                </StackPanel>
+                <StackPanel Name="QuittungenPanel" Height="180" Background="Gray"/>
             </ScrollViewer>
             <UniformGrid Columns="2">
                 <Label FontSize="20">Betrag:</Label>

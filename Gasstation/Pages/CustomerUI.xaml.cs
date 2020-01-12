@@ -22,20 +22,31 @@ namespace Gasstation.Pages
     /// </summary>
     public partial class CustomerUI : Page
     {
+        // selected gas pump
         private Zapfsaeule selectedZapfsaeule;
 
-        private IFuelType selectedFuelType;      // für Berechnung Anzeige
+        // fuel type of selected gas nozzle
+        private IFuelType selectedFuelType;
 
+        // selected gas nozzle
         private Zapfhahn selectedZapfhahn;
 
+        // selected transaction from cash register
         private Transaction selectedTransaction;
 
+        // instance of gas station
         private Tankstelle tankstelle;
 
+        // gui dispatcher timer
         private DispatcherTimer guiRefreshTimer;
 
+        // instance of previous page
         private CustomerSimulation customerSimulation;
 
+        // instance of tanking button
+        private Button tankingButton;
+
+        // constructor
         public CustomerUI()
         {
             InitializeComponent();
@@ -51,6 +62,7 @@ namespace Gasstation.Pages
             this.guiRefreshTimer.Start();
         }
 
+        // for setting GUI properly
         public void SetZapfhahnValues(Zapfsaeule selectedZapfsaeule, Zapfhahn selectedZapfhahn, CustomerSimulation customerSimulation)
         {
             this.customerSimulation = customerSimulation;
@@ -81,8 +93,7 @@ namespace Gasstation.Pages
             RefreshTransactions();
         }
 
-        private Button tankingButton;
-
+        // on TakeFuel button click
         private void TakeFuel_Click(object sender, RoutedEventArgs e)
         {
             if (selectedZapfsaeule != null && selectedZapfhahn != null)
@@ -124,6 +135,7 @@ namespace Gasstation.Pages
             }
         }
 
+        // for opening cash register GUI after PayButton click
         private void PayBetrag_Click(object sender, RoutedEventArgs e)
         {
             KassenUI kassenUI = new KassenUI(selectedTransaction, this);
@@ -134,6 +146,7 @@ namespace Gasstation.Pages
 
         }
 
+        // refreshing list of unpaid transactions
         public void RefreshTransactions()
         {
             QuittungenPanel.Children.Clear();
@@ -150,6 +163,7 @@ namespace Gasstation.Pages
             BetragBlock.Text = "";
         }
 
+        // on selection of transaction
         private void TransactionButton_Click(object sender, RoutedEventArgs e, Transaction transaction)
         {
             BetragBlock.Text = (transaction.GetTotalFuelAmount() * (float)transaction.GetCostPerLiterInCent() / 100).ToString("C2");
@@ -158,6 +172,7 @@ namespace Gasstation.Pages
             PayBetrag.ClearValue(BackgroundProperty);
         }
 
+        // for refreshing GUI
         private void RefreshCurrentZapfsaeule()
         {
             int fuelAmountToDisplay = this.selectedZapfsaeule.GetCurrentTransactionFuelAmount();
@@ -166,6 +181,7 @@ namespace Gasstation.Pages
             LiterBox.Text = this.selectedZapfsaeule.GetCurrentTransactionFuelAmount() + " L";
         }
 
+        // reselects items from CustomerSimulation
         public void ResetCustomerUI()
         {
             customerSimulation.SelectZapfsauele(selectedZapfsaeule);

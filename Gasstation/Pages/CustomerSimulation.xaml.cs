@@ -11,18 +11,18 @@ namespace Gasstation.Pages
     /// </summary>
     public partial class CustomerSimulation : Page
     {
-
+        // static wrappanel for changing items from other pages
         public static WrapPanel AccessZapfhahnPanel;
 
-        private Zapfhahn selectedZapfhahn;
-
+        // instance of selected gas pump
         private Zapfsaeule selectedZapfsaeule;
 
+        // instance of gas station
         private Tankstelle tankstelle;
 
+        // constructor
         public CustomerSimulation()
         {
-            
             InitializeComponent();
             RefreshPage();
             AccessZapfhahnPanel = ZapfhahnPanel;
@@ -30,9 +30,10 @@ namespace Gasstation.Pages
 
         }
 
+        // updates the page
         private void RefreshPage()
         {
-            // Singleton Initalisieren
+            // Initializes singleton
             this.tankstelle = Tankstelle.Current();
 
 
@@ -54,7 +55,7 @@ namespace Gasstation.Pages
             }
         }
 
-        
+        // on selection of gas pump
         public void SelectZapfsauele(Zapfsaeule zapfsaeule)
         {
 
@@ -95,10 +96,9 @@ namespace Gasstation.Pages
             }
         }
 
+        // on selection of gas nozzle
         public void SelectZapfhahn(Zapfhahn zapfhahn)
         {
-            // set selection
-            this.selectedZapfhahn = zapfhahn;
             selectedZapfsaeule.Selectzapfhahn(zapfhahn);
             CustomerUI customerUI = new CustomerUI();
             CustomerUIFrame.Content = customerUI;
@@ -106,6 +106,7 @@ namespace Gasstation.Pages
 
         }
 
+        // returns to main menu
         private void BackToMenu_Click(object sender, RoutedEventArgs e)
         {
             MainWindow.SetContent(new WelcomePage());

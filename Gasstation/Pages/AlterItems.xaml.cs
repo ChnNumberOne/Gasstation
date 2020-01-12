@@ -21,7 +21,10 @@ namespace Gasstation.Pages
     /// </summary>
     public partial class AlterItems : Page
     {
+        // gas station object
         private Tankstelle tankstelle;
+
+        // fuel tank selected by user in GUI
         private FuelTank selectedFuelTank;
 
         public AlterItems()
@@ -30,6 +33,7 @@ namespace Gasstation.Pages
             RefreshPage();
         }
 
+        // refreshes all data in page
         private void RefreshPage()
         {
             // initialize singleton
@@ -53,6 +57,7 @@ namespace Gasstation.Pages
             }
         }
 
+        // for updating GUI on fuel tank selection
         private void SelectFuelTank(FuelTank fuelTank)
         {
             // setting values of the selected fueltank
@@ -62,6 +67,7 @@ namespace Gasstation.Pages
             selectedFuelTank = fuelTank;
         }
 
+        // for checking if textbox input is valid
         private void FuelTankBox_TextChanged(object sender, TextChangedEventArgs e)
         {
             int ignoreInt;
@@ -75,6 +81,7 @@ namespace Gasstation.Pages
             }
         }
 
+        // fill fuel into selected fuel tank
         private void FillTankButton_Click(object sender, RoutedEventArgs e)
         {
             int amountOfFuel;
@@ -87,6 +94,7 @@ namespace Gasstation.Pages
             }
         }
 
+        // drain fuel from selected fuel tank
         private void EmptyFuel_Click(object sender, RoutedEventArgs e)
         {
             int amountOfFuel;

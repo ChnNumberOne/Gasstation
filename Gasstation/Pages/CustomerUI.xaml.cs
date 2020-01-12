@@ -123,7 +123,7 @@ namespace Gasstation.Pages
                 }
                 else
                 {
-                    this.tankingButton.Content = "Fueltank empty";
+                    this.tankingButton.Content = "Fuel tank empty";
                     this.tankingButton.IsEnabled = false;
                     this.tankingButton.Background = Brushes.IndianRed;
                 }

@@ -368,37 +368,5 @@ namespace Gasstation.Implementation
         {
             return dataRepository.StoredContainers.ToList();
         }
-
-        public Zapfsaeule Zapfsaeule
-        {
-            get => default;
-            set
-            {
-            }
-        }
-
-        public FuelTank FuelTank
-        {
-            get => default;
-            set
-            {
-            }
-        }
-
-        public Tankstellenkasse Tankstellenkasse
-        {
-            get => default;
-            set
-            {
-            }
-        }
-
-        public DataRepository DataRepository
-        {
-            get => default;
-            set
-            {
-            }
-        }
     }
 }

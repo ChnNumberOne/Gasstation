@@ -34,14 +34,6 @@ namespace Gasstation.Implementation
             this.fueltype = fuelType;
         }
 
-        public FuelType FuelType
-        {
-            get => default;
-            set
-            {
-            }
-        }
-
         /// <summary>
         /// Gets the Fueltype of this Zapfhahn
         /// </summary>

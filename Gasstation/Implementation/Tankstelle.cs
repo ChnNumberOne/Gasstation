@@ -234,9 +234,6 @@ namespace Gasstation.Implementation
             return availableFuelTanks;
         }
 
-        // TODO: Benjamin - bitte returns und Param Tags jeweils ausfüllen sonst okay(beispiele siehe oben)
-        // statistic calculations
-
         /// <summary>
         /// calculates total profit from last year
         /// </summary>

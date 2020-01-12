@@ -58,23 +58,6 @@ namespace Gasstation.Implementation
          
         }
 
-        public Transaction Transaction
-        {
-            get => default;
-            set
-            {
-            }
-        }
-
-        public Kassenautomat Kassenautomat
-        {
-            get => default;
-            set
-            {
-            }
-        }
-
-
         /// <summary>
         /// Adds a Transaction to the Unpaid Transactions List
         /// </summary>

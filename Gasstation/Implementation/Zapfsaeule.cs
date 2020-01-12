@@ -73,14 +73,6 @@ namespace Gasstation.Implementation
             this.name = name;
         }
 
-        public Zapfhahn Zapfhahn
-        {
-            get => default;
-            set
-            {
-            }
-        }
-
         /// <summary>
         /// Gets the Name of the Zapfsaeule
         /// </summary>

@@ -72,13 +72,6 @@ namespace Gasstation.Implementation
         [XmlElement]
         public FuelType FuelType { get; set; }
 
-        public FuelType FuelType1
-        {
-            get => default;
-            set
-            {
-            }
-        }
 
         /// <summary>
         /// gets the Fueltype of this tank

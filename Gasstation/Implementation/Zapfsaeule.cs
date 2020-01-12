@@ -149,7 +149,7 @@ namespace Gasstation.Implementation
         /// <summary>
         /// checks if the Zapfsaeule is locked
         /// </summary>
-        /// <returns></returns>
+        /// <returns>boolean of if it is locked</returns>
         public bool isLocked()
         {
             return lockStatus;
@@ -178,7 +178,7 @@ namespace Gasstation.Implementation
         /// <summary>
         /// Stops the timer and the Tanking Process and returns a Transaction
         /// </summary>
-        /// <returns></returns>
+        /// <returns>newly created unpaid transaction</returns>
         public Transaction StopTankingTimer()
         {
             this.tankingTimer.Stop();

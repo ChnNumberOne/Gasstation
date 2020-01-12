@@ -27,7 +27,7 @@ namespace Gasstation.Implementation
         /// <summary>
         ///  constructor for the Zapfhahn
         /// </summary>
-        /// <param name="fuelType"></param>
+        /// <param name="fuelType">Fueltype which the gas nozzle will dispense</param>
 
         public Zapfhahn(IFuelType fuelType)
         {

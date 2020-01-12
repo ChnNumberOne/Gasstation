@@ -240,7 +240,7 @@ namespace Gasstation.Implementation
         /// <summary>
         /// calculates total profit from last year
         /// </summary>
-        /// <returns></returns>        
+        /// <returns>Total money from last year</returns>        
         public float GetYearStats()
         {
             float totalMoney = 0;
@@ -258,7 +258,7 @@ namespace Gasstation.Implementation
         /// <summary>
         /// calculates total profit from last month
         /// </summary>
-        /// <returns></returns>
+        /// <returns>Total money from last month</returns>
         public float GetMonthStats()
         {
             float totalMoney = 0;
@@ -277,7 +277,7 @@ namespace Gasstation.Implementation
         /// <summary>
         /// calculates total profit from last week
         /// </summary>
-        /// <returns></returns>
+        /// <returns>Total money from last week</returns>
         public float GetWeekStats()
         {
             float totalMoney = 0;
@@ -294,9 +294,9 @@ namespace Gasstation.Implementation
         }
 
         /// <summary>
-        /// calculates total profit from yesterday
+        /// calculates total profit from today
         /// </summary>
-        /// <returns></returns>
+        /// <returns>Total money from today</returns>
         public float GetTodaysMoneyStats()
         {
             float totalMoney = 0;
@@ -312,10 +312,10 @@ namespace Gasstation.Implementation
         }
 
         /// <summary>
-        /// calculates yesterdays total liters from a certain fueltype
+        /// calculates todays total liters from a certain fueltype
         /// </summary>
-        /// <param name="fuelType"></param>
-        /// <returns></returns>
+        /// <param name="fuelType">The fuel type from which the amount of liters needs to be calculated</param>
+        /// <returns>Amount of drained liters from tank according to the fuel type</returns>
         public int GetTodaysLiterStats(FuelType fuelType)
         {
             int totalLiters = 0;
@@ -344,8 +344,8 @@ namespace Gasstation.Implementation
         /// <summary>
         /// returns the fueltank according to the appropriate fueltype
         /// </summary>
-        /// <param name="fuelType"></param>
-        /// <returns></returns>
+        /// <param name="fuelType">Name of the tanks fuel type</param>
+        /// <returns>Tank according to fueltype</returns>
         public FuelTank FindFuelTank(string fuelType)
         {
             return AvailableFuelTanks.Find(x => x.GetFuelType().GetFuelTypeName() == fuelType);
@@ -362,8 +362,8 @@ namespace Gasstation.Implementation
         /// <summary>
         /// Loads list of containers from file
         /// </summary>
-        /// <param name="dataRepository"></param>
-        /// <returns></returns>
+        /// <param name="dataRepository">Data repository of the gas station</param>
+        /// <returns>List of coin/money containers</returns>
         private List<Container> LoadPreviousContainers(IDataRepository dataRepository)
         {
             return dataRepository.StoredContainers.ToList();

@@ -127,7 +127,7 @@ namespace Gasstation.Implementation
         /// <summary>
         /// Gets the Unpaid Transactions List
         /// </summary>
-        /// <returns></returns>
+        /// <returns>The list of all unpaid transaction</returns>
         public List<Transaction> GetUnpaidTransactions()
         {
             return this.unpaidTransactions;

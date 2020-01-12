@@ -20,20 +20,24 @@ namespace Gasstation.Pages
     /// </summary>
     public partial class WelcomePage : Page
     {
+        // boolean values for which page is currently open
         private bool isOnStats = false;
         private bool isOnAlterItems = false;
 
+        // constructor
         public WelcomePage()
         {
             InitializeComponent();
             QuickDisplayFrame.Content = new DisplayWelcome();
         }
 
+        // opens customer page
         private void CustomerViewButton_Click(object sender, RoutedEventArgs e)
         {
             MainWindow.SetContent(new CustomerSimulation());
         }
 
+        // opens statistics page
         private void CheckStatsButton_Click(object sender, RoutedEventArgs e)
         {
             if ((!isOnStats && !isOnAlterItems) || isOnAlterItems)
@@ -50,6 +54,7 @@ namespace Gasstation.Pages
             }
         }
 
+        // opens alter items page
         private void AlterButton_Click(object sender, RoutedEventArgs e)
         {
             if ((!isOnStats && !isOnAlterItems) || isOnStats)

@@ -20,6 +20,8 @@ namespace Gasstation.Pages
     /// </summary>
     public partial class Receipt : Window
     {
+        // constructor
+        // sets values for GUI items
         public Receipt(Transaction transaction, int PaidInCent)
         {
             InitializeComponent();

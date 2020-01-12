@@ -21,13 +21,18 @@ namespace Gasstation.Pages
     /// </summary>
     public partial class Statistics : Page
     {
+        // instance of gas station
         private Tankstelle tankstelle;
+
+        // constructor
         public Statistics()
         {
             InitializeComponent();
             RefreshAllStats();
         }
 
+        // refreshes GUI
+        // sets proper values to GUI items
         private void RefreshAllStats()
         {
             this.tankstelle = Tankstelle.Current();
@@ -35,7 +40,6 @@ namespace Gasstation.Pages
             TotalLastMonthLabel.Content = tankstelle.GetMonthStats().ToString("C2");
             TotalLastWeekLabel.Content = tankstelle.GetWeekStats().ToString("C2");
             TotalTodayLabel.Content = tankstelle.GetTodaysMoneyStats().ToString("C2");
-            //TotalLitersTodayLabel.Content = tankstelle.GetTodaysLiterStats().ToString() + "L";
 
             foreach (FuelType fuelType in tankstelle.GetAvailableFuelTypes())
             {

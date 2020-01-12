@@ -20,11 +20,19 @@ namespace Gasstation.Pages
     /// </summary>
     public partial class KassenUI : Window
     {
+        // selected transaction
         private Transaction transaction;
+
+        // list of inserted coin/money values
         private List<int> insertedMoney;
+
+        // instance of customerUI for changing items
         private CustomerUI customerUI;
+
+        // instance of gas station
         private Tankstelle tankstelle;
 
+        // constructor
         public KassenUI(Transaction transaction, CustomerUI customerUI)
         {
             this.tankstelle = Tankstelle.Current();
@@ -51,6 +59,7 @@ namespace Gasstation.Pages
             }
         }
 
+        // on click of coin button
         private void OnMoneyButton_Click(object sender, RoutedEventArgs eventArgs, int valueInCent)
         {
             insertedMoney.Add(valueInCent);
@@ -71,6 +80,7 @@ namespace Gasstation.Pages
             UpdateInserted();
         }
 
+        // update GUI
         private void UpdateInserted(bool wasPayed = false)
         {
             InsertedAmount.Content = ((float)insertedMoney.Sum() / 100).ToString("C2");
@@ -86,20 +96,20 @@ namespace Gasstation.Pages
             }
         }
 
+        // closes cash register
         private void TakeRetourButton_Click(object sender, RoutedEventArgs e)
         {
             customerUI.RefreshTransactions();
             this.Close();
         }
 
-        // AN THOMAS
-        // Bitte hier beim pay das ganze von der kasse auch integrieren. Jetzt grad ist nur ein bisschen makeshift code eingebaut.
+        // on pay button click
         private void PayButton_Click(object sender, RoutedEventArgs e)
         {
 
             if (tankstelle.GetTransactionList().Contains(transaction))
             {
-                // Wenn die Kasse aufgemacht wird muss der Betrag in der Liste von CUstomer UI Gesperrt werden
+                // opens receipt GUI
                 (new Receipt(transaction, insertedMoney.Sum())).Show();
                 InsertedPanel.Children.Clear();
                 ReturnLabel.Content = ((float)(insertedMoney.Sum() - transaction.GetCostInCent()) / 100).ToString("C2");
@@ -108,8 +118,8 @@ namespace Gasstation.Pages
                 TakeRetourButton.IsEnabled = true;
                 TakeRetourButton.ClearValue(BackgroundProperty);
                 MoneyPanel.Children.Clear();
-                // teil der Businesslogik
 
+                // list of change
                 List<int> changeList = tankstelle.PayTransaction(transaction, insertedMoney);
                 customerUI.ResetCustomerUI();
             
@@ -118,6 +128,7 @@ namespace Gasstation.Pages
                 customerUI.CostBox.Text = "0.-";
                 if (changeList != null)
                 {
+                    // displays change on GUI
                     foreach (int coin in changeList)
                     {
                         Button button = new Button()

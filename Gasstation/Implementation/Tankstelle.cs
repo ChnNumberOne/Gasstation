@@ -41,17 +41,17 @@ namespace Gasstation.Implementation
         /// <summary>
         /// List of all Zapfsaeulen Objects that are stored and available
         /// </summary>
-        public List<Zapfsaeule> AvailableZapfsaeulen = new List<Zapfsaeule>();
+        private List<Zapfsaeule> availableZapfsaeulen = new List<Zapfsaeule>();
 
         /// <summary>
         /// List of all FuelTank Objects that are stored and available
         /// </summary>
-        public List<FuelTank> AvailableFuelTanks = new List<FuelTank>();
+        private List<FuelTank> availableFuelTanks = new List<FuelTank>();
 
         /// <summary>
         /// All currently Available FuelTypes on a Zapfsaeule or on a Tank in this Station
         /// </summary>
-        public List<FuelType> AvailableFuelTypes = new List<FuelType>();
+        private List<FuelType> availableFuelTypes = new List<FuelType>();
 
         /// <summary>
         /// All Cointypes that exist in the Tankstellenkasse
@@ -84,23 +84,23 @@ namespace Gasstation.Implementation
         private Tankstelle()
         {
 
-            this.AvailableFuelTanks = LoadPreviousFuelTanks(this.dataRepository);
-            if (this.AvailableFuelTanks.Any() == false)
+            this.availableFuelTanks = LoadPreviousFuelTanks(this.dataRepository);
+            if (this.availableFuelTanks.Any() == false)
             {
-                this.AvailableFuelTypes = new List<FuelType>
+                this.availableFuelTypes = new List<FuelType>
                 {
                     new FuelType("Benzin", 120),
                     new FuelType("Diesel", 130),
                     new FuelType("Biodiesel", 100),
                 };
-                foreach (FuelType ft in this.AvailableFuelTypes)
+                foreach (FuelType ft in this.availableFuelTypes)
                 {
-                    this.AvailableFuelTanks.Add(new FuelTank(ft, 1000));
+                    this.availableFuelTanks.Add(new FuelTank(ft, 1000));
                 }
             }
             else
             {
-                this.AvailableFuelTypes = this.AvailableFuelTanks.Select(x => x.GetFuelType()).Distinct().ToList();
+                this.availableFuelTypes = this.availableFuelTanks.Select(x => x.GetFuelType()).Distinct().ToList();
             }
 
             // Erstellen einer Tankstellenkasse
@@ -132,7 +132,7 @@ namespace Gasstation.Implementation
                 .Range(1, 5)
                 .Select(zapfsaeulenNummer =>
                 {
-                    IEnumerable<Zapfhahn> zapfhaehneFuerSaeule = this.AvailableFuelTypes.Select(fuelType => new Zapfhahn(fuelType));
+                    IEnumerable<Zapfhahn> zapfhaehneFuerSaeule = this.availableFuelTypes.Select(fuelType => new Zapfhahn(fuelType));
                     Zapfsaeule zapfsaeule = new Zapfsaeule(zapfsaeulenNummer.ToString(), zapfhaehneFuerSaeule.ToList());
                     foreach (Transaction unpaidTransaction in this.tankstellenkasse.GetUnpaidTransactions())
                     {
@@ -144,7 +144,7 @@ namespace Gasstation.Implementation
                     }
                     return zapfsaeule;
                 });
-            AvailableZapfsaeulen.AddRange(zapfsauelen);
+            availableZapfsaeulen.AddRange(zapfsauelen);
         }
 
 
@@ -154,7 +154,7 @@ namespace Gasstation.Implementation
         /// <returns>the list of all available zapfsaeulen</returns>
         public IList<Zapfsaeule> GetAllZapfsauelen()
         {
-            return this.AvailableZapfsaeulen;
+            return this.availableZapfsaeulen;
         }
 
         /// <summary>
@@ -172,7 +172,7 @@ namespace Gasstation.Implementation
             }
             else
             {
-                FuelTank currentFuelTank = this.AvailableFuelTanks.Find(x => x.GetFuelType() == fuelType);
+                FuelTank currentFuelTank = this.availableFuelTanks.Find(x => x.GetFuelType() == fuelType);
                 zapfsaeule.StartTankingTimer(currentFuelTank, this.SaveFuelTanks);
                 zapfsaeule.Lock();
             }
@@ -213,7 +213,7 @@ namespace Gasstation.Implementation
         /// </summary>
         public void SaveFuelTanks()
         {
-            this.dataRepository.StoredFuelTanks = this.AvailableFuelTanks;
+            this.dataRepository.StoredFuelTanks = this.availableFuelTanks;
         }
 
         /// <summary>
@@ -222,7 +222,7 @@ namespace Gasstation.Implementation
         /// <returns>the list of all avialable fuel types</returns>
         public List<FuelType> GetAvailableFuelTypes()
         {
-            return this.AvailableFuelTypes;
+            return this.availableFuelTypes;
         }
 
         /// <summary>
@@ -231,7 +231,7 @@ namespace Gasstation.Implementation
         /// <returns>the list of fueltanks</returns>
         public List<FuelTank> GetAvailableFuelTanks()
         {
-            return AvailableFuelTanks;
+            return availableFuelTanks;
         }
 
         // TODO: Benjamin - bitte returns und Param Tags jeweils ausfüllen sonst okay(beispiele siehe oben)
@@ -348,7 +348,7 @@ namespace Gasstation.Implementation
         /// <returns>Tank according to fueltype</returns>
         public FuelTank FindFuelTank(string fuelType)
         {
-            return AvailableFuelTanks.Find(x => x.GetFuelType().GetFuelTypeName() == fuelType);
+            return availableFuelTanks.Find(x => x.GetFuelType().GetFuelTypeName() == fuelType);
         }
 
         /// <summary>
@@ -364,7 +364,7 @@ namespace Gasstation.Implementation
         /// </summary>
         /// <param name="dataRepository">Data repository of the gas station</param>
         /// <returns>List of coin/money containers</returns>
-        private List<Container> LoadPreviousContainers(IDataRepository dataRepository)
+        private static List<Container> LoadPreviousContainers(IDataRepository dataRepository)
         {
             return dataRepository.StoredContainers.ToList();
         }

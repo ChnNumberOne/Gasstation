@@ -86,5 +86,13 @@ namespace Gasstation.Implementation
                 settings.Save();
             }
         }
+
+        internal Settings Settings
+        {
+            get => default;
+            set
+            {
+            }
+        }
     }
 }

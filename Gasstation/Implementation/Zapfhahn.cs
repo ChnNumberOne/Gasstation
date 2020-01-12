@@ -1,17 +1,31 @@
-﻿namespace Gasstation.Implementation
+﻿//
+//      author:             Thomas Fischer  t.fischer@siemens.com
+//      date:               11/1/2020   
+//      projectname:        tankstelle / Gasstation
+//      version:            1.0
+//      description:        a framework for a Gasstation application. 
+//                          Based on a GUI on WPF Pages
+//                          Warning this is an explorative code and may have instabilities dead code or wrong design decisions
+//                          
+//
+//      class:              Zapfhahn
+//      classDescription:   Helper Class which holds the Fueltype
+
+
+
+
+namespace Gasstation.Implementation
 {
     public class Zapfhahn
     {
-        // Important Notes and TOOD:
-        // each Zapfhahn has an entire list of Tanks ( Because its easier)
 
-      
-
+        /// <summary>
+        /// The Fueltype of this Zapfhahn
+        /// </summary>
         private readonly IFuelType fueltype;
 
         /// <summary>
-        /// Erstellt einen Zapfhahn für einen STRING fueltypeName
-        /// Sucht den Tank dieses fuelTypes heraus und bindet diese auf den zapfhahn
+        ///  constructor for the Zapfhahn
         /// </summary>
         /// <param name="fuelType"></param>
 
@@ -20,16 +34,22 @@
             this.fueltype = fuelType;
         }
 
+        public FuelType FuelType
+        {
+            get => default;
+            set
+            {
+            }
+        }
+
+        /// <summary>
+        /// Gets the Fueltype of this Zapfhahn
+        /// </summary>
+        /// <returns>the Fueltype</returns>
         public IFuelType GetFuelType()
         {
             return fueltype;
         }
-        
-        /// <summary>
-        /// Boolean Check if this is locked
-        /// </summary>
-        /// <returns></returns>
-  
        
     }   
 }

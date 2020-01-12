@@ -35,6 +35,14 @@ namespace Gasstation
 
         }
 
+        public Container Container
+        {
+            get => default;
+            set
+            {
+            }
+        }
+
         private List<Container> cointypes;
 
 
